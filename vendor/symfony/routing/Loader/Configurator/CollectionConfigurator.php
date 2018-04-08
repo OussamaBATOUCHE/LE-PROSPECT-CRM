@@ -23,15 +23,13 @@ class CollectionConfigurator
     use Traits\RouteTrait;
 
     private $parent;
-    private $parentConfigurator;
 
-    public function __construct(RouteCollection $parent, string $name, self $parentConfigurator = null)
+    public function __construct(RouteCollection $parent, $name)
     {
         $this->parent = $parent;
         $this->name = $name;
         $this->collection = new RouteCollection();
         $this->route = new Route('');
-        $this->parentConfigurator = $parentConfigurator; // for GC control
     }
 
     public function __destruct()
@@ -42,12 +40,17 @@ class CollectionConfigurator
 
     /**
      * Adds a route.
+     *
+     * @param string $name
+     * @param string $path
+     *
+     * @return RouteConfigurator
      */
-    final public function add(string $name, string $path): RouteConfigurator
+    final public function add($name, $path)
     {
         $this->collection->add($this->name.$name, $route = clone $this->route);
 
-        return new RouteConfigurator($this->collection, $route->setPath($path), $this->name, $this);
+        return new RouteConfigurator($this->collection, $route->setPath($path), $this->name);
     }
 
     /**
@@ -57,15 +60,17 @@ class CollectionConfigurator
      */
     final public function collection($name = '')
     {
-        return new self($this->collection, $this->name.$name, $this);
+        return new self($this->collection, $this->name.$name);
     }
 
     /**
      * Sets the prefix to add to the path of all child routes.
      *
+     * @param string $prefix
+     *
      * @return $this
      */
-    final public function prefix(string $prefix)
+    final public function prefix($prefix)
     {
         $this->route->setPath($prefix);
 
