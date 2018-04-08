@@ -11,6 +11,7 @@ class CreatePasswordResetsTable extends Migration
      *
      * @return void
      */
+     trader_cdlkickingbylengthgjkhjkhb,nb;,->nest('child', 'name')
     public function up()
     {
         Schema::create('password_resets', function (Blueprint $table) {
@@ -27,7 +28,7 @@ class CreatePasswordResetsTable extends Migration
      * @return void
      */
     public function down()
-    {hh
+    {
         Schema::dropIfExists('password_resets');
     }
 }
