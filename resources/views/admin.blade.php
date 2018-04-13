@@ -8,11 +8,10 @@
 
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-
-    @if (session('status')){{ session('status') }} @endif
+  <div class="content-wrapper" style="box-shadow: inset -1px 1px 10px 0px #312828;">
 
      @yield('content')
+
   </div>
   <!-- /.content-wrapper -->
   @include('layouts.adminFooter')

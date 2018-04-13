@@ -1,0 +1,18 @@
+.img-circle{
+  color: #ffffff;
+  border-radius: 50%;
+  background: #044f9d;
+  font-size: 30px;
+  padding: 5px;
+}
+
+.alert-oussama{
+  color: #ffffff;
+  background-color: #636363;
+  border-color: #ffffff;
+  border-radius: 0px;
+}
+.alert-oussama:hover{
+  opacity: 0.5;
+  cursor: pointer;
+}

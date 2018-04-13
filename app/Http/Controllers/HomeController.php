@@ -25,4 +25,17 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+
+    public function paramList()
+    {
+
+        if($this->checkAccess()==1){
+            return view('listParam');
+        }else {
+         return  $this->messageDroitAccee();
+        }
+
+
+    }
 }
