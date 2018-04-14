@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 
 Route::get('/paramList','HomeController@paramList');
+Route::get('/scores','ScoreController@get');
 
 
 Auth::routes();
