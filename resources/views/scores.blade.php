@@ -3,7 +3,7 @@
 @section('content')
 <section class="content">
   <div style="text-align:right ">
-    <a class="btn btn-success" class="btn btn-success" data-toggle="modal" data-target="#addScoreModal" >+ Ajouter</a>
+    <a class="btn btn-success" data-toggle="modal" data-target="#addScoreModal" >+ Ajouter</a>
   </div>
   @if (session('status')){!! session('status') !!}@endif
   <div class="row">
@@ -33,7 +33,7 @@
                 <td>{{$score->description}}</td>
                 <td>{{$score->action}}</td>
                 <td>{{$score->obs}}</td>
-                <td><a class="btn btn-warning fa fa-pen-square" href="{{url('score_update/'.$score->id)}}"></a></td>
+                <td><a class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="#updateScoreModal"  href="{{url('score_update/'.$score->id)}}"></a></td>
                 <td><a class="btn btn-danger fa fa-trash" href="{{url('score_delete/'.$score->id)}}"></a></td>
               </tr>
               @endforeach
@@ -54,14 +54,15 @@
         <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Ajouter un Score</h3>
       </div>
       <div class="modal-body">
-        <form method="post" action="createChambre">
+        <form method="post" action="createScore">
           @csrf
           <div class="form-group">
             <label class="form-control-label">Libelle</label>
-            <input type="text" class="form-control" name="type" required>
+            <input type="text" class="form-control" name="LibScore">
           </div>
           <div class="form-group">
-            <textarea name="description" class="form-control-label" rows="8" width="100%" placeholder="Description" required></textarea>
+            <label for="description" class="form-control-label">Description</label>
+            <textarea name="description" class="form-control" rows="8"  required></textarea>
           </div>
           <div class="form-group">
             <label  class="form-control-label">Action</label>
@@ -69,7 +70,42 @@
           </div>
           <div class="form-group">
             <label  class="form-control-label">Observation</label>
-            <input type="text" class="form-control" name="type" required>
+            <input type="text" class="form-control" name="obs" required>
+          </div>
+          <button class="btn btn-primary" type="submit">Ajouter</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateScoreModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Modifier un Score</h3>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="createScore">
+          @csrf
+          <div class="form-group">
+            <label class="form-control-label">Libelle</label>
+            <input type="text" class="form-control" name="LibScore">
+          </div>
+          <div class="form-group">
+            <label for="description" class="form-control-label">Description</label>
+            <textarea name="description" class="form-control" rows="8"  required></textarea>
+          </div>
+          <div class="form-group">
+            <label  class="form-control-label">Action</label>
+            <input type="text" class="form-control" name="action" required>
+          </div>
+          <div class="form-group">
+            <label  class="form-control-label">Observation</label>
+            <input type="text" class="form-control" name="obs" required>
           </div>
           <button class="btn btn-primary" type="submit">Ajouter</button>
         </form>
