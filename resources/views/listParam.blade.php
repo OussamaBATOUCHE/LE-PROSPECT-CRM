@@ -12,9 +12,9 @@
   <!-- Main content -->
   <section class="content">
           <div class="container">
-            <div class="row container" style="text-align:center">
+            <div class="row container" style="text-align:center" onclick="window.open('scores')">
                 <div class="col-md-10 alert alert-oussama">
-                  <span class="">SCORES</span>
+                  <span>SCORES</span>
                 </div>
             </div>
             <div class="row container" style="text-align:center">

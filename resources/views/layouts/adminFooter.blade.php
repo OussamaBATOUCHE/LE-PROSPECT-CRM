@@ -1,8 +1,8 @@
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
+      <b>Version</b> 1.0 by BATOUCHE & BENSAIB
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2018 <a href="https://fecomit.com">FECOM IT</a> &nbsp; & &nbsp; <a href="https://usthb.dz">USTHB</a>.</strong> All rights
     reserved.
   </footer>
 </div>
