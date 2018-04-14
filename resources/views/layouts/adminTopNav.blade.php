@@ -1,11 +1,11 @@
 <header class="main-header">
   <!-- Logo -->
-  <a href="index2.html" class="logo">
+  <span  class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>E-F</b></span>
+    <span class="logo-mini"><b>L-P</b></span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>EL FAKHAMA</b></span>
-  </a>
+    <span class="logo-lg"><b>LE PROSPECT</b></span>
+  </span>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">
     <!-- Sidebar toggle button-->
@@ -70,16 +70,16 @@
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="adminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+            <img src="{{asset('Icon-user.png')}}" class="user-image" alt="User Image">
             <span class="hidden-xs">{{session('nom')}}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
-              <img src="adminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="{{asset('Icon-user.png')}}" class="img-circle" alt="User Image">
 
               <p>
-                {{session('nom').session('prenom')}} - Admin principal
+                {{ Auth::user()->name }} - Admin principal
               </p>
             </li>
             <!-- Menu Footer-->
@@ -88,8 +88,12 @@
                 <a href="#" class="btn btn-default btn-flat">Profile</a>
               </div>
               <div class="pull-right">
-                <a href="#" class="btn btn-default btn-flat">Deconnecter</a>
+                <a href="{{ route('logout') }}" class="btn btn-default btn-flat" onclick="event.preventDefault();
+                              document.getElementById('logout-form').submit();">Deconnecter</a>
               </div>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  @csrf
+              </form>
             </li>
           </ul>
         </li>

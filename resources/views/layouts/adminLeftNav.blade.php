@@ -5,10 +5,10 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="adminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+        <span class="img-circle">.{{strtoupper(Auth::user()->name[0])}}.</span>
       </div>
       <div class="pull-left info">
-        <p>{{session('nom').session('prenom')}} </p>
+        <p>{{ Auth::user()->name }} </p>
         <a href="#"><i class="fa fa-circle text-success"></i> Enligne</a>
       </div>
     </div>
@@ -26,47 +26,54 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">Menu de navigation</li>
-      <li class="active treeview">
+      <li class="treeview">
         <a href="#">
-          <i class="fa fa-plane"></i> <span>Voles</span>
+          <i class="fa fa-tachometer"></i> <span>Principal</span>
         </a>
       </li>
       <li class="treeview">
         <a href="#">
-          <i class="fa fa-files-o"></i>
-          <span>Reservations</span>
+          <i class="fa fa-fire"></i> <span>Prospects</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Commercial</span>
         </a>
       </li>
       <li>
         <a href="pages/widgets.html">
-          <i class="fa fa-hotel"></i> <span>Hotel</span>
+          <i class="fa fa-calendar"></i> <span>Tâches</span>
         </a>
       </li>
       <li class="treeview">
         <a href="#">
-          <i class="fa fa-binoculars"></i>
-          <span>Visite</span>
+          <i class="fa fa-th"></i>
+          <span>Produits & Services</span>
         </a>
+        <ul class="treeview-menu">
+          <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Produits</a></li>
+          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Service</a></li>
+        </ul>
       </li>
       <li class="treeview">
         <a href="#">
-          <i class="fa fa-home"></i>
-          <span>Chambre</span>
+          <i class="fa fa-phone"></i>
+          <span>Contact</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
         </a>
-      </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-edit"></i> <span>Nouvelle</span>
-        </a>
-      </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-envelope"></i> <span>Message</span>
-        </a>
+        <ul class="treeview-menu">
+          <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Visite</a></li>
+          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Email</a></li>
+          <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Appel</a></li>
+        </ul>
       </li>
       <li>
-        <a href="/users">
-          <i class="fa fa-user"></i> <span>Utilisateur</span>
+        <a href="paramList">
+          <i class="fa fa-gears"></i> <span>Parametres</span>
         </a>
       </li>
     </ul>
