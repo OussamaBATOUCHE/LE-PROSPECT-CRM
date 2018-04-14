@@ -35,7 +35,9 @@ class HomeController extends Controller
         }else {
          return  $this->messageDroitAccee();
         }
+    }
 
-
+    public function profil(){
+        return view('profil');
     }
 }

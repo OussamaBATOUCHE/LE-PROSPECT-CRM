@@ -32,6 +32,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 /*    List route kamel  */
 
+Route::get('/profil','HomeController@profil');
+Route::get('/champActivite','ChampActiviteController@get');
 
 
 /*  END  List route kamel  */
