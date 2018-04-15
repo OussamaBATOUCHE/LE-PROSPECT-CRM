@@ -13,18 +13,22 @@
 
 
 /*    List route oussama  */
-Route::get('/', function () {
-    return view('welcome');
-});
 
+/* --- GET --- */
+
+Route::get('/','HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/paramList','HomeController@paramList');
 Route::get('/scores','ScoreController@get');
 
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+/* --- POST --- */
+
+Route::post('/createScore','ScoreController@create');
+
 
 
 /*  END  List route oussama  */

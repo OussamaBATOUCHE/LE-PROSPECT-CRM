@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 use App\Score;
 
@@ -21,21 +22,20 @@ class ScoreController extends Controller
       }
     }
 
-    public function store(){
+    public function create(Request $rq){
 
-    	$this->validate(request(),[
-    		'LibScore'=>'required'
-    	]);
-
-
-		Score::create([
-    			'LibScore' => request('LibScore'),
-    			'description' => request('description'),
-    			'action' => request('action'),
-    			'obs' => request('obs')
-		]);
-
-		redirect('/');
+      $score = new Score ;
+      $score->LibScore = $rq->LibScore;
+      $score->description = $rq->description;
+      $score->action = $rq->action;
+      $score->obs = $rq->obs;
+  	  $score->save();
+		  return redirect('/scores')->with('status', '<div class="alert alert-success alert-dismissible show" >
+                                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                      Ajouté avec succée !
+                                                    </div>');
     }
 
     public function update(Request $rq){
