@@ -36,6 +36,8 @@ Route::post('/createScore','ScoreController@create');
 
 /*    List route kamel  */
 
+Route::get('/profil','HomeController@profil');
+Route::get('/champActivite','ChampActiviteController@get');
 
 
 /*  END  List route kamel  */

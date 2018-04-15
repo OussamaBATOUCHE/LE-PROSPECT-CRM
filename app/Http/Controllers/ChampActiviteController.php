@@ -3,15 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 use App\ChampActivite;
 
 class ChampActiviteController extends Controller
 {
+
+    public function get()
+    {
+      if($this->checkAccess()==1){
+          $champs = ChampActivite::get();
+          return view('champActivite')->with('champs',$champs);
+      }else {
+       return  $this->messageDroitAccee();
+      }
+    }
+
     public function store(){
 
     	$this->validate(request(),[
-    		'LibChampAct'->'required'
+    		'LibChampAct'=>'required'
     	]);
 
 
@@ -22,18 +35,13 @@ class ChampActiviteController extends Controller
 		redirect('/');
     }
 
-    public function update(ChampActivite $champActivite){
+    public function update(Request $rq){
+        $this->validate(request(),[
+            'LibChampAct'=>'required'
+        ]);
 
-    	$this->validate(request(),[
-    		'LibChampAct'->'required'
-    	]);
-
-    	$champActivite->LibChampAct => request('LibChampAct');
-
-    
-    	$score->save();
     }
-
+    
     public function destroy(ChampActivite $champActivite){
 
     	$champActivite->delete();

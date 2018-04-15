@@ -17,7 +17,7 @@
                   <span>SCORES</span>
                 </div>
             </div>
-            <div class="row container" style="text-align:center">
+            <div class="row container" style="text-align:center" onclick="window.open('champActivite')">
                 <div class="col-md-10 alert alert-oussama">
                   <span class="">Champs d'Activites</span>
                 </div>
