@@ -30,21 +30,21 @@ class ScoreController extends Controller
       $score->action = $rq->action;
       $score->obs = $rq->obs;
   	  $score->save();
-		  return redirect('/scores')->with('status', '<div class="alert alert-success alert-dismissible show" >
-                                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                      </button>
-                                                      Ajouté avec succée !
-                                                    </div>');
+		  return redirect('/scores')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');
+    }
+      
+
+      
+ public function update(Request $request,$score ){
+
+    $data = request()->except(['_token','_method']);
+    Score::where('id', '=', $score)->update($data);
+      return redirect('/scores')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Modifier avec succée !</div>');
     }
 
-    public function update(Request $rq){
-    	return 3;
-
-    }
-
-    public function destroy(Score $score){
-
+    public function destroy($id){
+      $score = Score::find($id);
     	$score->delete();
+      return redirect('/scores')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>supprimé avec succée !</div>');    
     }
 }
