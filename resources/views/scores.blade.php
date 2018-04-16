@@ -82,6 +82,7 @@
   </div>
 </div>
 
+@if(!$scores->isEmpty()){
 <div class="modal fade" id="updateScoreModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -89,8 +90,10 @@
         <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Modifier un Score</h3>
       </div>
       <div class="modal-body">
-        <form method="post" action="createScore">
+
+        <form method="post" action="updateScore/{{ $score->id }}">
           @csrf
+          {{ method_field('PATCH') }}
           <div class="form-group">
             <label class="form-control-label">Libelle</label>
             <input type="text" class="form-control" name="LibScore">
@@ -107,7 +110,7 @@
             <label  class="form-control-label">Observation</label>
             <input type="text" class="form-control" name="obs" required>
           </div>
-          <button class="btn btn-primary" type="submit">Ajouter</button>
+          <button class="btn btn-primary" type="submit">Modifier</button>
         </form>
       </div>
       <div class="modal-footer">
@@ -116,4 +119,5 @@
     </div>
   </div>
 </div>
+}@endif
 @endsection

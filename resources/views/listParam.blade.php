@@ -22,7 +22,7 @@
                   <span class="">Champs d'Activites</span>
                 </div>
             </div>
-            <div class="row container" style="text-align:center">
+            <div class="row container" style="text-align:center" onclick="window.open('produits')">
                 <div class="col-md-10 alert alert-oussama">
                   <span class="">Produits et Service</span>
                 </div>

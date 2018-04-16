@@ -27,7 +27,7 @@
               <tr>
                 <td>{{$champ->id}}</td>
                 <td>{{$champ->LibChampAct}}</td>
-                <td><a class="btn btn-warning fa fa-pen-square" href="{{url('champActivite_update/'.$champ->id)}}"></a></td>
+                <td><a class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="#updateChampModal"  href="{{url('champActivite_update/'.$champ->id)}}"></a></td>
                 <td><a class="btn btn-danger fa fa-trash" href="{{url('champActivite_delete/'.$champ->id)}}"></a></td>
               </tr>
               @endforeach
@@ -45,16 +45,15 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Ajouter un champ d'activité</h3>
+        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Ajouter un Score</h3>
       </div>
       <div class="modal-body">
-        <form method="post" action="createChambre">
+        <form method="post" action="createChamp">
           @csrf
           <div class="form-group">
             <label class="form-control-label">Libelle</label>
-            <input type="text" class="form-control" name="type" required>
+            <input type="text" class="form-control" name="LibChampAct">
           </div>
-          
           <button class="btn btn-primary" type="submit">Ajouter</button>
         </form>
       </div>
@@ -64,4 +63,30 @@
     </div>
   </div>
 </div>
+
+@if(!$champs->isEmpty()){
+<div class="modal fade" id="updateChampModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Modifier un champ d'activité</h3>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="updateChamp/{{ $champ->id }}">
+          @csrf
+          {{ method_field('PATCH') }}
+          <div class="form-group">
+            <label class="form-control-label">Libelle</label>
+            <input type="text" class="form-control" name="LibChampAct">
+          </div>
+          <button class="btn btn-primary" type="submit">Modifier</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+}@endif
 @endsection

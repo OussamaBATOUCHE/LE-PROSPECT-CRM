@@ -109,11 +109,14 @@
           <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Profile</h3>
         </div>
         <div class="modal-body">
-          <form method="post" action="updateProfil">
+          <form method="post" action="updateProfil/{{ Auth::user()->id }}">
             @csrf
+            {{ method_field('PATCH') }}
+            <!-->
             <input id="id" name="id" type="hidden" class="form-control" value="{{Auth::user()->id}}">
             <input id="type" name="type" type="hidden" class="form-control" value="{{Auth::user()->type}}">
             <div class="form-group">
+             </--> 
               <label class="form-control-label">Nom</label>
               <input type="text" class="form-control" name="name" value="{{Auth::user()->name}}" >
             </div>

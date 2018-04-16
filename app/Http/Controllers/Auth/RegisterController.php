@@ -77,6 +77,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+    /*
     public function update(Request $rq)
     {
       return 3;
@@ -89,10 +90,14 @@ class RegisterController extends Controller
                                      'password'=>Hash::make($rq->password)
                                    )
                              );
-      return view('/home')->with('status', '<div class="alert alert-success alert-dismissible show" >
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                        </button> Utilisateur Modifié.
-                                     </div>');
-    }
+      return view('/home')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Utilisateur Modifié.</div>');
+    }*/
+
+public function update(Request $request,$user ){
+
+    $data = request()->except(['_token','_method']);
+    User::where('id', '=', $user)->update($data);
+    
+    return view('/home')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Utilisateur Modifié.</div>');
+}
 }
