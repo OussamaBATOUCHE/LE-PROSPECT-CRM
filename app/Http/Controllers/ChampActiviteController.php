@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
-
-
 use App\ChampActivite;
 
 class ChampActiviteController extends Controller
@@ -22,7 +20,7 @@ class ChampActiviteController extends Controller
       }
     }
 
-public function create(Request $rq){
+    public function create(Request $rq){
 
       $champ = new ChampActivite ;
       $champ->LibChampAct = $rq->LibChampAct;
@@ -30,7 +28,7 @@ public function create(Request $rq){
       return redirect('/champActivite')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');
     }
 
- public function update(Request $request,$champ ){
+     public function update(Request $request,$champ ){
 
     $data = request()->except(['_token','_method']);
     ChampActivite::where('id', '=', $champ)->update($data);
@@ -40,6 +38,6 @@ public function create(Request $rq){
     public function destroy($id){
       $champ = ChampActivite::find($id);
       $champ->delete();
-      return redirect('/champActivite')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>supprimé avec succée !</div>');    
-    }    
+      return redirect('/champActivite')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>supprimé avec succée !</div>');
+    }
 }

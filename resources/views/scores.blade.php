@@ -33,7 +33,13 @@
                 <td>{{$score->description}}</td>
                 <td>{{$score->action}}</td>
                 <td>{{$score->obs}}</td>
-                <td><a class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="#updateScoreModal"  href="{{url('score_update/'.$score->id)}}"></a></td>
+                @php
+                  $lib = str_replace("'",".",$score->LibScore);
+                  $description = str_replace("'",".",$score->description);
+                  $action = str_replace("'",".",$score->action);
+                  $obs = str_replace("'",".",$score->obs);
+                @endphp
+                <td><a class="btn btn-warning fa fa-pencil" onclick="chargeScore('{{$lib}}','{{$description}}','{{$action}}','{{$obs}}')" data-toggle="modal" data-target="#updateScoreModal" ></a></td>
                 <td><a class="btn btn-danger fa fa-trash" href="{{url('score_delete/'.$score->id)}}"></a></td>
               </tr>
               @endforeach
@@ -96,19 +102,19 @@
           {{ method_field('PATCH') }}
           <div class="form-group">
             <label class="form-control-label">Libelle</label>
-            <input type="text" class="form-control" name="LibScore">
+            <input id="lib" type="text" class="form-control" name="LibScore">
           </div>
           <div class="form-group">
             <label for="description" class="form-control-label">Description</label>
-            <textarea name="description" class="form-control" rows="8"  required></textarea>
+            <textarea id="desc" name="description" class="form-control" rows="8"  required></textarea>
           </div>
           <div class="form-group">
             <label  class="form-control-label">Action</label>
-            <input type="text" class="form-control" name="action" required>
+            <input id="act" type="text" class="form-control" name="action" required>
           </div>
           <div class="form-group">
             <label  class="form-control-label">Observation</label>
-            <input type="text" class="form-control" name="obs" required>
+            <input id="obs" type="text" class="form-control" name="obs" required>
           </div>
           <button class="btn btn-primary" type="submit">Modifier</button>
         </form>
@@ -120,4 +126,14 @@
   </div>
 </div>
 }@endif
+
+<script>
+function chargeScore(lib,desc,act,obs) {
+  document.getElementById('lib').value=lib;
+  document.getElementById('desc').value=desc;
+  document.getElementById('act').value=act;
+  document.getElementById('obs').value=obs;
+
+}
+</script>
 @endsection
