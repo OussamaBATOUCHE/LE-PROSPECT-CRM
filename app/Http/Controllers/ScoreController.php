@@ -39,9 +39,7 @@ class ScoreController extends Controller
     }
 
     public function update(Request $rq){
-    	$this->validate(request(),[
-    		'LibScore'=>'required'
-    	]);
+    	return 3;
 
     }
 

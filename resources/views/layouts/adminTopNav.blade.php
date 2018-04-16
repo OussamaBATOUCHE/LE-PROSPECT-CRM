@@ -85,7 +85,7 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="profil" class="btn btn-default btn-flat">Profile</a>
+                <a class="btn btn-default btn-flat" data-toggle="modal" data-target="#updateProfilModal">Profile</a>
               </div>
               <div class="pull-right">
                 <a href="{{ route('logout') }}" class="btn btn-default btn-flat" onclick="event.preventDefault();
@@ -101,3 +101,50 @@
     </div>
   </nav>
 </header>
+
+<div class="modal fade" id="updateProfilModal">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Profile</h3>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="updateProfil">
+            @csrf
+            <input id="id" name="id" type="hidden" class="form-control" value="{{Auth::user()->id}}">
+            <input id="type" name="type" type="hidden" class="form-control" value="{{Auth::user()->type}}">
+            <div class="form-group">
+              <label class="form-control-label">Nom</label>
+              <input type="text" class="form-control" name="name" value="{{Auth::user()->name}}" >
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">E-Mail</label>
+              <input id="email" type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="type" value="{{Auth::user()->email}}" required>
+            </div>
+            <div class="form-group">
+              <label  class="form-control-label">Nouveau mot de passe</label>
+              <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+              @if ($errors->has('password'))
+                  <span class="invalid-feedback">
+                      <strong>{{ $errors->first('password') }}</strong>
+                  </span>
+              @endif
+            </div>
+            <div class="form-group">
+              <label  class="form-control-label">Confirmez le mot de passe</label>
+              <input id="password-confirm" type="password" class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" required >
+              @if ($errors->has('password_confirmation'))
+                  <span class="invalid-feedback">
+                      <strong>{{ $errors->first('password_confirmation') }}</strong>
+                  </span>
+              @endif
+            </div>
+            <button class="btn btn-primary" type="submit">Modifier</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+</div>
