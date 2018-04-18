@@ -34,12 +34,12 @@
                 <td>{{$score->action}}</td>
                 <td>{{$score->obs}}</td>
                 @php
-                  $lib = str_replace("'",".",$score->LibScore);
-                  $description = str_replace("'",".",$score->description);
-                  $action = str_replace("'",".",$score->action);
-                  $obs = str_replace("'",".",$score->obs);
+                  $lib = str_replace("'","\'",$score->LibScore);
+                  $description = str_replace("'","\'",$score->description);
+                  $action = str_replace("'","\'",$score->action);
+                  $obs = str_replace("'","\'",$score->obs);
                 @endphp
-                <td><a class="btn btn-warning fa fa-pencil" onclick="chargeScore('{{$lib}}','{{$description}}','{{$action}}','{{$obs}}')" data-toggle="modal" data-target="#updateScoreModal" ></a></td>
+                <td><a class="btn btn-warning fa fa-pencil" onclick="charge('{{$lib}}','{{$description}}','{{$action}}','{{$obs}}')" data-toggle="modal" data-target="#updateScoreModal" ></a></td>
                 <td><a class="btn btn-danger fa fa-trash" href="{{url('score_delete/'.$score->id)}}"></a></td>
               </tr>
               @endforeach
@@ -88,7 +88,7 @@
   </div>
 </div>
 
-@if(!$scores->isEmpty()){
+@if(!$scores->isEmpty())
 <div class="modal fade" id="updateScoreModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -125,10 +125,10 @@
     </div>
   </div>
 </div>
-}@endif
+@endif
 
 <script>
-function chargeScore(lib,desc,act,obs) {
+function charge(lib,desc,act,obs) {
   document.getElementById('lib').value=lib;
   document.getElementById('desc').value=desc;
   document.getElementById('act').value=act;

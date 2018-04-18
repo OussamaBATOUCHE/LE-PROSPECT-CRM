@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 
 use App\Produit;
+use App\Prospect_produit;
 
 class ProduitController extends Controller
 {
@@ -29,9 +30,9 @@ class ProduitController extends Controller
   	  $produit->save();
 		  return redirect('/produits')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');
     }
-      
 
-      
+
+
  public function update(Request $request,$produit ){
 
     $data = request()->except(['_token','_method']);
@@ -40,9 +41,9 @@ class ProduitController extends Controller
     }
 
     public function destroy($id){
-      $produit = Produit::find($id);
-    	$produit->delete();
-      return redirect('/produits')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>supprimé avec succée !</div>');    
+      $row = Prospect_produit::where('idPrd',$id)->delete(); //ici je supprime tous les rows qui concernent le produit dont je vient de le supprimer..
+      $produit = Produit::find($id)->delete();
+      return redirect('/produits')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>supprimé avec succée !</div>');
     }
-    
+
 }

@@ -12,27 +12,27 @@
   <!-- Main content -->
   <section class="content">
           <div class="container">
-            <div class="row container" style="text-align:center" onclick="window.open('scores')">
+            <div class="row container" style="text-align:center" onclick="location.href ='{{url('scores')}}'">
                 <div class="col-md-10 alert alert-oussama">
                   <span>SCORES</span>
                 </div>
             </div>
-            <div class="row container" style="text-align:center" onclick="window.open('champActivite')">
+            <div class="row container" style="text-align:center" onclick="location.href ='{{url('champActivite')}}'">
                 <div class="col-md-10 alert alert-oussama">
                   <span class="">Champs d'Activites</span>
                 </div>
             </div>
-            <div class="row container" style="text-align:center" onclick="window.open('produits')">
+            <div class="row container" style="text-align:center" onclick="location.href ='{{url('produits')}}'">
                 <div class="col-md-10 alert alert-oussama">
                   <span class="">Produits et Service</span>
                 </div>
             </div>
-            <div class="row container" style="text-align:center">
+            <div class="row container" style="text-align:center" onclick="alert('Cette fonctionnalite n\'est pas encore disponibel. ')">
                 <div class="col-md-10 alert alert-oussama">
                   <span class="">Templates Emails</span>
                 </div>
             </div>
-            <div class="row container" style="text-align:center">
+            <div class="row container" style="text-align:center" onclick="alert('Cette fonctionnalite n\'est pas encore disponibel. ')">
                 <div class="col-md-10 alert alert-oussama">
                   <span class="">Messages</span>
                 </div>

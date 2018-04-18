@@ -50,11 +50,12 @@
       <li class="treeview">
         <a href="#">
           <i class="fa fa-th"></i>
-          <span>Produits & Services</span>
+          <span>Rapports</span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Produits</a></li>
-          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Service</a></li>
+          <li><a href="#"><i class="fa fa-circle-o"></i> Monsuelle</a></li>
+          <li><a href="#"><i class="fa fa-circle-o"></i> Annuelle</a></li>
+          <li><a href="#"><i class="fa fa-circle-o"></i> Tous</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -74,6 +75,11 @@
       <li>
         <a href="paramList">
           <i class="fa fa-gears"></i> <span>Parametres</span>
+        </a>
+      </li>
+      <li>
+        <a href="">
+          <i class="fa fa-envelope"></i> <span>Message</span>
         </a>
       </li>
     </ul>

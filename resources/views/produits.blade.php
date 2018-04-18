@@ -31,7 +31,11 @@
                 <td>{{$produit->LibProd}}</td>
                 <td>{{$produit->typePrd}}</td>
                 <td>{{$produit->prixPrd}}</td>
-                <td><a class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="#updateproduitModal"  href="{{url('produit_update/'.$produit->id)}}"></a></td>
+                @php
+                  $lib = str_replace("'","\'",$produit->LibProd);
+                  $type = str_replace("'","\'",$produit->typePrd);
+                @endphp
+                <td><a class="btn btn-warning fa fa-pencil" onclick="charge('{{$lib}}','{{$type}}',{{$produit->prixPrd}})" data-toggle="modal" data-target="#updateproduitModal"  href="{{url('produit_update/'.$produit->id)}}"></a></td>
                 <td><a class="btn btn-danger fa fa-trash" href="{{url('produit_delete/'.$produit->id)}}"></a></td>
               </tr>
               @endforeach
@@ -49,7 +53,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Ajouter un produit</h3>
+        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Ajouter un Produit</h3>
       </div>
       <div class="modal-body">
         <form method="post" action="createProduit">
@@ -76,12 +80,12 @@
   </div>
 </div>
 
-@if(!$produits->isEmpty()){
+@if(!$produits->isEmpty())
 <div class="modal fade" id="updateproduitModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Modifier un produit</h3>
+        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Modifier un Produit</h3>
       </div>
       <div class="modal-body">
         <form method="post" action="updateProduit/{{ $produit->id }}">
@@ -89,15 +93,15 @@
           {{ method_field('PATCH') }}
           <div class="form-group">
             <label class="form-control-label">Libelle</label>
-            <input type="text" class="form-control" name="LibProd" required>
+            <input id="lib" type="text" class="form-control" name="LibProd" required>
           </div>
           <div class="form-group">
-            <label for="description" class="form-control-label">Type</label>
-            <input type="text" class="form-control" name="typePrd" ></input>
+            <label for="type" class="form-control-label">Type</label>
+            <input id="tp" type="text" class="form-control" name="typePrd" required></input>
           </div>
           <div class="form-group">
             <label  class="form-control-label">Prix</label>
-            <input type="number" class="form-control" name="prixPrd" required>
+            <input id="prix" type="number" class="form-control" name="prixPrd" required>
           </div>
           <button class="btn btn-primary" type="submit">Modifier</button>
         </form>
@@ -108,6 +112,12 @@
     </div>
   </div>
 </div>
-}@endif
-
+@endif
+<script>
+  function charge(lib,type,prix) {
+    document.getElementById('lib').value=lib;
+    document.getElementById('tp').value=type;
+    document.getElementById('prix').value=prix;
+  }
+</script>
 @endsection

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 
 use App\Score;
+use App\Prospect_score;
 
 class ScoreController extends Controller
 {
@@ -32,9 +33,9 @@ class ScoreController extends Controller
   	  $score->save();
 		  return redirect('/scores')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');
     }
-      
 
-      
+
+
  public function update(Request $request,$score ){
 
     $data = request()->except(['_token','_method']);
@@ -43,8 +44,8 @@ class ScoreController extends Controller
     }
 
     public function destroy($id){
-      $score = Score::find($id);
-    	$score->delete();
-      return redirect('/scores')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>supprimé avec succée !</div>');    
+      $row = Prospect_score::where('idScore',$id)->delete(); //ici je supprime tous les rows qui concernent le score dont je vient de le supprimer..
+      $score = Score::find($id)->delete();
+      return redirect('/scores')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>supprimé avec succée !</div>');
     }
 }

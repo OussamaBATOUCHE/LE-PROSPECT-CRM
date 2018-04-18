@@ -27,7 +27,10 @@
               <tr>
                 <td>{{$champ->id}}</td>
                 <td>{{$champ->LibChampAct}}</td>
-                <td><a class="btn btn-warning fa fa-pencil" data-toggle="modal" data-target="#updateChampModal"  href="{{url('champActivite_update/'.$champ->id)}}"></a></td>
+                @php
+                  $lib = str_replace("'","\'",$champ->LibChampAct);
+                @endphp
+                <td><a class="btn btn-warning fa fa-pencil" onclick="charge('{{$lib}}')" data-toggle="modal" data-target="#updateChampModal" ></a></td>
                 <td><a class="btn btn-danger fa fa-trash" href="{{url('champActivite_delete/'.$champ->id)}}"></a></td>
               </tr>
               @endforeach
@@ -45,7 +48,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Ajouter un Score</h3>
+        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Ajouter un Champ d'Activité</h3>
       </div>
       <div class="modal-body">
         <form method="post" action="createChamp">
@@ -64,12 +67,12 @@
   </div>
 </div>
 
-@if(!$champs->isEmpty()){
+@if(!$champs->isEmpty())
 <div class="modal fade" id="updateChampModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Modifier un champ d'activité</h3>
+        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Modifier un Champ d'Activité</h3>
       </div>
       <div class="modal-body">
         <form method="post" action="updateChamp/{{ $champ->id }}">
@@ -77,7 +80,7 @@
           {{ method_field('PATCH') }}
           <div class="form-group">
             <label class="form-control-label">Libelle</label>
-            <input type="text" class="form-control" name="LibChampAct">
+            <input id="lib" type="text" class="form-control" name="LibChampAct">
           </div>
           <button class="btn btn-primary" type="submit">Modifier</button>
         </form>
@@ -88,5 +91,10 @@
     </div>
   </div>
 </div>
-}@endif
+@endif
+<script>
+function charge(lib) {
+  document.getElementById('lib').value=lib;
+}
+</script>
 @endsection
