@@ -23,7 +23,7 @@ class ProspectController extends Controller
             'wilaya'->required,
             'tele1'->required
             ]);
-         */ 
+         */ //mais had la validation lzem ndirouha ....
 
           $prospect = new Prospect ;
           $prospect->codeProsp = $rq->codeProsp;
@@ -51,9 +51,9 @@ class ProspectController extends Controller
 
           return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');
     }
-      
 
-      
+
+
  public function update(Request $request,$prospect ){
 
     $data = request()->except(['_token','_method']);
@@ -62,8 +62,9 @@ class ProspectController extends Controller
     }
 
     public function destroy($id){
+      //yak 9oulna prospect jamais la yetsuprimas
       $prospect = Prospect::find($id);
         $prospect->delete();
-      return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>supprimé avec succée !</div>');    
+      return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>supprimé avec succée !</div>');
     }
 }
