@@ -32,7 +32,7 @@
         </a>
       </li>
       <li class="treeview">
-        <a href="#">
+        <a href="prospects">
           <i class="fa fa-fire"></i> <span>Prospects</span>
         </a>
       </li>

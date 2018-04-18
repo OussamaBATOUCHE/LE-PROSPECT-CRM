@@ -27,10 +27,10 @@ Auth::routes();
 
 /* --- POST --- */
 
-Route::post('/createScore','ScoreController@create');
+//Route::post('/createScore/{score}','ScoreController@create');
 
 
-//Route::post('/updateProfil','Auth\RegisterController@update');
+Route::post('/updateProfil','Auth\RegisterController@update');
 
 
 /*  END  List route oussama  */
@@ -51,6 +51,11 @@ Route::get('/produits','ProduitController@get');
 
 Route::get('/produit_delete/{produit}','ProduitController@destroy');
 
+Route::get('/prospects','ProspectController@get');
+
+Route::get('/prospect_delete/{prospect}','ProspectController@destroy');
+
+
 
 
 
@@ -62,6 +67,9 @@ Route::post('/createChamp','ChampActiviteController@create');
 
 Route::post('/createProduit','ProduitController@create');
 
+Route::post('/createProspect','ProspectController@create');
+
+
 
 				/*    ----- PATCH ------ */
 
@@ -72,5 +80,7 @@ Route::patch('/updateChamp/{champ}', 'ChampActiviteController@update');
 Route::patch('/updateProduit/{produit}', 'ProduitController@update');
 
 Route::patch('/updateProfil/{user}', 'Auth\RegisterController@update');
+
+Route::patch('/updateProspect/{prospect}', 'ProspectController@update');
 		
 /*  END  List route kamel  */
