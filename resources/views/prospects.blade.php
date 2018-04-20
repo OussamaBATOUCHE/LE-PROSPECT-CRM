@@ -2,8 +2,46 @@
 
 @section('content')
 <section class="content">
-  <div style="text-align:right ">
-    <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" >+ Ajouter</a>
+  <div style="text-align:right;float: right">
+  <a class="btn btn-info" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-plus-square"></i>&nbsp; Taches en groupe</a>
+  <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-plus-square"></i>&nbsp; Ajouter un prospect</a>
+
+  </div>
+  <div style="float:left">
+    <div class="form-group col" style="float:left;margin:5px 5px;">
+      <label for="champActivite">Champ d'Activité</label>
+      <select class="form-control" id="champActivite" name="champActivite">
+        <option value=1"">1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+    <div class="form-group col" style="float:left;margin:5px 5px;">
+      <label for="groupe">Groupe</label>
+      <select class="form-control" id="group" name="group">
+        <option value=1"">1</option>
+        <option>heloooooooo</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+    <div class="form-group col" style="float:left;margin:5px 5px;">
+      <label for="region">Region</label>
+      <select class="form-control" id="region" name="region">
+        <option value=1"">1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+    <div class="form-group col" style="float:left;margin:5px 5px;padding-top: 25px;">
+      <a class="btn btn-warning" ><i class="fa fa-search"></i>&nbsp; Filtrer</a>
+    </div>
+
   </div>
   @if (session('status')){!! session('status') !!}@endif
   <div class="row">
@@ -17,79 +55,58 @@
             <thead>
               <tr>
                 <th>#</th>
+                <th>Comemrcial</th>
                 <th>Code Prospect</th>
-                <th>N° Groupe</th>
-                <th>N° Champ Activité</th>
                 <th>Societé</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Wilaya</th>
-                <th>commune</th>
-                <th>adresse</th>
-                <th>email</th>
-                <th>email2</th>
-                <th>skype</th>
-                <th>Tel1</th>
-                <th>Tel2</th>
-                <th>Tel3</th>
-                <th>Fax</th>
-                <th>Site Web</th>
-                <th>Nombre Employés</th>
-                <th>Description</th> 
-                <th>Bloquer</th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
+                <th>Score</th>
+                <th>Contact</th>
+                <th>Categorie</th>
+                <th>Echange</th>
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <th>12</th>
+                <th>oussama BATOUCHE</th>
+                <th>08.16.0380/17</th>
+                <th><a href="#" data-toggle="popover" title="Koonouz Store" data-content="voici la toute dernier remarque sur ce prospect ... " title="Free Web tutorials">Koonouz Store</a> <span style="color:#848484;"><br/> 12 Rue mohamed fellah <br/> 16026 Alger</span></th>
+                <th style="background-color:#60ce4c;font-size: 25px;color: white;">4</th>
+                <th>BENOTHMAN Yasmin<span style="color:#848484;"><br/> administration@koonouz.com <br/> 06.65.67.49.43</span></th>
+                <th>Marketing digital</th>
+                <th>
+                  <a class="btn btn-info col"><i class="fa fa-plus-square"></i></a>
+                  <a class="btn btn-info col"><i class="fa fa-calendar"></i></a>
+                </th>
+              </tr>
+              <tr>
+                <th>34</th>
+                <th>Kamel BENSAIB</th>
+                <th>06.18.0706/18</th>
+                <th><a href="#" data-toggle="popover" data-trigger="hover"  title="SULTAN Hotel" data-content="voici la toute dernier remarque sur ce prospect ... ">SULTAN Hotel</a> <span style="color:#848484;"><br/> 12 Rue salim merabet <br/> 16056 Alger</span></th>
+                <th style="background-color:#ffc440; font-size: 25px;color: white;">2</th>
+                <th>MALKI Amine<span style="color:#848484;"><br/> contact@sultanHotel.com <br/> 02.14.56.73.02</span></th>
+                <th>Hotel & restauration</th>
+                <th>
+                  <a class="btn btn-info col"><i class="fa fa-plus-square"></i></a>
+                  <a class="btn btn-info col"><i class="fa fa-calendar"></i></a>
+                </th>
+              </tr>
+              @php
+                $i = 0 ;
+              @endphp
               @foreach($prospects as $prospect)
               <tr>
-                <td>{{$prospect->id}}</td>
-                <td>{{$prospect->codeProsp}}</td>
-                <td>{{$prospect->idGrp}}</td>
-                <td>{{$prospect->idChampAct}}</td>
-                <td>{{$prospect->societe}}</td>
-                <td>{{$prospect->nom}}</td>
-                <td>{{$prospect->prenom}}</td>
-                <td>{{$prospect->wilaya}}</td>
-                <td>{{$prospect->commune}}</td>
-                <td>{{$prospect->adresse}}</td>
-                <td>{{$prospect->email}}</td>
-                <td>{{$prospect->email2}}</td>
-                <td>{{$prospect->skype}}</td>
-                <td>{{$prospect->tele1}}</td>
-                <td>{{$prospect->tele2}}</td>
-                <td>{{$prospect->tele3}}</td>
-                <td>{{$prospect->fax}}</td>
-                <td>{{$prospect->siteWeb}}</td>
-                <td>{{$prospect->nbreEmplyes}}</td>
-                <td>{{$prospect->description}}</td>
-                <td>{{$prospect->bloquer}}</td>
-                @php
-                  $codeProsp = str_replace("'",".",$prospect->codeProsp);
-                  $idGrp = str_replace("'",".",$prospect->idGrp);
-                  $idChampAct = str_replace("'",".",$prospect->idChampAct);
-                  $societe = str_replace("'",".",$prospect->societe);
-                  $nom = str_replace("'",".",$prospect->nom);
-                  $prenom = str_replace("'",".",$prospect->prenom);
-                  $wilaya = str_replace("'",".",$prospect->wilaya);
-                  $commune = str_replace("'",".",$prospect->commune);
-                  $adresse = str_replace("'",".",$prospect->adresse);
-                  $email = str_replace("'",".",$prospect->email);
-                  $email2 = str_replace("'",".",$prospect->email2);
-                  $skype = str_replace("'",".",$prospect->skype);
-                  $tele1 = str_replace("'",".",$prospect->tele1);
-                  $tele2 = str_replace("'",".",$prospect->tele2);
-                  $tele3 = str_replace("'",".",$prospect->tele3);
-                  $fax = str_replace("'",".",$prospect->fax);
-                  $siteWeb = str_replace("'",".",$prospect->siteWeb);
-                  $nbreEmplyes = str_replace("'",".",$prospect->nbreEmplyes);
-                  $description = str_replace("'",".",$prospect->description);
-                  $bloquer = str_replace("'",".",$prospect->bloquer);
-                @endphp
-                <td><a class="btn btn-warning fa fa-pencil" onclick="chargeprospect('{{$codeProsp}}','{{$idGrp}}','{{$idChampAct}}','{{$societe}}','{{$nom}}','{{$prenom}}','{{$wilaya}}','{{$commune}}','{{$adresse}}','{{$email}}','{{$email2}}','{{$skype}}','{{$tele1}}','{{$tele2}}','{{$tele3}}','{{$fax}}','{{$siteWeb}}','{{$nbreEmplyes}}','{{$description}}','{{$bloquer}}')" data-toggle="modal" data-target="#updateprospectModal" ></a></td>
-                <td><a class="btn btn-danger fa fa-trash" href="{{url('prospect_delete/'.$prospect->id)}}"></a></td>
-              </tr>
+                <th>#</th>
+                <th>Kamel BENSAIB</th>
+                <th>{{$prospect->codeProsp}}</th>
+                <th><a href="#" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{$prospect->description}}">{{$prospect->societe}}</a> <span style="color:#848484;"><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
+                <th style="background-color:{{$DerniersScores[$i]["couleur"]}}; font-size: 25px;color: white;" data-toggle="popover" data-trigger="hover"  title="{{$DerniersScores[$i]["date"]}}" data-content="{{$DerniersScores[$i]["remarque"]}}">{{$DerniersScores[$i]["score"]}}@php $i++; @endphp</th>
+                <th>{{$prospect->genre}}.{{$prospect->nom}} {{$prospect->prenom}} <span style="color:#848484;"><br/> {{$prospect->email}} <br/> {{$prospect->tele1}}</span></th>
+                <th>Hotel & restauration</th>
+                <th>
+                  <a class="btn btn-info col"><i class="fa fa-plus-square"></i></a>
+                  <a class="btn btn-info col"><i class="fa fa-calendar"></i></a>
+                </th>
               @endforeach
             </tbody>
             </tfoot>
@@ -105,63 +122,129 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Ajouter un prospect</h3>
+        <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Creation d'un nouveau Prospect</h3>
       </div>
       <div class="modal-body">
         <form method="post" action="createProspect">
           @csrf
-          <div class="form-group">
-            <label for="codeProsp" class="form-control-label">Code Prospect</label>
-            <input type="text" class="form-control" name="codeProsp" required="">
-            <label for="idGrp" class="form-control-label">N° Groupe</label>
-            <input type="number" name="idGrp" class="form-control" ></input>
-            <label for="idChampAct" class="form-control-label">N° Champ Activité</label>
-            <input type="number" name="idChampAct" class="form-control" ></input>
-            <label for="societe" class="form-control-label">Societé</label>
-            <input type="text" name="societe" class="form-control" required></input>
+          <div class="row">
+              <div class="col-md-12">
+                <div class="col-md-4">
+
+                  <div class="form-group-title">
+                    <i class="fa fa-home"></i>Societe
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="societe" placeholder="Société" required>
+                  </div>
+                  <div class="form-group">
+                    <textarea name="adresse" class="form-control" rows="4" style="width:100%; " placeholder="Adresse" required></textarea>
+                  </div>
+                  <div class="form-group">
+                    <input type="number" class="form-control" name="codePostal" placeholder="Code Postal" required>
+                  </div>
+                  <div class="form-group" id="wilayas">
+
+                  </div>
+                  <div class="form-group">
+                    <input type="number" class="form-control" name="nbreEmplyes" placeholder="Nombre d'employes" required>
+                  </div>
+
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group-title">
+                    <i class="fa fa-user"></i>Contact
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <select class="form-control" name="genre" required>
+                        <option value="" disabled selected>Genre</option>
+                        <option value="M">M</option>
+                        <option value="Mme">Mme</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="nom" placeholder="Nom" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="prenom" placeholder="Prenom" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="email" class="form-control" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="tele1" placeholder="Telephone " maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="tele2" placeholder="Telephone 2" maxlength="10" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="tele3" placeholder="Telephone 3" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="fax" placeholder="Fax " maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="skype" placeholder="Skype " required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="siteWeb" placeholder="Site Web (url) " required>
+                    </div>
+                  </div>
+                </div>
+              </div>
           </div>
-          <div class="form-group">
-            <label for="nom" class="form-control-label">Nom</label>
-            <input type="text" name="nom" class="form-control"></input>
-            <label  for="prenom" class="form-control-label">Prenom</label>
-            <input type="text" class="form-control" name="prenom">
-            <label for="wilaya" class="form-control-label">Wilaya</label>
-            <input type="text" class="form-control" name="wilaya" required>
-            <label for="commune" class="form-control-label">Comune</label>
-            <input type="text" class="form-control" name="commune">
-            <label for="adresse" class="form-control-label">Adresse</label>
-            <input type="text" class="form-control" name="adresse">
+          <hr/>
+
+          <div class="row">
+            <div class="col-md-12">
+               <div class="col-md-6">
+                 <div class="form-group">
+                   <select class="form-control" name="score" required>
+                     <option disabled selected>Score (Qualification)</option>
+                     @foreach ($tousLeScores as $score)
+                       <option value="{{$score->id}}" >{{$score->LibScore}}</option>
+                     @endforeach
+                   </select>
+                 </div>
+                 <div class="form-group">
+                   <select class="form-control" name="idGrp" required>
+                     <option value="0" disabled selected>Groupe</option>
+                     <option value="3">g1</option>
+                   </select>
+                 </div>
+                 <div class="form-group">
+                   <select class="form-control" name="idChampAct" required>
+                     <option value="0" disabled selected>Champ d'Activite</option>
+                     <option value="4">Hotel & restaurant</option>
+                     <option value="5">Pharmaceutique</option>
+                   </select>
+                 </div>
+                 <div class="form-group">
+                   <select class="form-control" name="produits[]" multiple>
+                     <option value="0" disabled selected>Produits</option>
+                     <option value="4">Foundouk</option>
+                     <option value="5">Kspersky</option>
+                     <option value="5">LE PROSPECT</option>
+                     <option value="5">Autre</option>
+                   </select>
+                 </div>
+               </div>
+               <div class="col-md-6">
+                 <div>
+                   <textarea class="textarea" placeholder="Remarque ..." name="description"
+                       style="width: 100%; height: 150px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
+                 </div>
+               </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="email" class="form-control-label">E-Mail</label>
-            <input type="text" class="form-control" name="email">
-            <label for="email2" class="form-control-label">E-Mail2</label>
-            <input type="text" class="form-control" name="email2">
-            <label for="skype" class="form-control-label">Skype</label>
-            <input type="text" class="form-control" name="skype">
-            <label for="tele1" class="form-control-label">Tel1</label>
-            <input type="number" class="form-control" name="tele1" required>
-            <label for="tele2" class="form-control-label">Tel2</label>
-            <input type="number" class="form-control" name="tele2">
-            <label for="tele3" class="form-control-label">Tel3</label>
-            <input type="number" class="form-control" name="tele3">
-            <label for="fax" class="form-control-label">Fax</label>
-            <input type="number" class="form-control" name="fax">
-            <label for="siteWeb" class="form-control-label">Site Web </label>
-            <input type="text" class="form-control" name="siteWeb">
-          </div>
-          <div class="form-group">
-            <label for="nbreEmplyes" class="form-control-label">Nombre Employés</label>
-            <input type="number" class="form-control" name="nbreEmplyes">
-            <label for="description" class="form-control-label">Description</label>
-            <textarea name="description" class="form-control" cols="8"></textarea>
-            <input type="checkbox" name="bloquer" value="bloquer">Bloquer
-          </div>
-          <button class="btn btn-primary" type="submit">Ajouter</button>
-        </form>
+
       </div>
       <div class="modal-footer">
         <button class="btn btn-danger" data-dismiss="modal">Fermer</button>
+        <input class="btn btn-success" type="submit" value="Ajouter"></form>
       </div>
     </div>
   </div>
@@ -261,4 +344,73 @@ function chargeprospect(codeProsp,idGrp,idChampAct,societe,nom,prenom,wilaya,com
   document.getElementById('bloquer').value=bloquer;
 }
 </script>
+
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({ trigger: "hover" });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        var wilayas  = `
+
+        <select class="form-control" name="wilaya">
+          <option value="0" disabled selected>Wilaya</option>
+          <option value="1">Adrar</option>
+          <option value="2">Chlef</option>
+          <option value="3">Laghouat</option>
+          <option value="4">Oum El Bouaghi</option>
+          <option value="5">Batna</option>
+          <option value="6">Béjaïa</option>
+          <option value="7">Biskra</option>
+          <option value="8">Béchar</option>
+          <option value="9">Blida</option>
+          <option value="10">Bouira</option>
+          <option value="11">Tamanrasset</option>
+          <option value="12">Tébessa</option>
+          <option value="13">Tlemcen</option>
+          <option value="14">Tiaret</option>
+          <option value="15">Tizi Ouzou</option>
+          <option value="16">Alger</option>
+          <option value="17">Djelfa</option>
+          <option value="18">Jijel</option>
+          <option value="19">Sétif</option>
+          <option value="20">Saïda</option>
+          <option value="21">Skikda</option>
+          <option value="22">Sidi Bel Abbès</option>
+          <option value="23">Annaba</option>
+          <option value="24">Guelma</option>
+          <option value="25">Constantine</option>
+          <option value="26">Médéa</option>
+          <option value="27">Mostaganem</option>
+          <option value="28">M'Sila</option>
+          <option value="29">Mascara</option>
+          <option value="30">Ouargla</option>
+          <option value="31">Oran</option>
+          <option value="32">El Bayadh</option>
+          <option value="33">Illizi</option>
+          <option value="34">Bordj Bou Arreridj</option>
+          <option value="35">Boumerdès</option>
+          <option value="36">El Tarf</option>
+          <option value="37">Tindouf</option>
+          <option value="38">Tissemsilt</option>
+          <option value="39">El Oued</option>
+          <option value="40">Khenchela</option>
+          <option value="41">Souk Ahras</option>
+          <option value="42">Tipaza</option>
+          <option value="43">Mila</option>
+          <option value="44">Aïn Defla</option>
+          <option value="45">Naâma</option>
+          <option value="46">Aïn Témouchent</option>
+          <option value="47">Ghardaïa</option>
+          <option value="48">Relizane</option>
+        </select>
+
+        `;
+        $('#wilayas').append(wilayas);
+    });
+</script>
+
 @endsection

@@ -15,10 +15,13 @@ class CreateScoresTable extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('num');
             $table->string('LibScore');
             $table->string('description');
             $table->longText('action');
+            $table->string('cycle');
             $table->longText('obs');
+            $table->string('couleur');
         });
     }
 

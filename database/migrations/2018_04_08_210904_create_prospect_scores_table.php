@@ -16,7 +16,7 @@ class CreateProspectScoresTable extends Migration
         Schema::create('prospect_scores', function (Blueprint $table) {
             $table->integer('idPros');
             $table->integer('idScore');
-            $table->date('date');
+            $table->string('date');
             $table->string('remarque');
         });
     }

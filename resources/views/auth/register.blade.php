@@ -24,6 +24,44 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="prenom" class="col-md-4 col-form-label text-md-right">{{ __('Prénom') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="prenom" type="text" class="form-control{{ $errors->has('prenom') ? ' is-invalid' : '' }}" name="prenom" value="{{ old('prenom') }}" required >
+
+                                @if ($errors->has('prenom'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('prenom') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="adresse" class="col-md-4 col-form-label text-md-right">{{ __('Adresse') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="adresse" type="text" class="form-control{{ $errors->has('adresse') ? ' is-invalid' : '' }}" name="adresse" value="{{ old('adresse') }}" required>
+                                @if ($errors->has('adresse'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('adresse') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Telephone') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="telephone" type="text" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" value="{{ old('telephone') }}" required autofocus>
+
+                                @if ($errors->has('telephone'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('telephone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Adresse Email') }}</label>
@@ -62,12 +100,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="admin" class="col-md-4 col-form-label text-md-right">{{ __('Admin') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="admin" type="checkbox" class="form-control" name="" onchange="check()">
-                                <input id="x" type="hidden" name="type">
-                            </div>
+                            <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Responsabilite') }}</label>
+                            <select class="col-md-6" id="type" name="type" required>
+                              <option value="/"></option>
+                              <option value="1">Directeur commercial</option>
+                              <option value="0">Commercial</option>
+                            </select>
                         </div>
 
                         <div class="form-group row mb-0">
@@ -84,15 +122,3 @@
     </div>
 </div>
 @endsection
-
-
-<script type="text/javascript">
-  function check() {
-   var c =  document.getElementById('admin').checked ;
-   if (c === true) {
-     document.getElementById('x').value = 1 ;
-   }else {
-     document.getElementById('x').value = 0 ;
-   }
-  }
-</script>

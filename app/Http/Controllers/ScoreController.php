@@ -26,10 +26,13 @@ class ScoreController extends Controller
     public function create(Request $rq){
 
       $score = new Score ;
+      $score->num = $rq->num;
       $score->LibScore = $rq->LibScore;
       $score->description = $rq->description;
       $score->action = $rq->action;
+      $score->cycle = $rq->cycle;
       $score->obs = $rq->obs;
+      $score->couleur = $rq->couleur;
   	  $score->save();
 		  return redirect('/scores')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');
     }
@@ -39,7 +42,7 @@ class ScoreController extends Controller
  public function update(Request $request,$score ){
 
     $data = request()->except(['_token','_method']);
-    Score::where('id', '=', $score)->update($data);
+    Score::where('id', $score)->update($data);
       return redirect('/scores')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Modifier avec succée !</div>');
     }
 

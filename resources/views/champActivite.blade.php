@@ -3,7 +3,7 @@
 @section('content')
 <section class="content">
   <div style="text-align:right ">
-    <a class="btn btn-success" class="btn btn-success" data-toggle="modal" data-target="#addChampModal" >+ Ajouter</a>
+    <a class="btn btn-success" class="btn btn-success" data-toggle="modal" data-target="#addChampModal" ><i class="fa fa-plus-square"></i>&nbsp; Ajouter</a>
   </div>
   @if (session('status')){!! session('status') !!}@endif
   <div class="row">
@@ -18,8 +18,7 @@
               <tr>
                 <th>#</th>
                 <th>Libelle</th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
+                <th colspan="2"></th>
               </tr>
             </thead>
             <tbody>

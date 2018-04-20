@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -66,38 +67,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-       $type =0;
-       if ($data['type'] == true) {
-          $type = 1;
-       }
+
         return User::create([
             'name' => $data['name'],
+            'prenom' => $data['prenom'],
             'email' => $data['email'],
+            'adresse' => $data['adresse'],
+            'telephone' => $data['telephone'],
             'type' => $type,
             'password' => Hash::make($data['password']),
         ]);
     }
-    /*
-    public function update(Request $rq)
-    {
-      return 3;
-      $user = User::where("id",$rq->id)
-                      ->update(
-                             array(
-                                     'name'=>$rq->name,
-                                     'email'=>$rq->email,
-                                     'type'=>$rq->type,
-                                     'password'=>Hash::make($rq->password)
-                                   )
-                             );
-      return view('/home')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Utilisateur Modifié.</div>');
-    }*/
 
-public function update(Request $request,$user ){
 
-    $data = request()->except(['_token','_method']);
-    User::where('id', '=', $user)->update($data);
-    
-    return view('/home')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Utilisateur Modifié.</div>');
-}
 }

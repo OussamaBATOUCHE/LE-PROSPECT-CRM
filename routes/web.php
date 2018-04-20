@@ -25,12 +25,14 @@ Route::get('/scores','ScoreController@get');
 Auth::routes();
 
 
+
+
 /* --- POST --- */
 
-//Route::post('/createScore/{score}','ScoreController@create');
+Route::post('/createScore','ScoreController@create');
 
 
-Route::post('/updateProfil','Auth\RegisterController@update');
+Route::post('/updateProfile','Controller@updateProfile');
 
 
 /*  END  List route oussama  */
@@ -79,8 +81,6 @@ Route::patch('/updateChamp/{champ}', 'ChampActiviteController@update');
 
 Route::patch('/updateProduit/{produit}', 'ProduitController@update');
 
-Route::patch('/updateProfil/{user}', 'Auth\RegisterController@update');
-
 Route::patch('/updateProspect/{prospect}', 'ProspectController@update');
-		
+
 /*  END  List route kamel  */

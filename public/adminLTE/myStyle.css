@@ -17,3 +17,31 @@
   cursor: pointer;
 }
 
+.top-param{
+  font-size: 30px;
+}
+.user-header-oussama a{
+  color:white;
+}
+
+.user-header-oussama .col-md-6:hover{
+  background-color:#eee;
+  transition:.5s;
+  cursor: pointer;
+}
+
+.param-header{
+  font-size: 15px;
+  text-align: center;
+}
+.form-group-title{
+  text-align: center;
+  font-size: 25px;
+}
+
+.btn-score:active {
+  opacity: 1;
+}
+.btn-score{
+  opacity: 0.8;
+}

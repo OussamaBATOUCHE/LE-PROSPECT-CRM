@@ -7,6 +7,9 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Auth;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class Controller extends BaseController
 {
@@ -29,5 +32,38 @@ class Controller extends BaseController
     {
         return Auth::user()->type;
     }
+
+
+    public function updateProfile(Request $rq)
+        {
+          if ($rq->password == "") {
+            $user = User::where("id",$rq->id)
+                            ->update(
+                                   array(
+                                           'name' => $rq->name,
+                                           'prenom' => $rq->prenom,
+                                           'email' => $rq->email,
+                                           'adresse' => $rq->adresse,
+                                           'telephone' => $rq->telephone,
+                                           'type'=>$rq->type
+                                         )
+                                   );
+          }else{
+            $user = User::where("id",$rq->id)
+                            ->update(
+                                   array(
+                                           'name' => $rq->name,
+                                           'prenom' => $rq->prenom,
+                                           'email' => $rq->email,
+                                           'adresse' => $rq->adresse,
+                                           'telephone' => $rq->telephone,
+                                           'type'=>$rq->type,
+                                           'password'=>Hash::make($rq->password)
+                                         )
+                                   );
+          }
+
+          return view('/home')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Profil Modifié.</div>');
+        }
 
 }

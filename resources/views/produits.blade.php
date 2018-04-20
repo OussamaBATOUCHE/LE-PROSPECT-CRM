@@ -3,7 +3,7 @@
 @section('content')
 <section class="content">
   <div style="text-align:right ">
-    <a class="btn btn-success" data-toggle="modal" data-target="#addproduitModal" >+ Ajouter</a>
+    <a class="btn btn-success" data-toggle="modal" data-target="#addproduitModal" ><i class="fa fa-plus-square"></i>&nbsp; Ajouter</a>
   </div>
   @if (session('status')){!! session('status') !!}@endif
   <div class="row">
@@ -20,8 +20,7 @@
                 <th>Libelle</th>
                 <th>Type</th>
                 <th>Prix</th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
+                <th colspan="2"></th>
               </tr>
             </thead>
             <tbody>

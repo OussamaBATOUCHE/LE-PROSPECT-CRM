@@ -43,8 +43,57 @@
 <script src="{{asset('adminLTE/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('adminLTE/dist/js/pages/dashboard.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{asset('adminLTE/dist/js/demo.js')}}"></script>
+<!-- DataTables -->
+<script src="{{asset('adminLTE/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('adminLTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+
+<script>
+  $(function () {
+    $('#example1').DataTable();
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  });
+
+  $(function() {
+    $('#c1').hover(function() {
+      $('#c1a').css('color', '#232e33');
+    }, function() {
+      // on mouseout, reset the background colour
+      $('#c1a').css('color', 'white');
+    });
+  });
+  $(function() {
+    $('#c2').hover(function() {
+      $('#c2a').css('color', '#232e33');
+    }, function() {
+      // on mouseout, reset the background colour
+      $('#c2a').css('color', 'white');
+    });
+  });
+  $(function() {
+    $('#c3').hover(function() {
+      $('#c3a').css('color', '#232e33');
+    }, function() {
+      // on mouseout, reset the background colour
+      $('#c3a').css('color', 'white');
+    });
+  });
+  $(function() {
+    $('#c4').hover(function() {
+      $('#c4a').css('color', '#232e33');
+    }, function() {
+      // on mouseout, reset the background colour
+      $('#c4a').css('color', 'white');
+    });
+  });
+</script>
+
 
 </body>
 </html>
