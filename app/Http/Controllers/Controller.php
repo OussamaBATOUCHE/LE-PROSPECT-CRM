@@ -11,6 +11,11 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+
+use Mail;
+
+
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -64,6 +69,22 @@ class Controller extends BaseController
           }
 
           return view('/home')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> Profil Modifié.</div>');
+        }
+
+
+        public function sendEmail($rq,$titre,$msg)
+        {
+
+          Mail::send('emails.template' , ['msg'=>$msg] , function ($m) use($rq,$titre) {
+              $m->from('prspection@fecomit.com');
+
+              $m->to('kamatcho1513@gmail.com', $rq->name)->subject($titre);
+          });
+
+        }
+
+        public function typeCntctToChar($type){
+          if($type == "phone") return "A"; elseif ($type == "mail") return "E" ; else return "T";
         }
 
 }

@@ -31,8 +31,9 @@ Auth::routes();
 
 Route::post('/createScore','ScoreController@create');
 
-
 Route::post('/updateProfile','Controller@updateProfile');
+
+Route::post('/createContact/{tache}/{type}/{prospect}','ContactController@create');
 
 
 /*  END  List route oussama  */

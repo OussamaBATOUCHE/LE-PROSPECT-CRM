@@ -13,8 +13,9 @@
   border-radius: 0px;
 }
 .alert-oussama:hover{
-  opacity: 0.5;
   cursor: pointer;
+  box-shadow: 0px 1px 11px 2px #676767;
+  transition: .3s;
 }
 
 .top-param{
@@ -39,9 +40,29 @@
   font-size: 25px;
 }
 
-.btn-score:active {
-  opacity: 1;
+.btn {
+  border-radius: 0px;
+  border: 1px solid #eee;
 }
-.btn-score{
-  opacity: 0.8;
+.btn:hover {
+  box-shadow: 0px 1px 11px 2px #676767;
+  transition: .3s;
+}
+.alert{
+  clear: both;
+}
+
+.score-info{
+    margin-left: 90px;
+    margin-top: 15px;
+    padding: 5px;
+    width: 25px;
+    padding-left: 9px;
+    border: 1px solid;
+    border-radius: 50%;
+}
+
+.modal-T1{
+  width: 45%;
+  top:10%;
 }
