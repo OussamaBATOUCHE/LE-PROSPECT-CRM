@@ -98,22 +98,31 @@
               <tr>
                 <th><input type="checkbox"/></th>
                 <th>{{$prospect->codeProsp}}</th>
-                <th><a href="#" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{$prospect->description}}">{{$prospect->societe}}</a> <span style="color:#848484;"><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
+                <th><a href="detailsProspect/{{$prospect->id}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{$prospect->description}}">{{$prospect->societe}}</a> <span style="color:#848484;"><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
                 <th style="background-color:{{$infosProsp[$i]["couleur"]}};" >{{$infosProsp[$i]["score"]}} <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{$infosProsp[$i]["remarque"]}}"></i></th>
                 <th>{{$prospect->genre}}.{{$prospect->nom}} {{$prospect->prenom}} <span style="color:#848484;"><br/> {{$prospect->email}} <br/> {{$prospect->tele1}}</span></th>
                 <th>{{$infosProsp[$i]["champActiv"]}}</th>
                 <th>
-                  <a href="" title="Mettre à joure"
-                     onclick="chargeUpdateContact('{{$infosProsp[$i]["typeDernierCntct"]}}',
-                                                   '{{$infosProsp[$i]["date"]}}',
-                                                   '{{str_replace("'","\'",$prospect->societe)}}',
-                                                   {{$prospect->id}},
-                                                   {{ json_encode($infosProsp[$i]["cntct_info"]) }},
-                                                   '{{$infosProsp[$i]["cntct_user"]}}',
-                                                   '{{$infosProsp[$i]["scoreLib"]}}'
-                                                 )"
-                     data-toggle="modal" data-target="#updateContact">{{$infosProsp[$i]["date"]}}
-                  </a>
+
+                     @if ($infosProsp[$i]["cntct_user"] != "")
+                       <a href="" title="Mettre à joure"
+                          onclick="chargeUpdateContact( {{$infosProsp[$i]["idDernierCntct"]}},
+                                                        '{{$infosProsp[$i]["typeDernierCntct"]}}',
+                                                        '{{str_replace("'","\'",$infosProsp[$i]["remarqueDernierCntct"])}}',
+                                                        '{{$infosProsp[$i]["date"]}}',
+                                                        '{{str_replace("'","\'",$prospect->societe)}}',
+                                                        {{$prospect->id}},
+                                                        {{ json_encode($infosProsp[$i]["cntct_info"]) }},
+                                                        '{{$infosProsp[$i]["cntct_user"]}}',
+                                                        '{{$infosProsp[$i]["scoreLib"]}}'
+                                                      )"
+                          data-toggle="modal" data-target="#updateContact">
+                        {{$infosProsp[$i]["date"]}}
+                       </a>
+                     @else
+                       Aucun Echange
+                     @endif
+
                 </th>
                 <th>
                   <a class="btn btn-info col" title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}})" data-toggle="modal" data-target="#nouveauContact"><i class="fa fa-plus-square"></i></a>

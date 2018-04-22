@@ -38,7 +38,7 @@
                   <div class="row">
                     <div class="form-group col-md-4">
                       <label for="">Date de contact</label>
-                      <input class="form-control" type="date" name="date" min="2018-01-01" required>
+                      <input class="form-control" type="date" name="date" min="2018-01-01"  value="<?echo date('m/d/Y');?>" required>
                     </div>
                     <div id="heure" class="form-group col-md-2">
                       <label for="">Heure</label>
@@ -79,7 +79,6 @@
 
       var idP;
       chargeNouveauContact = function(societe , idProsp) {
-            $('#societe').html("");
             $('#societe').html(societe);
             $('#cntct-form').attr('action',"createContact/0/phone/"+idProsp);
             idP = idProsp;
@@ -111,7 +110,6 @@
               }
 
               $("#submit").attr('value','Ajouter');
-              $("#typeCntct").attr('value','A');
 
           }else if (button == "mail") {
             $("#map").removeClass("btn-info");   $(".terain").remove();
@@ -119,17 +117,21 @@
 
             $("#submit").attr('value','Envoyer & Enregisrer');
             $("#js").show();
-            $("#typeCntct").attr('value','E');
 
           }else {
             $("#phone").removeClass("btn-info"); $(".phone").remove();
             $("#mail").removeClass("btn-info");  $(".mail").remove(); $("#js").hide();
-            $("#typeCntct").attr('value','T');
-
 
           }
       };
 
+
+         $("#phone").click(function(){
+             $("#typeCntct").val("A");
+         });
+         $("#mail").click(function(){
+             $("#typeCntct").val("E");
+         });
 
     });
 

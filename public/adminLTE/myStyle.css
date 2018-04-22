@@ -66,3 +66,35 @@
   width: 45%;
   top:10%;
 }
+
+.det-prosp-soc{
+  background-color: white;
+  border: 1px solid #edf0f5;
+  margin: 10px;
+  box-shadow: 1px 1px 6px 0px #929292;
+  padding: 11px;
+}
+.det-prosp-soc>h2>span{
+  font-size: 20px;
+}
+.det-prosp-soc>h3>span{
+  font-size: 15px;
+}
+.prospect-info{
+  font-size: 15px;
+  color: #6f6f6f;
+  margin: 5px 0px;
+}
+.prospect-info>.fa-map-marker{
+  font-size: 25px;
+}
+.margin-det-pros{
+  margin-left: 40px;
+}
+textarea{
+  width: 100%;
+  resize: vertical;
+}
+hr{
+  margin-top: 10px;
+}

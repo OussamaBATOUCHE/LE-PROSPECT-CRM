@@ -83,8 +83,5 @@ class Controller extends BaseController
 
         }
 
-        public function typeCntctToChar($type){
-          if($type == "phone") return "A"; elseif ($type == "mail") return "E" ; else return "T";
-        }
 
 }

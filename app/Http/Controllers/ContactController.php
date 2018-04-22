@@ -24,7 +24,7 @@ class ContactController extends Controller
     $contact->idProsp = $prospect;
     $contact->date = $rq->date;
     $contact->remarque = $rq->remarque;
-    $contact->type = $this->typeCntctToChar($rq->type);
+    $contact->type = $rq->type;
 
     $contact->save();
 
@@ -48,13 +48,13 @@ class ContactController extends Controller
     }elseif ($type == "mail") {
       //we send'it first if it's a saveSend Request
 
-      $envoye = "Non";
+      $envoye = 'Non';
       //return $rq->jsave ;
       if ($rq->jsave != "Enregistrer") {
         $Reciever = Prospect::where('id',$prospect)->first();
         $this->sendEmail($Reciever,$rq->titre,$rq->remarque);
         $emailSendResult=" et email envoyé ";
-        $envoye = "Oui";
+        $envoye = 'Oui';
       }
 
 
@@ -67,6 +67,15 @@ class ContactController extends Controller
     }
 
     return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Contact ajouté '.$emailSendResult.'avec succée !</div>');
+  }
+
+  public function delete($id)
+  {
+    $rowAppel = cntct_appel::where('idCntct',$id)->delete(); //ici je supprime tous les rows qui concernent le contact dont je vient de le supprimer..
+    $rowEmail = cntct_email::where('idCntct',$id)->delete(); //ici je supprime tous les rows qui concernent le contact dont je vient de le supprimer..
+    $contact = Contact::find($id)->delete();
+    return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button> Supprimé avec succée !</div>');
+
   }
 
 }
