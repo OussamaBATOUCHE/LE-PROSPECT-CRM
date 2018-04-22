@@ -8,33 +8,65 @@ use App\Prospect;
 use App\Prospect_produit;
 use App\Prospect_score;
 use App\score;
+use App\champActivite;
+use App\Produit;
+use App\Contact;
+use App\User;
+use App\cntct_email;
+use App\cntct_appel;
+use App\cntct_terain;
 
 class ProspectController extends Controller
 {
     public function get()
     {
-          $prospects = prospect::where('bloquer',0)->orderByRaw('created_at DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
-          $tousLesScores = score::get();//pour un nouveau contact/prospect
-          $listScore = array();//pour chaque prospect , on recupere le dernier score obtenu
+          $prospects = Prospect::where('bloquer',0)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
+          $tousLesScores = Score::get();//pour un nouveau contact/prospect
+          $tousLesChampActiv = ChampActivite::get();
+          $tousLesProduits = Produit::get();
+
+          $infosProspect = array();//pour chaque prospect , on recupere toute autre infos
+
           //dernier score marqué
-          //dd($prospects);
           foreach ($prospects as $prospect) {
-             $lastScore = Prospect_score::where('idPros',$prospect->id)->first();
+             $lastScore = Prospect_score::where('idPros',$prospect->id)->latest()->first();
              $scoreById = Score::where('id',$lastScore->idScore)->first();
-             $listScore[] = array( "score" => $scoreById->num,
-                                   "date" => $lastScore->date,
-                                   "remarque" => $lastScore->remarque,
-                                   "couleur" => $scoreById->couleur
-                                  );
+             $champActById = champActivite::where('id',$prospect->idChampAct)->first();
+             $derniersContacts = Contact::where('idProsp',$prospect->id)->orderByRaw('id DESC')->first();
+             $cntct="";
+             switch ($derniersContacts->type) {
+
+               case 'A':
+                 $cntct = cntct_appel::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
+                 break;
+               case 'E':
+                 $cntct = cntct_email::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul mail pour un contact
+                 break;
+               case 'T':
+                 $cntct = cntct_terain::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
+                 break;
+                 default:return $derniersContacts->type; break;
+             }
+             $userCntct = user::where('id',$derniersContacts->idUser)->first();
+
+             $infosProspect[] = array( "score" => $scoreById->num,
+                                       "scoreLib" => $scoreById->LibScore,
+                                       "date" => $lastScore->date,
+                                       "remarque" => $lastScore->remarque,
+                                       "couleur" => $scoreById->couleur,
+                                       "champActiv"=> $champActById->LibChampAct,
+                                       "typeDernierCntct" => $derniersContacts->type,
+                                       "cntct_info" => json_decode($cntct, true),
+                                       "cntct_user" => $userCntct->name." ".$userCntct->prenom
+                                     );
           }
-          //return $listScore[0]["score"];
-         $MyJsonList = json_encode($listScore,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
-          //dd($MyJsonList);
-         // return $JsonList[0]->score;
-        //  $listScore ; // hadi ma temchich 7ta nro7 n'ajouti scores ki ana ki nass
+
+
           return view('prospects')->with('prospects',$prospects)
                                   ->with('tousLeScores',$tousLesScores)
-                                  ->with('DerniersScores',$listScore);
+                                  ->with('tousLesChampActiv',$tousLesChampActiv)
+                                  ->with('tousLesProduits',$tousLesProduits)
+                                  ->with('infosProsp',$infosProspect);
     }
 
     public function create(Request $rq){
@@ -48,7 +80,7 @@ class ProspectController extends Controller
             ]);
          */ //mais had la validation lzem ndirouha ....
 
-         // traitement pour obtenir le num sequenciel de nouveau prospect
+         // traitement pour obtenir le num sequentiel d'un nouveau prospect
 
 
          //traitement des champs de code
@@ -56,7 +88,7 @@ class ProspectController extends Controller
          $Nwilaya = strval($rq->wilaya);    if(strlen($Nwilaya) != 2) $Nwilaya = "0".$Nwilaya;
          $year   = substr(date("Y"),-2); //to get only the 2 last number ex: 2016 -> 16
          $sytax = $NchAct.$Nwilaya.$year;
-         //return $sytax;
+
           $oldPrspects = Prospect::select('codeProsp')->get();
           $threeOne = 0 ; // pour savoir si on a prospect avec le meme champ d'activite et la meme wilaya et la meme annee , dans ce cas on doit incrementer , other ways une simple initialisation.
           $list[] = 0 ; //une liste qui contient les num sequenciel qui existe deja
@@ -65,7 +97,7 @@ class ProspectController extends Controller
             $OPwilaya = substr($prospect->codeProsp,3,2);
             $OPyear   = substr($prospect->codeProsp,-2);
             $OPsytax = $OPchAct.$OPwilaya.$OPyear;
-            //return $OPsytax;
+
             if ( $sytax == $OPsytax) {
               $threeOne = 1;
             }else{
@@ -81,20 +113,20 @@ class ProspectController extends Controller
 
 
 
-          $newCode =$NchAct.".".$Nwilaya.".".$mySeq."/".substr(date("Y"),-2);//le code ext pret
+          $newCode =$NchAct.".".$Nwilaya.".".$mySeq."/".substr(date("Y"),-2);//le code est pret
 
           //Societe
           $prospect = new Prospect ;
           $prospect->codeProsp = $newCode;
-          $prospect->societe = $rq->societe;
+          $prospect->societe = ucfirst(strtolower($rq->societe));
           $prospect->adresse = $rq->adresse;
           $prospect->codePostal = $rq->codePostal;
           $prospect->wilaya = $rq->wilaya;
           $prospect->nbreEmplyes = $rq->nbreEmplyes;
           //Contact
-          $prospect->nom = $rq->nom;
           $prospect->genre = $rq->genre;
-          $prospect->prenom = $rq->prenom;
+          $prospect->nom = strtoupper($rq->nom);
+          $prospect->prenom = ucfirst(strtolower($rq->prenom));
           $prospect->email = $rq->email;
           $prospect->tele1 = $rq->tele1;
           $prospect->tele2 = $rq->tele2;
@@ -108,6 +140,7 @@ class ProspectController extends Controller
           $prospect->idGrp = $rq->idGrp;
           $prospect->idChampAct = $rq->idChampAct;
           $prospect->bloquer = 0;
+          //$prospect->created_at = \Carbon\Carbon::now()->toDateTimeString() ;
 
           //Done
           $prospect->save();
@@ -123,8 +156,9 @@ class ProspectController extends Controller
           $prospect_score = new Prospect_score;
           $prospect_score->idPros = $prospect->id;
           $prospect_score->idScore = $rq->score ;
-          $prospect_score->date = date("d/m/Y H:i:s");
+          $prospect_score->date = date("d/m/Y H:i:s");//la date est en format string
           $prospect_score->remarque = 'Creation.';
+
           $prospect_score->save();
 
           return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');

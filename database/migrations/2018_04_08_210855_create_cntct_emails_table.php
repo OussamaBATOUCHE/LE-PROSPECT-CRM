@@ -18,6 +18,7 @@ class CreateCntctEmailsTable extends Migration
             $table->integer('idCntct');
             $table->integer('idGrp');
             $table->longText('contenu');
+            $table->enum('envoye', ['Oui', 'Non']);
         });
     }
 
