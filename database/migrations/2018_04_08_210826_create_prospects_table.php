@@ -19,13 +19,13 @@ class CreateProspectsTable extends Migration
             $table->integer('idGrp');
             $table->integer('idChampAct');
             $table->string('societe');
+            $table->string('adresse');
+            $table->integer('codePostal');
+            $table->string('wilaya');
+            $table->string('genre');
             $table->string('nom');
             $table->string('prenom');
-            $table->string('wilaya');
-            $table->string('commune');
-            $table->string('adresse');
             $table->string('email');
-            $table->string('email2');
             $table->string('skype');
             $table->integer('tele1');
             $table->integer('tele2');

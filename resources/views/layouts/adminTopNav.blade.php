@@ -66,6 +66,51 @@
             <li class="footer"><a href="#">Afficher tous</a></li>
           </ul>
         </li>
+        <!-- parametres -->
+        <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-gears"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="param-header">
+              PARAMETRES
+            </li>
+            <li class="user-header user-header-oussama">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" id="c1">
+                    <a href="paramList" id="c1a">
+                      <i class="fa fa-gears top-param"></i>
+                      <p>Configurations</p>
+                    </a>
+                  </div>
+                  <div class="col-md-6" id="c2">
+                    <a href="#" id="c2a">
+                      <i class="fa fa-user top-param"></i>
+                      <p>Utilisateurs</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6" id="c3">
+                    <a href="#" id="c3a">
+                      <i class="fa fa-pied-piper top-param"></i>
+                      <p>Modeles</p>
+                    </a>
+                  </div>
+                  <div class="col-md-6" id="c4">
+                    <a href="#" id="c4a">
+                      <i class="fa fa-mobile top-param"></i>
+                      <p>Application</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
 
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
@@ -109,40 +154,36 @@
           <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Profile</h3>
         </div>
         <div class="modal-body">
-          <form method="post" action="updateProfil/{{ Auth::user()->id }}">
+          <form method="POST" action="{{ url('updateProfile') }}">
             @csrf
-            {{ method_field('PATCH') }}
-            <!-->
+
             <input id="id" name="id" type="hidden" class="form-control" value="{{Auth::user()->id}}">
             <input id="type" name="type" type="hidden" class="form-control" value="{{Auth::user()->type}}">
             <div class="form-group">
-             </--> 
               <label class="form-control-label">Nom</label>
               <input type="text" class="form-control" name="name" value="{{Auth::user()->name}}" >
             </div>
             <div class="form-group">
+              <label class="form-control-label">Prenom</label>
+              <input type="text" class="form-control" name="prenom" value="{{Auth::user()->prenom}}" >
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Adresse</label>
+              <input type="text" class="form-control" name="adresse" value="{{Auth::user()->adresse}}" >
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Telephone</label>
+              <input type="text" class="form-control" name="telephone" value="{{Auth::user()->telephone}}" >
+            </div>
+            <div class="form-group">
               <label class="form-control-label">E-Mail</label>
-              <input id="email" type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="type" value="{{Auth::user()->email}}" required>
+              <input id="email" type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{Auth::user()->email}}" required>
             </div>
-            <div class="form-group">
-              <label  class="form-control-label">Nouveau mot de passe</label>
-              <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-              @if ($errors->has('password'))
-                  <span class="invalid-feedback">
-                      <strong>{{ $errors->first('password') }}</strong>
-                  </span>
-              @endif
+            <div class="form-group" id="updtPass">
+              <label for="changePass"><a onclick="showUpdatePassForm()">Modifer mot de passe</a></label>
             </div>
-            <div class="form-group">
-              <label  class="form-control-label">Confirmez le mot de passe</label>
-              <input id="password-confirm" type="password" class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" required >
-              @if ($errors->has('password_confirmation'))
-                  <span class="invalid-feedback">
-                      <strong>{{ $errors->first('password_confirmation') }}</strong>
-                  </span>
-              @endif
-            </div>
-            <button class="btn btn-primary" type="submit">Modifier</button>
+
+            <input class="btn btn-primary" type="submit" value="Modifier">
           </form>
         </div>
         <div class="modal-footer">
@@ -151,3 +192,26 @@
       </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+  var x = 0;
+  function showUpdatePassForm() {
+    var from =`
+                                  <div class="form-group">
+                                     <label  class="form-control-label">Nouveau mot de passe</label>
+                                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" >
+
+                                  </div>
+                                  <div class="form-group">
+                                    <label  class="form-control-label">Confirmez le mot de passe</label>
+                                    <input id="password-confirm" type="password" class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" required >
+
+                                  </div>`;
+    if (x == 0) {
+        $( "#updtPass" ).after(from);
+        x=1;
+    }
+
+  }
+</script>

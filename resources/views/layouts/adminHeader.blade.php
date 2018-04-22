@@ -27,9 +27,14 @@
   <link rel="stylesheet" href="{{asset('adminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{asset('adminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{asset('adminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
   <!-- MyStyle -->
   <link rel="stylesheet" href="{{asset('adminLTE/myStyle.css')}}">
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <!-- to let popover works -->
+  <script src="{{asset('adminLTE/bower_components/jquery/dist/jquery.min.js')}}"></script>
 </head>
