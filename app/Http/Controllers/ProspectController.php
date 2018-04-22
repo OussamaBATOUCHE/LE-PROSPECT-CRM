@@ -34,31 +34,48 @@ class ProspectController extends Controller
              $champActById = champActivite::where('id',$prospect->idChampAct)->first();
              $derniersContacts = Contact::where('idProsp',$prospect->id)->orderByRaw('id DESC')->first();
              $cntct="";
-             switch ($derniersContacts->type) {
+             if ($derniersContacts) { //si un contact exist deja , dans le cas de creatino ce code ne s'execute pas .
+               switch ($derniersContacts->type) {
 
-               case 'A':
-                 $cntct = cntct_appel::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
-                 break;
-               case 'E':
-                 $cntct = cntct_email::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul mail pour un contact
-                 break;
-               case 'T':
-                 $cntct = cntct_terain::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
-                 break;
-                 default:return $derniersContacts->type; break;
+                 case 'A':
+                   $cntct = cntct_appel::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
+                   break;
+                 case 'E':
+                   $cntct = cntct_email::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul mail pour un contact
+                   break;
+                 case 'T':
+                   $cntct = cntct_terain::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
+                   break;
+                   default:return $derniersContacts->type; break;
+               }
+               $userCntct = user::where('id',$derniersContacts->idUser)->first();
+               $infosProspect[] = array( "score" => $scoreById->num,
+                                         "scoreLib" => $scoreById->LibScore,
+                                         "date" => $lastScore->date,
+                                         "remarque" => $lastScore->remarque,
+                                         "couleur" => $scoreById->couleur,
+                                         "champActiv"=> $champActById->LibChampAct,
+                                         "idDernierCntct" => $derniersContacts->id,
+                                         "typeDernierCntct" => $derniersContacts->type,
+                                         "remarqueDernierCntct" => $derniersContacts->remarque,
+                                         "cntct_info" => json_decode($cntct, true),
+                                         "cntct_user" => $userCntct->name." ".$userCntct->prenom
+                                       );
+             }else {
+               $infosProspect[] = array( "score" => $scoreById->num,
+                                         "scoreLib" => $scoreById->LibScore,
+                                         "date" => $lastScore->date,
+                                         "remarque" => $lastScore->remarque,
+                                         "couleur" => $scoreById->couleur,
+                                         "champActiv"=> $champActById->LibChampAct,
+                                         "idDernierCntct" => "",
+                                         "typeDernierCntct" => "",
+                                         "remarqueDernierCntct" => "",
+                                         "cntct_info" => "",
+                                         "cntct_user" => ""
+                                       );
              }
-             $userCntct = user::where('id',$derniersContacts->idUser)->first();
 
-             $infosProspect[] = array( "score" => $scoreById->num,
-                                       "scoreLib" => $scoreById->LibScore,
-                                       "date" => $lastScore->date,
-                                       "remarque" => $lastScore->remarque,
-                                       "couleur" => $scoreById->couleur,
-                                       "champActiv"=> $champActById->LibChampAct,
-                                       "typeDernierCntct" => $derniersContacts->type,
-                                       "cntct_info" => json_decode($cntct, true),
-                                       "cntct_user" => $userCntct->name." ".$userCntct->prenom
-                                     );
           }
 
 
@@ -175,8 +192,28 @@ class ProspectController extends Controller
 
     public function destroy($id){
       //yak 9oulna prospect jamais la yetsuprimas
+      $prospect = Prospect::where('id',$id)->update("bloquer",1);
+      return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Le prospect est bloqué (vous pouvez le debloquer dans la <a href"prospectBloques">liste des prospect bloqués</a>)</div>');
+    }
+
+    public function getById($id)
+    {
       $prospect = Prospect::find($id);
-        $prospect->delete();
-      return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>supprimé avec succée !</div>');
+
+      $scores = Prospect_score::where('idPros',$prospect->id)->latest()->first();
+      $scoreById = Score::where('id',$scores->idScore)->first();//pour la couleur
+
+      $champActById = champActivite::where('id',$prospect->idChampAct)->first();
+      $derniersContacts = Contact::where('idProsp',$prospect->id)->orderByRaw('id DESC')->get();
+
+      $produitsPros = Prospect_produit::where('idProsp',$prospect->id)->get(['idPrd']);
+      $produits = Produit::whereIn('id',$produitsPros);
+
+      return view('prospectDetails')->with('prospect',$prospect)
+                                    ->with('score',$scores)
+                                    ->with('chamActiv',$champActById)
+                                    ->with('contacts',$derniersContacts)
+                                    ->with('produits',$produits);
+
     }
 }

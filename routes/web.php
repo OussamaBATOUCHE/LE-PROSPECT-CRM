@@ -24,7 +24,8 @@ Route::get('/scores','ScoreController@get');
 
 Auth::routes();
 
-
+Route::get('/deleteContact/{id}','ContactController@delete');
+Route::get('/detailsProspect/{id}','ProspectController@getById');
 
 
 /* --- POST --- */
@@ -34,6 +35,7 @@ Route::post('/createScore','ScoreController@create');
 Route::post('/updateProfile','Controller@updateProfile');
 
 Route::post('/createContact/{tache}/{type}/{prospect}','ContactController@create');
+
 
 
 /*  END  List route oussama  */
