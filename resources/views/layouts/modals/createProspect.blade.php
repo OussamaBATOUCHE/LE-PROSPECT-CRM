@@ -93,9 +93,9 @@
                  <div class="form-group">
                    <select class="form-control" name="idGrp" required>
                      <option value="0" disabled selected>Groupe</option>
-                     <option value="1">g-1</option>
-                     <option value="2">g-2</option>
-                     <option value="3">g-3</option>
+                     @foreach ($tousLesGroupes as $groupe)
+                       <option value="{{$groupe->id}}" >{{$groupe->LibGrp}}</option>
+                     @endforeach
                    </select>
                  </div>
                  <div class="form-group">
@@ -137,7 +137,7 @@
 
         var wilayas  = `
 
-        <select class="form-control" name="wilaya">
+        <select class="form-control" name="wilaya" required>
           <option value="0" disabled selected>Wilaya</option>
           <option value="1">Adrar</option>
           <option value="2">Chlef</option>

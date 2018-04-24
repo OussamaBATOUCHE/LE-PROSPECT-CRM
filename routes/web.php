@@ -28,6 +28,13 @@ Route::get('/deleteContact/{id}','ContactController@delete');
 Route::get('/detailsProspect/{id}','ProspectController@getById');
 
 
+Route::get('/groupes','GroupeController@get');
+
+Route::get('/groupe_delete/{champ}','GroupeController@destroy');
+Route::get('/bloquerProspect/{id}','ProspectController@bloquer');
+Route::get('/debloquerProspect/{id}','ProspectController@debloquer');
+
+
 /* --- POST --- */
 
 Route::post('/createScore','ScoreController@create');
@@ -35,6 +42,12 @@ Route::post('/createScore','ScoreController@create');
 Route::post('/updateProfile','Controller@updateProfile');
 
 Route::post('/createContact/{tache}/{type}/{prospect}','ContactController@create');
+
+Route::post('/createGroupe','GroupeController@create');
+Route::patch('/updateGroupe/{champ}', 'GroupeController@update');
+
+Route::post('/updateProspect/{prospect}', 'ProspectController@update');
+
 
 
 
@@ -58,7 +71,7 @@ Route::get('/produit_delete/{produit}','ProduitController@destroy');
 
 Route::get('/prospects','ProspectController@get');
 
-Route::get('/prospect_delete/{prospect}','ProspectController@destroy');
+
 
 
 
@@ -84,6 +97,6 @@ Route::patch('/updateChamp/{champ}', 'ChampActiviteController@update');
 
 Route::patch('/updateProduit/{produit}', 'ProduitController@update');
 
-Route::patch('/updateProspect/{prospect}', 'ProspectController@update');
+
 
 /*  END  List route kamel  */

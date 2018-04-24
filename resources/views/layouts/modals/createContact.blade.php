@@ -38,7 +38,7 @@
                   <div class="row">
                     <div class="form-group col-md-4">
                       <label for="">Date de contact</label>
-                      <input class="form-control" type="date" name="date" min="2018-01-01"  value="<?echo date('m/d/Y');?>" required>
+                      <input class="form-control" type="date" name="date" min="2018-01-01"  required>
                     </div>
                     <div id="heure" class="form-group col-md-2">
                       <label for="">Heure</label>

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Prospect;
 use App\Prospect_produit;
 use App\Prospect_score;
 use App\score;
 use App\champActivite;
+use App\Groupe;
 use App\Produit;
 use App\Contact;
 use App\User;
@@ -23,6 +25,7 @@ class ProspectController extends Controller
           $prospects = Prospect::where('bloquer',0)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
           $tousLesScores = Score::get();//pour un nouveau contact/prospect
           $tousLesChampActiv = ChampActivite::get();
+          $tousLesGroupes = Groupe::get();
           $tousLesProduits = Produit::get();
 
           $infosProspect = array();//pour chaque prospect , on recupere toute autre infos
@@ -82,6 +85,7 @@ class ProspectController extends Controller
           return view('prospects')->with('prospects',$prospects)
                                   ->with('tousLeScores',$tousLesScores)
                                   ->with('tousLesChampActiv',$tousLesChampActiv)
+                                  ->with('tousLesGroupes',$tousLesGroupes)
                                   ->with('tousLesProduits',$tousLesProduits)
                                   ->with('infosProsp',$infosProspect);
     }
@@ -183,17 +187,68 @@ class ProspectController extends Controller
 
 
 
- public function update(Request $request,$prospect ){
+ public function update(Request $rq,$prospect ){
 
-    $data = request()->except(['_token','_method']);
-      Prospect::where('id',$prospect)->update($data);
-      return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Modifier avec succée !</div>');
+      Prospect::where('id',$prospect)
+                ->update(["societe"=>$rq->societe,
+                          "adresse"=>$rq->adresse,
+                          "codePostal"=>$rq->codePostal,
+                          "wilaya"=>$rq->wilaya,
+                          "nbreEmplyes"=>$rq->nbreEmplyes,
+                          //contact
+                          "genre"=>$rq->genre,
+                          "nom"=>$rq->nom,
+                          "prenom"=>$rq->prenom,
+                          "email"=>$rq->email,
+                          "tele1"=>$rq->tele1,
+                          "tele2"=>$rq->tele2,
+                          "tele3"=>$rq->tele3,
+                          "fax"=>$rq->fax,
+                          "skype"=>$rq->skype,
+                          "siteWeb"=>$rq->siteWeb,
+                          //autre
+                          "description"=>$rq->description,
+                          "idGrp"=>$rq->idGrp,
+                          "idChampAct"=>$rq->idChampAct
+                         ]);
+
+        //mise a jour des produits
+        $prospect_produits = Prospect_produit::where('idProsp',$prospect)->delete();
+        //Nouveau produits affectés pour ce prospect
+        foreach ($rq->produits as $produit) {
+          $prospect_produit = new Prospect_produit ;
+          $prospect_produit->idPrd = $produit;
+          $prospect_produit->idProsp = $prospect ;
+          $prospect_produit->save();
+        }
+        //updateScorring -> if it's defrent from the last one
+        $lastScore = Prospect_score::where('idPros',$prospect)->latest()->first();
+        if ($lastScore->idScore != $rq->score ) {
+          $prospect_score = new Prospect_score;
+          $prospect_score->idPros = $prospect;
+          $prospect_score->idScore = $rq->score ;
+          $prospect_score->date = date("d/m/Y H:i:s");//la date est en format string
+          $prospect_score->remarque = 'Modification de prospect.';
+          $prospect_score->save();
+        }
+
+
+      return redirect('detailsProspect/'.$prospect)->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Modifier avec succée !</div>');
     }
 
-    public function destroy($id){
+    public function bloquer($id){
+      //return 0;
       //yak 9oulna prospect jamais la yetsuprimas
-      $prospect = Prospect::where('id',$id)->update("bloquer",1);
-      return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Le prospect est bloqué (vous pouvez le debloquer dans la <a href"prospectBloques">liste des prospect bloqués</a>)</div>');
+      $prospect = Prospect::where('id',$id)->update(["bloquer"=>1]);
+      return redirect('detailsProspect/'.$id)->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Le prospect est bloqué (vous pouvez le debloquer dans la <a href"prospectBloques">liste des prospect bloqués</a>)</div>');
+    }
+
+
+    public function debloquer($id){
+      //return 0;
+      //yak 9oulna prospect jamais la yetsuprimas
+      $prospect = Prospect::where('id',$id)->update(["bloquer"=>0]);
+      return redirect('detailsProspect/'.$id)->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Le prospect est Debloquer.</div>');
     }
 
     public function getById($id)
@@ -202,18 +257,43 @@ class ProspectController extends Controller
 
       $scores = Prospect_score::where('idPros',$prospect->id)->latest()->first();
       $scoreById = Score::where('id',$scores->idScore)->first();//pour la couleur
+      $monGroupe = Groupe::where('id',$prospect->idGrp)->first();
 
       $champActById = champActivite::where('id',$prospect->idChampAct)->first();
       $derniersContacts = Contact::where('idProsp',$prospect->id)->orderByRaw('id DESC')->get();
 
-      $produitsPros = Prospect_produit::where('idProsp',$prospect->id)->get(['idPrd']);
-      $produits = Produit::whereIn('id',$produitsPros);
+      $produitsPros = Prospect_produit::where('idProsp',$prospect->id)->select('idPrd')->get();
+      $pr = array();
+      foreach ($produitsPros as $prs) {
+           $pr[] = $prs->idPrd ;
+       }
+       //dd($pr);
+      $produits = DB::table('Produits')->whereIn('id',$pr)->get();//sa marche pas
+
+      $us = array();
+      foreach ($derniersContacts as $uss) {
+           $userCntct = User::where('id',$uss->idUser)->first();
+           $us[] = array("name"=>$userCntct->name,"prenom"=>$userCntct->prenom);
+       }
+
+
+       //pour le modal de modification
+       $tousLesScores = Score::get();
+       $tousLesChampActiv = ChampActivite::get();
+       $tousLesGroupes = Groupe::get();
+       $tousLesProduits = Produit::get();
 
       return view('prospectDetails')->with('prospect',$prospect)
-                                    ->with('score',$scores)
+                                    ->with('score',$scoreById)
                                     ->with('chamActiv',$champActById)
+                                    ->with('monGroupe',$monGroupe)
                                     ->with('contacts',$derniersContacts)
-                                    ->with('produits',$produits);
+                                    ->with('userContact',$us)
+                                    ->with('produits',$produits)
+                                    ->with('scores',$tousLesScores)
+                                    ->with('lesChampActiv',$tousLesChampActiv)
+                                    ->with('lesGroupes',$tousLesGroupes)
+                                    ->with('lesProduits',$tousLesProduits);
 
     }
 }

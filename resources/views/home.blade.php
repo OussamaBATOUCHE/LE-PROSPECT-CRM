@@ -21,9 +21,9 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
           <div class="inner">
-            <h3>150</h3>
+            <h3>N/A</h3>
 
-            <p>Reservations</p>
+            <p>Prospects</p>
           </div>
           <div class="icon">
             <i class="ion ion-bag"></i>
@@ -36,9 +36,9 @@
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
-            <h3>53<sup style="font-size: 20px">%</sup></h3>
+            <h3>N/A<sup style="font-size: 20px">%</sup></h3>
 
-            <p>Omra</p>
+            <p>Taches effectuées</p>
           </div>
           <div class="icon">
             <i class="ion ion-stats-bars"></i>
@@ -51,9 +51,9 @@
         <!-- small box -->
         <div class="small-box bg-yellow">
           <div class="inner">
-            <h3>44</h3>
+            <h3>N/A</h3>
 
-            <p>Abonnés</p>
+            <p>Contact</p>
           </div>
           <div class="icon">
             <i class="ion ion-person-add"></i>

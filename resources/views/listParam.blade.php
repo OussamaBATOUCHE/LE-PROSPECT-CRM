@@ -14,12 +14,17 @@
           <div class="container">
             <div class="row container" style="text-align:center" onclick="location.href ='{{url('scores')}}'">
                 <div class="col-md-10 alert alert-oussama">
-                  <span>SCORES</span>
+                  <span>Scores</span>
                 </div>
             </div>
             <div class="row container" style="text-align:center" onclick="location.href ='{{url('champActivite')}}'">
                 <div class="col-md-10 alert alert-oussama">
                   <span class="">Champs d'Activites</span>
+                </div>
+            </div>
+            <div class="row container" style="text-align:center" onclick="location.href ='{{url('groupes')}}'">
+                <div class="col-md-10 alert alert-oussama">
+                  <span class="">Groupes</span>
                 </div>
             </div>
             <div class="row container" style="text-align:center" onclick="location.href ='{{url('produits')}}'">
