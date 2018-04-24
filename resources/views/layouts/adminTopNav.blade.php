@@ -79,7 +79,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="col-md-6" id="c1">
-                    <a href="paramList" id="c1a">
+                    <a href="{{url('paramList')}}" id="c1a">
                       <i class="fa fa-gears top-param"></i>
                       <p>Configurations</p>
                     </a>

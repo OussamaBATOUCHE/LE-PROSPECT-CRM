@@ -4,37 +4,40 @@
 <section class="content">
   <div class="row">
       <span class="col-md-7"> <h4>Prospect > Details</h4> </span>
-      <div class="col-md-4" style="text-align:right">
-      <a class="btn btn-info " data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-edit"></i>&nbsp; Modifier</a>
+      <div class="col-md-4" style="text-align:right;margin-left:25px">
+        @if ($prospect->bloquer == "1")
+          <a class="btn btn-danger " title="Debloquer ce prospect"  data-toggle="modal" data-target="#ouiNonDebloque" ><i class="fa fa-edit"></i>&nbsp; Debloquer</a>
+        @endif
+      <a class="btn btn-info " title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}})" data-toggle="modal" data-target="#updateprospectModal" ><i class="fa fa-pencil"></i>&nbsp; Modifier</a>
       </div>
   </div>
-
+  @if (session('status')){!! session('status') !!}@endif
   <div class="row">
     <div class="col-md-7 ">
       <div class="det-prosp-soc ">
-        <h2>KOONOUZ STORE - <span style="background-color:#07d8e2">[Chaud-3]</span></h2>
+        <h2>{{$prospect->societe}} - <span style="background-color:{{$score->couleur}}">[{{$score->LibScore}}]</span></h2>
         <hr/>
-        <div class="prospect-info"> <i class="fa fa-map-marker"></i> &nbsp;kouba alger 16024 KOUBA </div>
-        <div class="prospect-info"><i class="fa fa-map-signs"></i> ALGER </div>
-        <div class="prospect-info"><i class="fa fa-users"></i> 23 Employes </div>
+        <div class="prospect-info"> <i class="fa fa-map-marker"></i> &nbsp;{{$prospect->adresse}} {{$prospect->codePostal}} </div>
+        <div class="prospect-info"><i class="fa fa-map-signs"></i> <span  id="r-prospect-wilaya">{{$prospect->wilaya}}</span> </div>
+        <div class="prospect-info"><i class="fa fa-users"></i> {{$prospect->nbreEmplyes}} Employes </div>
       </div>
       <div class="det-prosp-soc" >
          <label for="h">Remarques </label>
-         <textarea class="form-control" rows="2" disabled></textarea>
+         <textarea class="form-control" rows="4" disabled>{{$prospect->description}}</textarea>
       </div>
     </div>
 
     <div class="col-md-4 det-prosp-soc">
       <h3>Contact </h3>
       <hr/>
-      <div class="prospect-info"> Mme.BENOTHMAN Yasmin </div>
-      <div class="prospect-info"> <i class="fa fa-phone"></i> 1- &nbsp;0553 83 95 77 </div>
-      <div class="prospect-info"> <i class="fa fa-phone"></i> 2- &nbsp;0553 83 95 77 </div>
-      <div class="prospect-info"> <i class="fa fa-phone"></i> 3- &nbsp;0553 83 95 77 </div>
-      <div class="prospect-info"> <i class="fa fa-fax"></i> &nbsp;0213 83 95 77 </div>
-      <div class="prospect-info"><i class="fa fa-skype"></i> Koonouz skype </div>
-      <div class="prospect-info"><i class="fa fa-at"></i> administration@koonouz.com </div>
-      <div class="prospect-info"><i class="fa fa-globe"></i> <a href="">www.koonouzstore.com</a> </div>
+      <div class="prospect-info"> {{$prospect->genre}}.{{$prospect->nom}} {{$prospect->prenom}} </div>
+      <div class="prospect-info"> <i class="fa fa-phone"></i> 1- &nbsp;{{$prospect->tele1}} </div>
+      <div class="prospect-info"> <i class="fa fa-phone"></i> 2- &nbsp;{{$prospect->tele2}} </div>
+      <div class="prospect-info"> <i class="fa fa-phone"></i> 3- &nbsp;{{$prospect->tele3}} </div>
+      <div class="prospect-info"> <i class="fa fa-fax"></i> &nbsp;{{$prospect->fax}} </div>
+      <div class="prospect-info"><i class="fa fa-skype"></i> {{$prospect->skype}} </div>
+      <div class="prospect-info"><i class="fa fa-at"></i> {{$prospect->email}} </div>
+      <div class="prospect-info"><i class="fa fa-globe"></i> <a href="http://{{$prospect->siteWeb}}">{{$prospect->siteWeb}}</a> </div>
     </div>
 
   </div>
@@ -45,24 +48,45 @@
         <h3>Derniers échanges </h3>
         <hr/>
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-phone"></i> Appel <i class="fa fa-clock-o"></i> 22.03.2018 15:30   - Par : BENSIAB Kamel </a>
-          <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-at"></i> Email <i class="fa fa-clock-o"></i> 12.03.2018 10:00  - Par : AMGHAR Abdennour </a>
-          <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-at"></i> Email <i class="fa fa-clock-o"></i> 15.02.2018 10:00   - Par : Directeur Commercial </a>
+          @php
+            $i=0;
+          @endphp
+          @foreach ($contacts as $contact)
+            @if ($i != 5)
+              <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#updateContact">
+                @if ($contact->type == "A")
+                <i class="fa fa-phone"></i> Appel
+              @else
+                <i class="fa fa-envelope-o"></i> Email
+              @endif
+              <i class="fa fa-clock-o"></i> {{$contact->date}}   - Par : {{$userContact[$i]["name"]}} {{$userContact[$i]["prenom"]}} </a>
+              @php
+                $i++;
+              @endphp
+            @endif
+
+            @endforeach
         </div>
       </div>
 
 
     </div>
     <div class="col-md-5 det-prosp-soc">
-      <h3>Champ d'activites : <span><a> -Gestion des champs d'activités</a></span></h3>
+      <h3>Champ d'activites : <span><a href="{{url('champActivite')}}"> -Gestion des champs d'activités</a></span></h3>
       <hr/>
-      <div class="prospect-info"> Electronique. </div>
-      <h3>Groupe : <span><a> -Gestion des groupe</a></span></h3>
+      <div class="prospect-info"> {{$chamActiv->LibChampAct}} </div>
+      <h3>Groupe : <span><a href="{{url('groupes')}}"> -Gestion des groupe</a></span></h3>
       <hr/>
-      <div class="prospect-info"> G1. </div>
-      <h3>Produits & Services : <span><a> - Gestion des produits/services</a></span></h3>
+      <div class="prospect-info"> @if(! $monGroupe) / @else {{$monGroupe->LibGrp}}. @endif </div>
+      <h3>Produits & Services : <span><a href="{{url('produits')}}"> - Gestion des produits/services</a></span></h3>
       <hr/>
-      <div class="prospect-info"> G1. </div>
+      <div class="prospect-info">
+        <div class="list-group">
+           @foreach ($produits as $produit)
+             <a href="#" class="list-group-item list-group-item-action"><i class=""></i> {{$produit->LibProd }} <i class="fa fa-clock-o"></i> {{$produit->typePrd }} </a>
+           @endforeach
+        </div>
+      </div>
     </div>
 
   </div>
@@ -73,5 +97,34 @@
 
 </section><!-- /.content -->
 
+<!--Update Prospect-->
+@include('layouts.modals.updateProspect')
+
+<!--Update Contact-->
+@include('layouts.modals.updateContact')
+
+  <div class="modal fade" id="ouiNonDebloque">
+    <div class="modal-dialog modal-lg modal-T1" >
+      <div class="modal-content">
+        <div class="modal-body">
+
+            <div class="row">
+              <div class="col-md-12">
+              <h2>Voullez vous vraiment debloquer ce prospect ?</h2>
+              </div>
+            </div>
+            <hr/>
+
+            <div class="row">
+              <div class="col-md-12">
+                <button class="col-md-6 btn btn-info" onclick="location.href='{{url('debloquerProspect/'.$prospect->id)}}'">Oui</button>
+                <button class="col-md-6 btn btn-danger" data-dismiss="modal">Non</button>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 
 @endsection

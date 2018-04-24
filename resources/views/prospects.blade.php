@@ -68,7 +68,7 @@
               <tr>
                 <th><input type="checkbox"/></th>
                 <th>08.16.0380/17</th>
-                <th><a href="#" data-toggle="popover" title="Koonouz Store" data-content="voici la toute dernier remarque sur ce prospect ... " title="Free Web tutorials">Koonouz Store</a> <span style="color:#848484;"><br/> 12 Rue mohamed fellah <br/> 16026 Alger</span></th>
+                <th><a href="#" data-toggle="popover" title="Koonouz Store" data-content="voici la toute dernier remarque sur ce prospect ... " title="Details">Koonouz Store</a> <span style="color:#848484;"><br/> 12 Rue mohamed fellah <br/> 16026 Alger</span></th>
                 <th style="background-color:#60ce4c;font-size: 25px;color: white;">4</th>
                 <th>BENOTHMAN Yasmin<span style="color:#848484;"><br/> administration@koonouz.com <br/> 06.65.67.49.43</span></th>
                 <th>Marketing digital</th>
@@ -141,7 +141,6 @@
 
 <!--Nouveau Prospect-->
 @include('layouts.modals.createProspect')
-
 
 <!--Nouveau Contact-->
 @include('layouts.modals.createContact')
