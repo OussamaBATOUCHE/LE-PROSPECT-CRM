@@ -34,10 +34,23 @@ Route::get('/groupe_delete/{champ}','GroupeController@destroy');
 Route::get('/bloquerProspect/{id}','ProspectController@bloquer');
 Route::get('/debloquerProspect/{id}','ProspectController@debloquer');
 
+Route::get('/prospectsBloques/{bloque}','ProspectController@get');
+
+Route::get('/priorites','PrioriteController@get');
+Route::get('/priorite_delete/{priorite}','PrioriteController@destroy');
+
+Route::get('/etats','EtatController@get');
+Route::get('/etat_delete/{etat}','EtatController@destroy');
 
 /* --- POST --- */
 
 Route::post('/createScore','ScoreController@create');
+
+Route::post('/createPriorite','PrioriteController@create');
+Route::patch('/updatePriorite/{priorite}', 'PrioriteController@update');
+
+Route::post('/createEtat','EtatController@create');
+Route::patch('/updateEtat/{etat}', 'EtatController@update');
 
 Route::post('/updateProfile','Controller@updateProfile');
 
@@ -70,9 +83,6 @@ Route::get('/produits','ProduitController@get');
 Route::get('/produit_delete/{produit}','ProduitController@destroy');
 
 Route::get('/prospects','ProspectController@get');
-
-
-
 
 
 

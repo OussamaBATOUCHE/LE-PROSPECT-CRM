@@ -32,14 +32,29 @@
                   <span class="">Produits et Service</span>
                 </div>
             </div>
-            <div class="row container" style="text-align:center" onclick="alert('Cette fonctionnalite n\'est pas encore disponibel. ')">
+            <div class="row container" style="text-align:center" onclick="location.href ='{{url('etats')}}'">
+                <div class="col-md-10 alert alert-oussama">
+                  <span class="">Etats des taches</span>
+                </div>
+            </div>
+            <div class="row container" style="text-align:center" onclick="location.href ='{{url('priorites')}}'">
+                <div class="col-md-10 alert alert-oussama">
+                  <span class="">Priorites des taches</span>
+                </div>
+            </div>
+            <div class="row container" style="text-align:center" onclick="alert('Cette fonctionnalite n\'est pas encore desponibel. ')">
                 <div class="col-md-10 alert alert-oussama">
                   <span class="">Templates Emails</span>
                 </div>
             </div>
-            <div class="row container" style="text-align:center" onclick="alert('Cette fonctionnalite n\'est pas encore disponibel. ')">
+            <div class="row container" style="text-align:center" onclick="alert('Cette fonctionnalite n\'est pas encore desponibel. ')">
                 <div class="col-md-10 alert alert-oussama">
                   <span class="">Messages</span>
+                </div>
+            </div>
+            <div class="row container" style="text-align:center" onclick="location.href ='{{url('prospectsBloques/1')}}'">
+                <div class="col-md-10 alert alert-oussama">
+                  <span class="">Prospect Bloqués</span>
                 </div>
             </div>
   </section>

@@ -65,7 +65,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              {{-- <tr>
                 <th><input type="checkbox"/></th>
                 <th>08.16.0380/17</th>
                 <th><a href="#" data-toggle="popover" title="Koonouz Store" data-content="voici la toute dernier remarque sur ce prospect ... " title="Details">Koonouz Store</a> <span style="color:#848484;"><br/> 12 Rue mohamed fellah <br/> 16026 Alger</span></th>
@@ -90,7 +90,7 @@
                   <a class="btn btn-info col"><i class="fa fa-plus-square"></i></a>
                   <a class="btn btn-info col"><i class="fa fa-calendar"></i></a>
                 </th>
-              </tr>
+              </tr> --}}
               @php
                 $i = 0 ;
               @endphp
@@ -98,9 +98,9 @@
               <tr>
                 <th><input type="checkbox"/></th>
                 <th>{{$prospect->codeProsp}}</th>
-                <th><a href="detailsProspect/{{$prospect->id}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{$prospect->description}}">{{$prospect->societe}}</a> <span style="color:#848484;"><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
-                <th style="background-color:{{$infosProsp[$i]["couleur"]}};" >{{$infosProsp[$i]["score"]}} <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{$infosProsp[$i]["remarque"]}}"></i></th>
-                <th>{{$prospect->genre}}.{{$prospect->nom}} {{$prospect->prenom}} <span style="color:#848484;"><br/> {{$prospect->email}} <br/> {{$prospect->tele1}}</span></th>
+                <th class="sub-info"><a href="{{url('detailsProspect/'.$prospect->id)}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{$prospect->description}}">{{$prospect->societe}}</a> <span><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
+                <th style="background-color:{{$infosProsp[$i]["couleur"]}};" > <span class="text-white">{{$infosProsp[$i]["score"]}}</span> <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{$infosProsp[$i]["remarque"]}}"></i></th>
+                <th class="sub-info">{{$prospect->genre}}.{{$prospect->nom}} {{$prospect->prenom}} <span><br/> {{$prospect->email}} <br/> {{$prospect->tele1}}</span></th>
                 <th>{{$infosProsp[$i]["champActiv"]}}</th>
                 <th>
 
@@ -126,7 +126,7 @@
                 </th>
                 <th>
                   <a class="btn btn-info col" title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}})" data-toggle="modal" data-target="#nouveauContact"><i class="fa fa-plus-square"></i></a>
-                  <a class="btn btn-info col" title="Programmer une Tache"><i class="fa fa-calendar"></i></a>
+                  <a class="btn btn-info col" title="Programmer une Tache"  data-toggle="modal" data-target="#nouvelleTache"><i class="fa fa-calendar"></i></a>
                 </th>
               @php $i++; @endphp
               @endforeach
@@ -147,6 +147,9 @@
 
 <!--Lire et Modifier Contact-->
 @include('layouts.modals.updateContact')
+
+<!--Nouvelle taches-->
+@include('layouts.modals.createTache')
 
 <script>
 

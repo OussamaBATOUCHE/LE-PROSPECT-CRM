@@ -8,9 +8,10 @@
 
 .alert-oussama{
   color: #ffffff;
-  background-color: #636363;
-  border-color: #ffffff;
+  background-color: #00BCD4;
+  /* border-color: #ffffff; */
   border-radius: 0px;
+  font-size: 20px;
 }
 .alert-oussama:hover{
   cursor: pointer;
@@ -97,4 +98,12 @@ textarea{
 }
 hr{
   margin-top: 10px;
+}
+th.sub-info > span{
+  color:#848484;
+  font-size: 12px;
+}
+.text-white{
+  color: white;
+    font-size: 20px;
 }

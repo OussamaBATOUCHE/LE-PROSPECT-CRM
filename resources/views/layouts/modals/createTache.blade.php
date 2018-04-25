@@ -1,34 +1,24 @@
-<div class="modal fade" id="nouveauContact">
+<div class="modal fade" id="nouvelleTache">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h3 class="modal-title" style="color:white" >Nouveau contact - <span id="societe"></span></h3>
+        <h3 class="modal-title" style="color:white" >Nouvelle tache - <span id="societe"></span></h3>
       </div>
       <div class="modal-body">
 
-          <div class="row">
 
-            <div class="col-md-12">
-
-                <button id="phone" class=" btn  col-md-4 btn-info" type="button" name="button" onclick="active('phone')"><i class="fa fa-phone"></i> Appel</button>
-                <button id="mail" class=" btn col-md-4" type="button" name="button" onclick="active('mail')"><i class="fa fa-envelope-o"></i> Email</button>
-                <button id="map" class=" btn col-md-4" type="button" name="button" onclick="active('map')"><i class="fa fa-map"></i> Sur terain</button>
-
-            </div>
-
-          </div>
           <hr/>
 
-                <form id="cntct-form" method="post" action="createContact/0/phone">
+                <form id="cntct-form" method="post" action="createTache/0/phone">
                   @csrf
                   <div class="row">
                     <div class="form-group col-md-8">
-                      <input type="text" class="form-control" name="titre" placeholder="Titre">
+                      <input type="text" class="form-control" name="titre" placeholder="Object">
                     </div>
 
                     <div class="form-group col-md-4">
                       <select class="form-control" name="score" required>
-                        <option disabled selected>Score (Qualification)</option>
+                        <option disabled selected>Commercial</option>
                         @foreach ($tousLeScores as $score)
                           <option value="{{$score->id}}" >{{$score->LibScore}}</option>
                         @endforeach
@@ -37,7 +27,7 @@
                   </div>
                   <div class="row">
                     <div class="form-group col-md-4">
-                      <label for="">Date de contact</label>
+                      <label for="">Date de tache</label>
                       <input class="form-control" type="date" name="date" min="2018-01-01"  required>
                     </div>
                     <div id="heure" class="form-group col-md-2">
@@ -78,16 +68,16 @@
       $("#js").hide();
 
       var idP;
-      chargeNouveauContact = function(societe , idProsp) {
+      chargeNouveauTache = function(societe , idProsp) {
             $('#societe').html(societe);
-            $('#cntct-form').attr('action',"createContact/0/phone/"+idProsp);
+            $('#cntct-form').attr('action',"createTache/0/phone/"+idProsp);
             idP = idProsp;
       };
 
       active = function(button){
           $("#"+button).addClass("btn-info");
           $("#"+button+"-form").show();
-          $('#cntct-form').attr('action',"createContact/0/"+button+"/"+idP);
+          $('#cntct-form').attr('action',"createTache/0/"+button+"/"+idP);
           if (button == "phone") {
             $("#map").removeClass("btn-info");  $(".terain").remove();
             $("#mail").removeClass("btn-info"); $(".mail").remove(); $("#js").hide();

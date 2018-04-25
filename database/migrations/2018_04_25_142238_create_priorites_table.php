@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTachesTable extends Migration
+class CreatePrioritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateTachesTable extends Migration
      */
     public function up()
     {
-        Schema::create('taches', function (Blueprint $table) {
+        Schema::create('priorites', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idUser');
-            $table->integer('idPrio');
-            $table->string('titre');
-            $table->string('remarque');
-            $table->date('dateDebut');
-            $table->date('dateFin');
+            $table->integer('num');
+            $table->string('libPrio');
+            $table->string('couleur');
         });
     }
 
@@ -31,6 +28,6 @@ class CreateTachesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('taches');
+        Schema::dropIfExists('priorites');
     }
 }

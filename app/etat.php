@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class tache extends Model
+class etat extends Model
 {
-    public $timestamps = false;
+      public $timestamps = false;
 }
