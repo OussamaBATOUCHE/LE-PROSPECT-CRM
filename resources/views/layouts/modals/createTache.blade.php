@@ -38,28 +38,34 @@
                     </div>
                     <div class="form-group col-md-4">
                       <select class="form-control select2 select2-hidden-accessible" name="produits[]" required multiple="" data-placeholder="Produits/Services" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                        @foreach ($tousLesProduits as $produit)
-                          <option value="{{$produit->id}}" >{{$produit->LibProd}}</option>
+                        @php $b = ""; @endphp
+                        @foreach ($tousLesProduits as $produitTous)
+                          @foreach ($produitsPropose as $produit)
+                            @if ($produit->idPrd == $produitTous->id && $produit->idProsp == $prospect->id ) @php $b ="selected"; @endphp @endif
+                          @endforeach
+                          <option value="{{$produitTous->id}}" @php echo $b ; @endphp >{{$produitTous->LibProd}}</option>
+                           @php $b =""; @endphp
                         @endforeach
+
                       </select>
                     </div>
                     <div class="form-group col-md-4 phone">
-                      <select class="form-control" name="ES" required>
-                        <option disabled selected>Appel</option>
-                        <option value="1">Entrant</option>
-                        <option value="0">Sortant</option>
+                      <select class="form-control" name="priorite" required>
+                        <option disabled selected>Priorite</option>
+                        @foreach ($tousLesPriorites as $priorite)
+                          <option value="{{$priorite->id}}" >{{$priorite->libPrio}}</option>
+                        @endforeach
                       </select>
                     </div>
                   </div>
                   <div class="form-group">
-                      <textarea class="textarea form-control" name="remarque" rows="8" style="width:100%; " placeholder="Contenu ..." required></textarea>
+                      <textarea class="textarea form-control" name="remarque" rows="8" style="width:100%; " placeholder="Remarque ..." required></textarea>
                   </div>
                   <input id="typeCntct" type="hidden" name="type" value="A">
 
       </div>
       <div class="modal-footer">
-        <input id="submit" class="btn btn-primary col-md-4" type="submit" value="Ajouter">
-        <input id="js" class="btn btn-success col-md-2" type="submit" value="Enregistrer" name="jsave">
+        <input id="submit" class="btn btn-primary col-md-4" type="submit" value="Affecter">
         <button class="btn btn-danger" data-dismiss="modal">Fermer</button>
         </form>
       </div>
@@ -73,7 +79,7 @@
       //c'est pour le dater par interval
       $('#reservation').daterangepicker();
 
-      $("#js").hide();
+
 
       var idP;
       chargeNouveauTache = function(societe , idProsp) {
