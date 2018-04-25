@@ -53,7 +53,18 @@
           @endphp
           @foreach ($contacts as $contact)
             @if ($i != 5)
-              <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#updateContact">
+              <a href="#" class="list-group-item list-group-item-action"
+                 onclick="chargeUpdateContact( {{$contact->id}},
+                                            '{{$contact->type}}',
+                                            '{{str_replace("'","\'",$contact->remarque)}}',
+                                            '{{$contact->date}}',
+                                            '{{str_replace("'","\'",$prospect->societe)}}',
+                                            {{$prospect->id}},
+                                            {{ json_encode($cntct_infos[$i]) }},
+                                            '{{$userContact[$i]["name"]." ".$userContact[$i]["prenom"]}}',
+                                            '{{$score->LibScore}}'
+                                          )"
+                 data-toggle="modal" data-target="#updateContact">
                 @if ($contact->type == "A")
                 <i class="fa fa-phone"></i> Appel
               @else

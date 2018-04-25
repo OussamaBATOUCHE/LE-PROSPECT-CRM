@@ -121,7 +121,7 @@
           }else {
             $("#phone").removeClass("btn-info"); $(".phone").remove();
             $("#mail").removeClass("btn-info");  $(".mail").remove(); $("#js").hide();
-
+            $("#submit").attr('value','Ajouter');
           }
       };
 

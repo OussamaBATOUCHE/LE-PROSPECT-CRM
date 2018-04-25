@@ -98,3 +98,11 @@ textarea{
 hr{
   margin-top: 10px;
 }
+th.sub-info > span{
+  color:#848484;
+  font-size: 12px;
+}
+.text-white{
+  color: white;
+    font-size: 20px;
+}

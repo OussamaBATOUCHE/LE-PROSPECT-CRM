@@ -20,9 +20,9 @@ use App\cntct_terain;
 
 class ProspectController extends Controller
 {
-    public function get()
+    public function get($bloque = 0)
     {
-          $prospects = Prospect::where('bloquer',0)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
+          $prospects = Prospect::where('bloquer',$bloque)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
           $tousLesScores = Score::get();//pour un nouveau contact/prospect
           $tousLesChampActiv = ChampActivite::get();
           $tousLesGroupes = Groupe::get();
@@ -237,16 +237,12 @@ class ProspectController extends Controller
     }
 
     public function bloquer($id){
-      //return 0;
       //yak 9oulna prospect jamais la yetsuprimas
       $prospect = Prospect::where('id',$id)->update(["bloquer"=>1]);
-      return redirect('detailsProspect/'.$id)->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Le prospect est bloqué (vous pouvez le debloquer dans la <a href"prospectBloques">liste des prospect bloqués</a>)</div>');
+      return redirect('detailsProspect/'.$id)->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Le prospect est bloqué (vous pouvez le debloquer dans la <a href="'.url('prospectsBloques/1').'">liste des prospect bloqués</a>)</div>');
     }
 
-
     public function debloquer($id){
-      //return 0;
-      //yak 9oulna prospect jamais la yetsuprimas
       $prospect = Prospect::where('id',$id)->update(["bloquer"=>0]);
       return redirect('detailsProspect/'.$id)->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Le prospect est Debloquer.</div>');
     }
@@ -262,13 +258,30 @@ class ProspectController extends Controller
       $champActById = champActivite::where('id',$prospect->idChampAct)->first();
       $derniersContacts = Contact::where('idProsp',$prospect->id)->orderByRaw('id DESC')->get();
 
+      $cntct=array();
+      if ($derniersContacts) { //si un contact exist deja , dans le cas de creation ce code ne s'execute pas .
+        foreach ($derniersContacts as $derCntct) {
+          switch ($derCntct->type) {
+
+            case 'A':
+              $cntct[] = cntct_appel::where('idCntct',$derCntct->id)->first();//c sur que y'a q'un seul appel pour un contact
+              break;
+            case 'E':
+              $cntct[] = cntct_email::where('idCntct',$derCntct->id)->first();//c sur que y'a q'un seul mail pour un contact
+              break;
+              default://return $derCntct->type; break;
+          }
+        }
+
+      }
+
       $produitsPros = Prospect_produit::where('idProsp',$prospect->id)->select('idPrd')->get();
       $pr = array();
       foreach ($produitsPros as $prs) {
            $pr[] = $prs->idPrd ;
        }
-       //dd($pr);
-      $produits = DB::table('Produits')->whereIn('id',$pr)->get();//sa marche pas
+
+      $produits = DB::table('Produits')->whereIn('id',$pr)->get();//et sa marche
 
       $us = array();
       foreach ($derniersContacts as $uss) {
@@ -289,6 +302,7 @@ class ProspectController extends Controller
                                     ->with('monGroupe',$monGroupe)
                                     ->with('contacts',$derniersContacts)
                                     ->with('userContact',$us)
+                                    ->with('cntct_infos',$cntct)
                                     ->with('produits',$produits)
                                     ->with('scores',$tousLesScores)
                                     ->with('lesChampActiv',$tousLesChampActiv)

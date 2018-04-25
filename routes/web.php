@@ -34,6 +34,8 @@ Route::get('/groupe_delete/{champ}','GroupeController@destroy');
 Route::get('/bloquerProspect/{id}','ProspectController@bloquer');
 Route::get('/debloquerProspect/{id}','ProspectController@debloquer');
 
+Route::get('/prospectsBloques/{bloque}','ProspectController@get');
+
 
 /* --- POST --- */
 
