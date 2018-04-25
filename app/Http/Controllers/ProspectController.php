@@ -239,7 +239,7 @@ class ProspectController extends Controller
     public function bloquer($id){
       //yak 9oulna prospect jamais la yetsuprimas
       $prospect = Prospect::where('id',$id)->update(["bloquer"=>1]);
-      return redirect('detailsProspect/'.$id)->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Le prospect est bloqué (vous pouvez le debloquer dans la <a href="'.url('prospectsBloques/1').'">liste des prospect bloqués</a>)</div>');
+      return redirect('detailsProspect/'.$id)->with('status', '<div class="alert alert-danger alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Le prospect est bloqué (vous pouvez le debloquer dans la <a href="'.url('prospectsBloques/1').'">liste des prospect bloqués</a>)</div>');
     }
 
     public function debloquer($id){

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class tache extends Model
 {
-    //
+    public $timestamps = false;
 }

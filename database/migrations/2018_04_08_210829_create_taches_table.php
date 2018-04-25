@@ -19,7 +19,6 @@ class CreateTachesTable extends Migration
             $table->integer('idPrio');
             $table->string('titre');
             $table->string('remarque');
-            $table->integer('priorite');
             $table->date('dateDebut');
             $table->date('dateFin');
         });

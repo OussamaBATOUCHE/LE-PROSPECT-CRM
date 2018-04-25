@@ -126,7 +126,7 @@
                 </th>
                 <th>
                   <a class="btn btn-info col" title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}})" data-toggle="modal" data-target="#nouveauContact"><i class="fa fa-plus-square"></i></a>
-                  <a class="btn btn-info col" title="Programmer une Tache"><i class="fa fa-calendar"></i></a>
+                  <a class="btn btn-info col" title="Programmer une Tache"  data-toggle="modal" data-target="#nouvelleTache"><i class="fa fa-calendar"></i></a>
                 </th>
               @php $i++; @endphp
               @endforeach
@@ -147,6 +147,9 @@
 
 <!--Lire et Modifier Contact-->
 @include('layouts.modals.updateContact')
+
+<!--Nouvelle taches-->
+@include('layouts.modals.createTache')
 
 <script>
 

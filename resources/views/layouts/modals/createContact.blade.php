@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h3 class="modal-title"  style="color:white" >Nouveau contact - <span id="societe"></span></h3>
+        <h3 class="modal-title" style="color:white" >Nouveau contact - <span id="societe"></span></h3>
       </div>
       <div class="modal-body">
 
