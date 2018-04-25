@@ -27,6 +27,7 @@ class ProspectController extends Controller
           $tousLesChampActiv = ChampActivite::get();
           $tousLesGroupes = Groupe::get();
           $tousLesProduits = Produit::get();
+          $tousLesUsers = User::where('type',0)->get();
 
           $infosProspect = array();//pour chaque prospect , on recupere toute autre infos
 
@@ -87,7 +88,8 @@ class ProspectController extends Controller
                                   ->with('tousLesChampActiv',$tousLesChampActiv)
                                   ->with('tousLesGroupes',$tousLesGroupes)
                                   ->with('tousLesProduits',$tousLesProduits)
-                                  ->with('infosProsp',$infosProspect);
+                                  ->with('infosProsp',$infosProspect)
+                                  ->with('tousLesUsers',$tousLesUsers);
     }
 
     public function create(Request $rq){

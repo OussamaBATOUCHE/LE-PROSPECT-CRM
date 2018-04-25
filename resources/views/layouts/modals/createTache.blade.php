@@ -19,24 +19,29 @@
                     <div class="form-group col-md-4">
                       <select class="form-control" name="score" required>
                         <option disabled selected>Commercial</option>
-                        @foreach ($tousLeScores as $score)
-                          <option value="{{$score->id}}" >{{$score->LibScore}}</option>
+                        @foreach ($tousLesUsers as $user)
+                          <option value="{{$user->id}}" >{{$user->Name." ".$user->prenom}}</option>
                         @endforeach
                       </select>
                     </div>
                   </div>
                   <div class="row">
+                    <!-- Date range -->
                     <div class="form-group col-md-4">
-                      <label for="">Date de tache</label>
-                      <input class="form-control" type="date" name="date" min="2018-01-01"  required>
+                      <div class="input-group">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="reservation">
+                      </div>
+                      <!-- /.input group -->
                     </div>
-                    <div id="heure" class="form-group col-md-2">
-                      <label for="">Heure</label>
-                      <input class="form-control" type="time" name="heure" value="" required>
-                    </div>
-                    <div class="form-group col-md-2 phone">
-                      <label for="">Duree - <a> <i class="fa fa-phone"></i> Simuler</a></label>
-                      <input class="form-control" type="time" name="duree" value="" required>
+                    <div class="form-group col-md-4">
+                      <select class="form-control select2 select2-hidden-accessible" name="produits[]" required multiple="" data-placeholder="Produits/Services" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        @foreach ($tousLesProduits as $produit)
+                          <option value="{{$produit->id}}" >{{$produit->LibProd}}</option>
+                        @endforeach
+                      </select>
                     </div>
                     <div class="form-group col-md-4 phone">
                       <select class="form-control" name="ES" required>
@@ -65,6 +70,9 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+      //c'est pour le dater par interval
+      $('#reservation').daterangepicker();
+
       $("#js").hide();
 
       var idP;
