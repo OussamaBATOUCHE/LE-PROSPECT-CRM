@@ -17,6 +17,7 @@ use App\User;
 use App\cntct_email;
 use App\cntct_appel;
 use App\cntct_terain;
+use App\Priorite;
 
 class ProspectController extends Controller
 {
@@ -28,6 +29,9 @@ class ProspectController extends Controller
           $tousLesGroupes = Groupe::get();
           $tousLesProduits = Produit::get();
           $tousLesUsers = User::where('type',0)->get();
+          //pour form ajout tache et recuperation des produit supposes au moment de creation de se prospect
+          $produitsPropose = Prospect_produit::get();
+          $tousLesPriorites = Priorite::get();
 
           $infosProspect = array();//pour chaque prospect , on recupere toute autre infos
 
@@ -89,7 +93,9 @@ class ProspectController extends Controller
                                   ->with('tousLesGroupes',$tousLesGroupes)
                                   ->with('tousLesProduits',$tousLesProduits)
                                   ->with('infosProsp',$infosProspect)
-                                  ->with('tousLesUsers',$tousLesUsers);
+                                  ->with('tousLesUsers',$tousLesUsers)
+                                  ->with('produitsPropose',$produitsPropose)
+                                  ->with('tousLesPriorites',$tousLesPriorites);
     }
 
     public function create(Request $rq){
