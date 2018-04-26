@@ -23,7 +23,7 @@ class EtatController extends Controller
   public function create(Request $rq){
 
     $etat = new Etat ;
-
+    $etat->num = $rq->num;
     $etat->LibEtat = $rq->LibEtat;
     $etat->save();
     return redirect('/etats')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');

@@ -17,6 +17,7 @@
             <thead>
               <tr>
                 <th>#</th>
+                <th>Numero</th>
                 <th>Libelle</th>
                 <th></th>
               </tr>
@@ -25,11 +26,12 @@
               @foreach($etats as $etat)
               <tr>
                 <td>{{$etat->id}}</td>
+                <td>{{$etat->num}}</td>
                 <td>{{$etat->LibEtat}}</td>
                 @php
                   $lib = str_replace("'","\'",$etat->LibEtat);
                 @endphp
-                <td><a class="btn btn-warning fa fa-pencil" onclick="charge({{$etat->id}},'{{$lib}}')" data-toggle="modal" data-target="#updateetatModal" ></a><a class="btn btn-danger fa fa-trash" href="{{url('etat_delete/'.$etat->id)}}"></a></td>
+                <td><a class="btn btn-warning fa fa-pencil" onclick="charge({{$etat->id}},'{{$lib}}',{{$etat->num}})" data-toggle="modal" data-target="#updateetatModal" ></a><a class="btn btn-danger fa fa-trash" href="{{url('etat_delete/'.$etat->id)}}"></a></td>
               </tr>
               @endforeach
             </tbody>

@@ -16,7 +16,6 @@ class CreateTacheEtatsTable extends Migration
         Schema::create('tache_etats', function (Blueprint $table) {
             $table->integer('idTache');
             $table->integer('idEtat');
-            $table->date('date');
             $table->timestamps();
         });
     }

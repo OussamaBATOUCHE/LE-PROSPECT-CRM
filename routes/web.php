@@ -42,6 +42,8 @@ Route::get('/priorite_delete/{priorite}','PrioriteController@destroy');
 Route::get('/etats','EtatController@get');
 Route::get('/etat_delete/{etat}','EtatController@destroy');
 
+
+
 /* --- POST --- */
 
 Route::post('/createScore','ScoreController@create');
@@ -61,7 +63,7 @@ Route::patch('/updateGroupe/{champ}', 'GroupeController@update');
 
 Route::post('/updateProspect/{prospect}', 'ProspectController@update');
 
-
+Route::post('createTache/{id}','TacheController@create');
 
 
 /*  END  List route oussama  */

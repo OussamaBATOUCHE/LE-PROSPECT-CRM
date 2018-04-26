@@ -11,6 +11,10 @@
           @csrf
           {{ method_field('PATCH') }}
           <div class="form-group">
+            <label class="form-control-label">Numero</label>
+            <input id="num" type="text" class="form-control" name="num">
+          </div>
+          <div class="form-group">
             <label class="form-control-label">Libelle</label>
             <input id="lib" type="text" class="form-control" name="LibEtat">
           </div>
@@ -26,10 +30,11 @@
 @endif
 
 <script>
-function charge(id,lib) {
+function charge(id,lib,num) {
 
   document.getElementById('updateEtat').action="updateEtat/"+id;
   document.getElementById('lib').value=lib;
+  document.getElementById('num').value=num;
 
 }
 </script>
