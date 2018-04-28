@@ -107,3 +107,105 @@ th.sub-info > span{
   color: white;
     font-size: 20px;
 }
+
+#showMessagesModal .row{
+  margin: 0px;
+}
+
+#showMessagesModal .col-md-4{
+  background: #222d32;
+  padding: 0px;
+}
+
+#showMessagesModal ul{
+  list-style:none;
+  padding-left: initial;
+  display: block;
+  margin: 0px;
+}
+
+#showMessagesModal li{
+    padding-left: 15px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+#showMessagesModal li:hover{
+    background-color: #23527c;
+}
+
+
+
+#showMessagesModal a{
+  color: #b8c7ce;
+}
+
+
+#showMessagesModal h4{
+  margin-bottom: 0px;
+}
+
+
+#showMessagesModal small{
+      font-size: 75%;
+    padding-left: 25px;
+}
+
+
+/* Chat containers */
+.container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    width : initial;
+}
+
+/* Darker chat container */
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
+    width : initial;
+}
+
+.darker p{
+  text-align: right;
+}
+
+/* Clear floats */
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Style images */
+.container img {
+    float: left;
+    max-width: 60px;
+    width: 8%;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+/* Style the right image */
+.container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+}
+
+/* Style time text */
+.time-right {
+    float: right;
+    color: #aaa;
+}
+
+/* Style time text */
+.time-left {
+    float: left;
+    color: #999;
+}
+
+
