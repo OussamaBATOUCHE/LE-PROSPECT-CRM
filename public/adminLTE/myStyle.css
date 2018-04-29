@@ -196,6 +196,14 @@ th.sub-info > span{
     margin-right:0;
 }
 
+
+/* myContent for scroll*/
+.myContent {
+    overflow: overlay;
+    height: 275px;
+    padding-right: inherit;
+    /*border: #000000 1px solid;*/
+}
 /* Style time text */
 .time-right {
     float: right;
