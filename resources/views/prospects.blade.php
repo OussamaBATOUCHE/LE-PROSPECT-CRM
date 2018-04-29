@@ -3,7 +3,7 @@
 @section('content')
 <section class="content">
   <div style="text-align:right;float: right">
-  <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect()" ><i class="fa fa-plus-square"></i>&nbsp; Taches en groupe</a>
+  <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect({{$tousLesProduits}})" ><i class="fa fa-plus-square"></i>&nbsp; Taches en groupe</a>
   <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-plus-square"></i>&nbsp; Ajouter un prospect</a>
 
   </div>
@@ -54,7 +54,7 @@
           <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>#</th>
+                <th><input id="checkAll" type="checkbox"  style="color:red"/></th>
                 <th>Code Prospect</th>
                 <th>Societé</th>
                 <th>Score</th>
@@ -84,7 +84,7 @@
               @endphp
               @foreach($prospects as $prospect)
               <tr>
-                <th><input class="check" name="prospects[]" type="checkbox" value="{{$prospect->id}}"/></th>
+                <th><input class="check" type="checkbox" value="{{$prospect->id}}"/></th>
                 <th>{{$prospect->codeProsp}}</th>
                 <th class="sub-info"><a href="{{url('detailsProspect/'.$prospect->id)}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{$prospect->description}}">{{$prospect->societe}}</a> <span><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
                 <th style="background-color:{{$infosProsp[$i]["couleur"]}};" > <span class="text-white">{{$infosProsp[$i]["score"]}}</span> <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{$infosProsp[$i]["remarque"]}}"></i></th>
@@ -143,12 +143,33 @@
 
 
     $(document).ready(function(){
+        var allSelected = false;
         $('[data-toggle="popover"]').popover({ trigger: "hover" , html: true }); // and now my popover accept hmtl text ^^
 
         $( "#btn-filtrer" ).click(function() {
           $('input[aria-controls="example1"]').val("hotel");
           //alert( "Handler for .click() called." );
         });
+
+        $("#checkAll").click(function() {
+          if(allSelected == true ){
+            //alert('helo');
+            $('.check').each(function(){
+              //alert(this.value);
+                  this.checked = false;
+            });
+            allSelected = false;
+          }else{
+            //alert('kldsjflf');
+            $('.check').each(function(){
+                this.checked = true;
+            });
+            allSelected = true;
+          }
+
+        });
+
+
 
     });
 
