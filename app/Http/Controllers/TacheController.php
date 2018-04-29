@@ -11,7 +11,7 @@ use App\Etat;
 
 class TacheController extends Controller
 {
-    public function create(Request $rq , $id)
+    public function create(Request $rq , $id=0)
     {
       $tache = new Tache ;
       $tache->idUser = $rq->user;
@@ -46,7 +46,7 @@ class TacheController extends Controller
       }
 
       //definition de/des prospect(s) concerné(s) par cette tache .
-      if ($rq->prospects == null) {
+      if ($id == 0) {
         //donc sa concerne un seul prospect
         $tache_prospect = new Tache_prospect;
         $tache_prospect->idTach = $tache->id;

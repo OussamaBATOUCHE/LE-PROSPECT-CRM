@@ -84,6 +84,12 @@
             idP = idProsp;
       };
 
+      chargeNouvelleTachePlusieurProspect = function(){
+         foreach ($("input") as $key => $value) {
+           # code...
+         }
+      };
+
 
 
     });
