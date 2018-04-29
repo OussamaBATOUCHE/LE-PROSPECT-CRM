@@ -1,3 +1,6 @@
+@include('layouts.modals.updateProfil')
+@include('layouts.modals.showMessages')
+
 <header class="main-header">
   <!-- Logo -->
   <span  class="logo">
@@ -19,10 +22,10 @@
         <li class="dropdown messages-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>
-            <span class="label label-success">4</span>
+            <span class="label label-success">2</span>
           </a>
           <ul class="dropdown-menu">
-            <li class="header">Vous avez 4 messages</li>
+            <li class="header">Vous avez 2 messages</li>
             <li>
               <!-- inner menu: contains the actual data -->
               <ul class="menu">
@@ -33,7 +36,20 @@
                     </div>
                     <h4>
                       Support Team
-                      <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                      <small><i class="fa fa-clock-o"></i> 24/03 23H30</small>
+                    </h4>
+                    <p>c terminer kho</p>
+                  </a>
+                </li>
+                <!-- end message -->
+                <li><!-- start message -->
+                  <a href="#">
+                    <div class="pull-left">
+                      <img src="adminLTE/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                    </div>
+                    <h4>
+                      Bensaib Kamel
+                      <small><i class="fa fa-clock-o"></i> 24/03 22H27</small>
                     </h4>
                     <p>Why not buy a new awesome theme?</p>
                   </a>
@@ -42,7 +58,7 @@
 
               </ul>
             </li>
-            <li class="footer"><a href="#">Afficher tous les messages</a></li>
+            <li class="footer"><a class="btn btn-success" data-toggle="modal" data-target="#showMessagesModal">Afficher tous les messages</a></li>
           </ul>
         </li>
         <!-- Notifications: style can be found in dropdown.less -->
@@ -151,4 +167,6 @@
     </div>
   </nav>
 </header>
-@include('layouts.modals.updateProfil')
+
+
+
