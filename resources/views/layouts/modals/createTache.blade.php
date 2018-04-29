@@ -37,15 +37,7 @@
                       <!-- /.input group -->
                     </div>
                     <div class="form-group col-md-4">
-                      <select class="form-control select2 select2-hidden-accessible" name="produits[]" required multiple="" data-placeholder="Produits/Services" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                        @php $b = ""; @endphp
-                        @foreach ($tousLesProduits as $produitTous)
-                          @foreach ($produitsPropose as $produit)
-                            @if ($produit->idPrd == $produitTous->id && $produit->idProsp == $prospect->id ) @php $b ="selected"; @endphp @endif
-                          @endforeach
-                          <option value="{{$produitTous->id}}" @php echo $b ; @endphp >{{$produitTous->LibProd}}</option>
-                           @php $b =""; @endphp
-                        @endforeach
+                      <select id="tchSlctPrd" class="form-control select2 select2-hidden-accessible " name="produits[]" required multiple="" data-placeholder="Produits/Services" style="width: 100%;" tabindex="-1" aria-hidden="true">
 
                       </select>
                     </div>
@@ -71,6 +63,8 @@
   </div>
 </div>
 
+@include('layouts.modals.noProspectSelected')
+
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -78,17 +72,43 @@
       $('#reservation').daterangepicker();
 
       var idP;
-      chargeNouvelleTache = function(societe , idProsp) {
+      chargeNouvelleTache = function(societe , idProsp , tousLesProduits , produit_prospect) {
             $('#cr-tache-societe').html(societe);
             $('#tache-form').attr('action',"createTache/"+idProsp);
             idP = idProsp;
-      };
+            var  i ,j;
+            var b = "";
+            var options="";
+            for(i = 0 ; i < tousLesProduits.length ; i++){
+              for( j = 0 ; j < produit_prospect.length ; j++){
+                if (b != "selected" && produit_prospect[j]['idPrd'] == tousLesProduits[i]['id'] && produit_prospect[j]['idProsp'] ==  idProsp ) {
+                  b = "selected";
+                }
+              }
 
-      chargeNouvelleTachePlusieurProspect = function(){
-         foreach ($("input") as $key => $value) {
-           # code...
-         }
+              options += '<option value="'+tousLesProduits[i]["id"]+'" '+b+' > '+tousLesProduits[i]["LibProd"]+' </option>';
+              b="";
+            }
+
+            $("#tchSlctPrd").html(options);
+
       };
+      chargeNouvelleTachePlusieurProspect = function(){
+        var b=false ;
+        $(".check").each(function(){
+          if(this.checked == true ){
+              b = true ;
+          }
+
+        });
+        if (b==false) {
+          $('#NoProspectSelected').modal('show');
+        }
+        else {
+          chargeNouvelleTache("Groupe",-1);
+          $('#nouvelleTache').modal('show');
+        }
+      }
 
 
 

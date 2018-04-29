@@ -3,7 +3,7 @@
 @section('content')
 <section class="content">
   <div style="text-align:right;float: right">
-  <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect()" data-toggle="modal" data-target="#nouvelleTache" ><i class="fa fa-plus-square"></i>&nbsp; Taches en groupe</a>
+  <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect()" ><i class="fa fa-plus-square"></i>&nbsp; Taches en groupe</a>
   <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-plus-square"></i>&nbsp; Ajouter un prospect</a>
 
   </div>
@@ -66,18 +66,6 @@
             </thead>
             <tbody>
               {{-- <tr>
-                <th><input type="checkbox"/></th>
-                <th>08.16.0380/17</th>
-                <th><a href="#" data-toggle="popover" title="Koonouz Store" data-content="voici la toute dernier remarque sur ce prospect ... " title="Details">Koonouz Store</a> <span style="color:#848484;"><br/> 12 Rue mohamed fellah <br/> 16026 Alger</span></th>
-                <th style="background-color:#60ce4c;font-size: 25px;color: white;">4</th>
-                <th>BENOTHMAN Yasmin<span style="color:#848484;"><br/> administration@koonouz.com <br/> 06.65.67.49.43</span></th>
-                <th>Marketing digital</th>
-                <th><a>03-04-2018</a></th>
-                <th>
-                  <a class="btn btn-info col"><i class="fa fa-plus-square"></i></a>
-                  <a class="btn btn-info col"><i class="fa fa-calendar"></i></a>
-                </th>
-              </tr>
               <tr>
                 <th><input type="checkbox"/></th>
                 <th>06.18.0706/18</th>
@@ -96,7 +84,7 @@
               @endphp
               @foreach($prospects as $prospect)
               <tr>
-                <th><input name="prospects[]" type="checkbox" value="{{$prospect->id}}"/></th>
+                <th><input class="check" name="prospects[]" type="checkbox" value="{{$prospect->id}}"/></th>
                 <th>{{$prospect->codeProsp}}</th>
                 <th class="sub-info"><a href="{{url('detailsProspect/'.$prospect->id)}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{$prospect->description}}">{{$prospect->societe}}</a> <span><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
                 <th style="background-color:{{$infosProsp[$i]["couleur"]}};" > <span class="text-white">{{$infosProsp[$i]["score"]}}</span> <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{$infosProsp[$i]["remarque"]}}"></i></th>
@@ -126,7 +114,7 @@
                 </th>
                 <th>
                   <a class="btn btn-info col" title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}})" data-toggle="modal" data-target="#nouveauContact"><i class="fa fa-plus-square"></i></a>
-                  <a class="btn btn-info col" title="Programmer une Tache" onclick="chargeNouvelleTache('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}})"  data-toggle="modal" data-target="#nouvelleTache"><i class="fa fa-calendar"></i></a>
+                  <a class="btn btn-info col" title="Programmer une Tache" onclick="chargeNouvelleTache('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}} , {{$tousLesProduits}} , {{$produitsPropose}})"  data-toggle="modal" data-target="#nouvelleTache"><i class="fa fa-calendar"></i></a>
                 </th>
               @php $i++; @endphp
               @endforeach
