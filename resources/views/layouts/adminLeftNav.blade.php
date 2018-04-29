@@ -27,7 +27,7 @@
         </a>
       </li>
       <li>
-        <a href="pages/widgets.html">
+        <a href="/taches">
           <i class="fa fa-calendar"></i> <span>Tâches</span>
         </a>
       </li>

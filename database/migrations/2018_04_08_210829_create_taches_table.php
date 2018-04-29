@@ -21,6 +21,7 @@ class CreateTachesTable extends Migration
             $table->string('remarque');
             $table->date('dateDebut');
             $table->date('dateFin');
+            $table->boolean('termine');
         });
     }
 
