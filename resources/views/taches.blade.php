@@ -33,17 +33,6 @@
               </tr>
             </thead>
             <tbody>
-              dsfsdfsdfsdqsd
-
-              <datalistf
-              dsqfdqs
-              dsqfdqsfqsd
-              @foreach (qf
-              fd as $element)
-
-              @endforeach>
-
-              </datalist>
               @php
                 $i = 0 ;
               @endphp
@@ -57,24 +46,9 @@
                 <th>{{$infosProsp[$i]["champActiv"]}}</th>
                 <th>
 
-                     @if ($infosProsp[$i]["cntct_user"] != "")
-                       <a href="" title="Mettre à joure"
-                          onclick="chargeUpdateContact( {{$infosProsp[$i]["idDernierCntct"]}},
-                                                        '{{$infosProsp[$i]["typeDernierCntct"]}}',
-                                                        '{{str_replace("'","\'",$infosProsp[$i]["remarqueDernierCntct"])}}',
-                                                        '{{$infosProsp[$i]["date"]}}',
-                                                        '{{str_replace("'","\'",$tache->societe)}}',
-                                                        {{$tache->id}},
-                                                        {{ json_encode($infosProsp[$i]["cntct_info"]) }},
-                                                        '{{$infosProsp[$i]["cntct_user"]}}',
-                                                        '{{$infosProsp[$i]["scoreLib"]}}'
-                                                      )"
-                          data-toggle="modal" data-target="#updateContact">
-                        {{$infosProsp[$i]["date"]}}
-                       </a>
-                     @else
+
                        Aucun Echange
-                     @endif
+
 
                 </th>
                 <th>

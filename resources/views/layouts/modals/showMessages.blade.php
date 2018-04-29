@@ -59,18 +59,16 @@
                   <p>Hey! I'm fine. Thanks for asking!</p>
                   <span class="time-left">11:01</span>
                 </div>
-                    
+
               </div>
 
               <div class="modal-footer" style="padding-left: 0px;width: 95%;">
-                <table width="110%">
-                  <tr>
-                    <td><input type="text" class="form-control" name="message" placeholder="Votre Message" required></td>
-                    <td><img src="adminLTE/dist/img/send.png"></td>
-                  </tr>
-                </table>
+
+                    <input type="text" class="col-md-10" name="message" placeholder="Votre Message" required style="    margin-top: 5px;    width: 90.333333%;">
+                    <img class="btn-send" src="adminLTE/dist/img/sendSemiCircle.png" title="Envoyer" style="width:9%">
+
               </div>
-            
+
             </div>
           </div>
         </form>
@@ -78,7 +76,3 @@
     </div>
   </div>
 </div>
-
-
-
-

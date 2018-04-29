@@ -11,6 +11,18 @@ use App\Etat;
 
 class TacheController extends Controller
 {
+
+   public function get()
+   {
+      $taches = Tache::where('termine',0)->get();
+
+      foreach ($tache as $tache) {
+        
+      }
+      return view('taches')->with('taches',$taches);
+   }
+
+
     public function create(Request $rq , $id=0)
     {
       $tache = new Tache ;
