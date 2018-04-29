@@ -33,7 +33,17 @@
               </tr>
             </thead>
             <tbody>
-              dsfsdfsdfsd
+              dsfsdfsdfsdqsd
+
+              <datalistf
+              dsqfdqs
+              dsqfdqsfqsd
+              @foreach (qf
+              fd as $element)
+
+              @endforeach>
+
+              </datalist>
               @php
                 $i = 0 ;
               @endphp
