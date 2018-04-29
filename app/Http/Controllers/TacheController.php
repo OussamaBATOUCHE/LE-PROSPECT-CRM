@@ -8,6 +8,10 @@ use App\Tache_etat;
 use App\Tache_produit;
 use App\Tache_prospect;
 use App\Etat;
+use App\Priorite;
+
+use App\User;
+use App\Prospect;
 
 class TacheController extends Controller
 {
@@ -16,10 +20,38 @@ class TacheController extends Controller
    {
       $taches = Tache::where('termine',0)->get();
 
-      foreach ($tache as $tache) {
-        
+      $lesPrioritesTaches=array();
+      $usersTaches = array();
+      $lesProspects = array();
+      $dernierEtat = array();
+      foreach ($taches as $tache) {
+        $user = User::where('id',$tache->idUser)->first();
+        $prio = Priorite::where('id',$tache->idPrio)->first();
+        $usersTaches[] = $user;
+        $lesPrioritesTaches[] =  $prio;
+
+        //pour une tache , elle lui corespend 1 ou plusieur prospect , je doit les recuperer tous dans une liste . et c'est un probleme (29.04 17:40)
+        $Tch_prospects = Tache_prospect::where('idTach',$tache->id)->get();
+        foreach ($Tch_prospects as $prospect) {
+          $lesProspects[] = array($tache->id => Prospect::where('id',$prospect->idProsp)->first());
+        }
+
+        //pour chaque tache elle lui corespend une tache dans une moment donne .
+        //dans ce cas je doit recuperer le dernier etat ajouter dans la table tache_etats
+        //et ceci pour chaque tache
+        $tach_etat = Tache_etat::where('idTache',$tache->id)->first();
+        $etat = Etat::where('num',$tach_etat->idEtat)->first();
+        $date = $tach_etat->created_at->format('m/d/Y');
+        //dd($date);
+        $dernierEtat[] = array( $date => $etat);//je doit savoir quand est ce que cette etat a ete marqué.
       }
-      return view('taches')->with('taches',$taches);
+      //dd($lesProspects);
+
+      return view('taches')->with('taches',$taches)
+                           ->with('lesPrioritesTaches', $lesPrioritesTaches)
+                           ->with('lesProspects', array_values($lesProspects))
+                           ->with('dernierEtats',$dernierEtat)
+                           ->with('usersTaches', $usersTaches);
    }
 
 
@@ -40,6 +72,7 @@ class TacheController extends Controller
 
       $tache->dateDebut = $dateDebut;
       $tache->dateFin = $dateFin;
+      $tache->termine = 0;
       $tache->save();
 
       //suivie de deroulement et avancement des taches ..

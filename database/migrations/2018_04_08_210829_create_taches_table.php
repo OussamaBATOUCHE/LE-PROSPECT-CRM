@@ -22,6 +22,7 @@ class CreateTachesTable extends Migration
             $table->date('dateDebut');
             $table->date('dateFin');
             $table->boolean('termine');
+            $table->timestamps();
         });
     }
 
