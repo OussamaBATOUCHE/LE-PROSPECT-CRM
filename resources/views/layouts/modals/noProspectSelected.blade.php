@@ -5,7 +5,7 @@
 
           <div class="row">
             <div class="col-md-12">
-            <h3>Voullez devez d'abord selctioner des prospects de votre liste !</h3>
+            <h3>Voulez devez d'abord sélectionner des prospects de votre liste !</h3>
             </div>
           </div>
           <hr/>

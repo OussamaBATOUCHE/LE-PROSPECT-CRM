@@ -53,6 +53,9 @@
                   <div class="form-group">
                       <textarea class="textarea form-control" name="remarque" rows="8" placeholder="Remarque ..." required></textarea>
                   </div>
+                  <div id="ls-prspcts">
+
+                  </div>
       </div>
       <div class="modal-footer">
         <input id="submit" class="btn btn-primary col-md-4" type="submit" value="Affecter">
@@ -72,10 +75,12 @@
       $('#reservation').daterangepicker();
 
       var idP;
-      chargeNouvelleTache = function(societe , idProsp , tousLesProduits , produit_prospect) {
+      chargeNouvelleTache = function(societe , idProsp , tousLesProduits = null , produit_prospect = null) {
             $('#cr-tache-societe').html(societe);
             $('#tache-form').attr('action',"createTache/"+idProsp);
             idP = idProsp;
+
+            //traitement des produits deja proposer pour un prospect , et les afficher en view
             var  i ,j;
             var b = "";
             var options="";
@@ -93,24 +98,43 @@
             $("#tchSlctPrd").html(options);
 
       };
-      chargeNouvelleTachePlusieurProspect = function(){
-        var b=false ;
-        $(".check").each(function(){
-          if(this.checked == true ){
-              b = true ;
-          }
-
-        });
-        if (b==false) {
-          $('#NoProspectSelected').modal('show');
-        }
-        else {
-          chargeNouvelleTache("Groupe",-1);
-          $('#nouvelleTache').modal('show');
-        }
+      chargeNouvelleTachePlusieurProspect = function(tousLesProduits){
+           prospectCheck = someChecked();
+           if( prospectCheck != false){
+             //alert(prospectCheck);
+             chargeNouvelleTache("Groupe",-1,tousLesProduits,0);
+             //je doit ajouter une liste de prospects comme inout ,pour l'envoyeé au TacheController afin d'affecter cette liste a un commercial
+             var listProspect = `<select class="form-control" name="prospects[]" multiple="" required style="display:  none;">`;
+              for(var i = 0 ; i < prospectCheck.length ; i++){
+                listProspect += `<option value="`+prospectCheck[i]+`" selected></option>`;
+              }
+              listProspect += `</select>`;
+              $("#ls-prspcts").html(listProspect);
+             $('#nouvelleTache').modal('show');
+           }
       }
 
+     someChecked = function(){
+       var b=false ,i=1;
+       var prospectCheck = [] ;
 
+       $(".check").each(function(){
+         if(this.checked == true ){
+             b = true ;
+             prospectCheck.push(this.value) ;
+         }
+       });
+      // console.log(prospectCheck);
+
+       if (b==false) {
+         $('#NoProspectSelected').modal('show');
+         return false;
+       }
+       else {
+        return prospectCheck;
+       }
+
+     }
 
     });
 
