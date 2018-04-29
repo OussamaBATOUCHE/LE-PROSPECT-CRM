@@ -3,7 +3,7 @@
 @section('content')
 <section class="content">
   <div style="text-align:right;float: right">
-  <a class="btn btn-info" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-plus-square"></i>&nbsp; Taches en groupe</a>
+  <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect()" data-toggle="modal" data-target="#nouvelleTache" ><i class="fa fa-plus-square"></i>&nbsp; Taches en groupe</a>
   <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-plus-square"></i>&nbsp; Ajouter un prospect</a>
 
   </div>
@@ -96,7 +96,7 @@
               @endphp
               @foreach($prospects as $prospect)
               <tr>
-                <th><input type="checkbox"/></th>
+                <th><input name="prospects[]" type="checkbox" value="{{$prospect->id}}"/></th>
                 <th>{{$prospect->codeProsp}}</th>
                 <th class="sub-info"><a href="{{url('detailsProspect/'.$prospect->id)}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{$prospect->description}}">{{$prospect->societe}}</a> <span><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
                 <th style="background-color:{{$infosProsp[$i]["couleur"]}};" > <span class="text-white">{{$infosProsp[$i]["score"]}}</span> <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{$infosProsp[$i]["remarque"]}}"></i></th>
