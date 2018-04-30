@@ -26,6 +26,12 @@
 <!-- jvectormap -->
 <script src="{{asset('adminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
 <script src="{{asset('adminLTE/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
+<!--  jquery.inputmask.js-->
+<script src="{{asset('adminLTE/plugins/iCheck/icheck.js')}}"></script>
+<script src="{{asset('adminLTE/plugins/iCheck/icheck.min.js')}}"></script>
+<!--  jquery.inputmask.js-->
+<script src="{{asset('adminLTE/plugins/input-mask/inputmask.js')}}"></script>
+<script src="{{asset('adminLTE/plugins/input-mask/jquery.inputmask.js')}}"></script>
 <!-- jQuery Knob Chart -->
 <script src="{{asset('adminLTE/bower_components/jquery-knob/dist/jquery.knob.min.js')}}"></script>
 <!-- daterangepicker -->
@@ -33,6 +39,9 @@
 <script src="{{asset('adminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 <!-- datepicker -->
 <script src="{{asset('adminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+<!-- timepicker -->
+<script src="{{asset('adminLTE/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{{asset('adminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
 <!-- Slimscroll -->
@@ -50,7 +59,6 @@
 <script src="{{asset('adminLTE/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- for chat -->
 <script src="{{ asset('assets/js/app.js') }}"></script>
-
 
 
 <script>
@@ -157,10 +165,6 @@
       radioClass   : 'iradio_flat-green'
     })
 
-    //Colorpicker
-    $('.my-colorpicker1').colorpicker()
-    //color picker with addon
-    $('.my-colorpicker2').colorpicker()
 
     //Timepicker
     $('.timepicker').timepicker({
