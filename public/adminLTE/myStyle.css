@@ -215,7 +215,7 @@ th.sub-info > span{
 .myContent {
     overflow: overlay;
     height: 275px;
-    padding-right: inherit;
+    padding-right: 20px;
     margin: 10px;
     /*border: #000000 1px solid;*/
 }
