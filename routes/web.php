@@ -89,11 +89,25 @@ Route::get('/produit_delete/{produit}','ProduitController@destroy');
 
 Route::get('/prospects','ProspectController@get');
 
+Route::get('/messages',function(){
+	return App\Message::all();
+});
+
 
 
 
 				/*    ----- POST ------ */
 
+
+Route::post('/messages',function(){
+	$user = Auth::user();
+
+	$user->messages()->create([
+		'message' => request()->get('message')
+	]);
+
+	return ['status' => 'OK'];
+})->middleware('auth');
 
 
 Route::post('/createChamp','ChampActiviteController@create');

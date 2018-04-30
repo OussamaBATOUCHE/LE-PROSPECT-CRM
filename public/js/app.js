@@ -14333,8 +14333,15 @@ var app = new Vue({
             // add to existing messages
             this.messages.push(message);
             //persist to database
-            console.log('message added');
+            axios.post('/messages', message).then(function (response) {});
         }
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/messages').then(function (response) {
+            _this.messages = response.data;
+        });
     }
 });
 
@@ -47769,6 +47776,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 			props: ['message']
@@ -47782,17 +47801,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("img", {
-      attrs: { src: "adminLTE/dist/img/user2-160x160.jpg", alt: "Avatar" }
-    }),
-    _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.message.message))]),
-    _vm._v(" "),
-    _c("span", { staticClass: "time-right" }, [
-      _vm._v(_vm._s(_vm.message.time))
-    ])
-  ])
+  return _vm.message.user_id == 1
+    ? _c("div", [
+        _c("div", { staticClass: "container" }, [
+          _c("img", {
+            attrs: { src: "adminLTE/dist/img/user2-160x160.jpg", alt: "Avatar" }
+          }),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.message.message))]),
+          _vm._v(" "),
+          _c("span", { staticClass: "time-right" }, [
+            _vm._v(_vm._s(_vm.message.user_id))
+          ])
+        ])
+      ])
+    : _c("div", [
+        _c("div", { staticClass: "container darker" }, [
+          _c("img", {
+            attrs: { src: "adminLTE/dist/img/user3-128x128.jpg", alt: "Avatar" }
+          }),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.message.message))]),
+          _vm._v(" "),
+          _c("span", { staticClass: "time-left" }, [
+            _vm._v(_vm._s(_vm.message.user_id))
+          ])
+        ])
+      ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48086,23 +48121,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-   data: function data() {
-      return {
-         messageText: ''
-      };
-   },
+    data: function data() {
+        return {
+            messageText: ''
+        };
+    },
 
-   methods: {
-      sendMessage: function sendMessage() {
-         this.$emit('messagesent', {
-            message: this.messageText,
-            time: "00:20"
-         });
-         this.messageText = '';
-      }
-   }
+    methods: {
+        sendMessage: function sendMessage() {
+            this.$emit('messagesent', {
+                message: this.messageText,
+                created_at: new Date().toLocaleTimeString()
+            });
+            this.messageText = '';
+        }
+    }
 
 });
 
@@ -48138,6 +48174,7 @@ var render = function() {
           staticClass: "col-md-10",
           staticStyle: { "margin-top": "5px", width: "90.333333%" },
           attrs: {
+            id: "empty",
             type: "text",
             name: "message",
             placeholder: "Votre Message",
