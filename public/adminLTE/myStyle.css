@@ -211,6 +211,7 @@ th.sub-info > span{
     overflow: overlay;
     height: 275px;
     padding-right: inherit;
+    margin: 10px;
     /*border: #000000 1px solid;*/
 }
 /* Style time text */
