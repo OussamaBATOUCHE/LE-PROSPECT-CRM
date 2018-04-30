@@ -18,7 +18,7 @@ class TacheController extends Controller
 
    public function get()
    {
-      $taches = Tache::where('termine',0)->orderByRaw('id DESC')->get(); 
+      $taches = Tache::where('termine',0)->orderByRaw('id DESC')->get();
 
       $lesPrioritesTaches=array();
       $usersTaches = array();
@@ -91,7 +91,7 @@ class TacheController extends Controller
       }
 
       //definition de/des prospect(s) concerné(s) par cette tache .
-      if ($id == 0) {
+      if ($id != 0) {
         //donc sa concerne un seul prospect
         $tache_prospect = new Tache_prospect;
         $tache_prospect->idTach = $tache->id;
