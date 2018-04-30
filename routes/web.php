@@ -44,7 +44,7 @@ Route::get('/etat_delete/{etat}','EtatController@destroy');
 
 
 Route::get('/taches','TacheController@get');
-
+Route::get('tachesTermine/{termine}','TacheController@get');
 
 
 /* --- POST --- */

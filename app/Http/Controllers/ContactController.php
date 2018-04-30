@@ -14,6 +14,8 @@ use App\cntct_email;
 use Auth;
 
 use App\Tache_etat;
+use App\Etat;
+use App\Tache;
 
 class ContactController extends Controller
 {
@@ -75,6 +77,12 @@ class ContactController extends Controller
       $tache_etat->idEtat = $rq->etatTache;
       $tache_etat->idTache = $tache;
       $tache_etat->save();
+
+      //si cette etat est le plus grand dans liste des tache ceci dire que la tache est bien accompli
+      $etat = Etat::whereRaw('num = (select max(`num`) from Etats)')->first();
+      if ($rq->etatTache == $etat->num) {
+        $TacheToUpdate = Tache::find($tache)->update(["termine"=>1]);
+      }
     }
 
     return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Contact ajouté '.$emailSendResult.'avec succée !</div>');

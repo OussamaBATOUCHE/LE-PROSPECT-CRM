@@ -34,7 +34,7 @@ const app = new Vue({
                     time:"11:01"
 				}
 				]
-			
+
     },
     methods:{
     	addMessage(message){
