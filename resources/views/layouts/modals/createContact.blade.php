@@ -28,7 +28,7 @@
 
                     <div class="form-group col-md-4">
                       <select class="form-control" name="score" required>
-                        <option disabled selected>Score (Qualification)</option>
+                        <option value="" disabled selected>Score (Qualification)</option>
                         @foreach ($tousLeScores as $score)
                           <option value="{{$score->id}}" >{{$score->LibScore}}</option>
                         @endforeach
@@ -50,12 +50,15 @@
                     </div>
                     <div class="form-group col-md-4 phone">
                       <select class="form-control" name="ES" required>
-                        <option disabled selected>Appel</option>
+                        <option value="" disabled selected>Appel</option>
                         <option value="1">Entrant</option>
                         <option value="0">Sortant</option>
                       </select>
                     </div>
                   </div>
+
+                    <div class="row etats"></div>
+
                   <div class="form-group">
                       <textarea class="textarea form-control" name="remarque" rows="8" style="width:100%; " placeholder="Contenu ..." required></textarea>
                   </div>
@@ -77,17 +80,38 @@
     $(document).ready(function(){
       $("#js").hide();
 
-      var idP;
-      chargeNouveauContact = function(societe , idProsp) {
+      var idP,idT; //had les var c'est pour les utilisé dans les fonctions ou j'ai pas acces au param necessaire
+      chargeNouveauContact = function(societe , idProsp , idTache ) {
+        //initialiser les button du top
+             $("#phone").addClass("btn-info");
+             $("#mail").removeClass("btn-info");
+             $("#map").removeClass("btn-info");
+        // END sinitialiser les button du top
             $('#societe').html(societe);
-            $('#cntct-form').attr('action',"createContact/0/phone/"+idProsp);
+            $('#cntct-form').attr('action',"createContact/"+idTache+"/phone/"+idProsp); // le 0 c'est pour le id de tache.
             idP = idProsp;
+            idT = idTache;
+            if (idTache != 0 ) {
+              var etatNum = $("#etatTache").Etat ;
+              //je cree une liste d'etat , et l'initialiser avec le dernier etat ->to the controller
+              var tacheEtat = `<div class="form-group col-md-12 ">
+                                <select class="form-control" name="etatTache" required style="background-color:#4bc1f0">
+                                  <option value="" disabled selected>Etat de Tache</option>
+                                  @foreach ($etats as $etat)
+                                    <option value="{{$etat->num}}" @if($etat->num == `+etatNum+ `) selected @endif>{{$etat->LibEtat}}</option>
+                                  @endforeach
+                                </select>
+                              </div>`;
+              if($(".etats").html() == ''){ // if the DOM element doasn't exist
+                $(".etats").html(tacheEtat);
+              }
+            }
       };
 
       active = function(button){
           $("#"+button).addClass("btn-info");
           $("#"+button+"-form").show();
-          $('#cntct-form').attr('action',"createContact/0/"+button+"/"+idP);
+          $('#cntct-form').attr('action',"createContact/"+idT+"/"+button+"/"+idP);
           if (button == "phone") {
             $("#map").removeClass("btn-info");  $(".terain").remove();
             $("#mail").removeClass("btn-info"); $(".mail").remove(); $("#js").hide();
@@ -98,10 +122,10 @@
               <input class="form-control" type="time" name="" value="">
             </div>
             <div class="form-group col-md-4 phone">
-              <select class="form-control" name="score" required>
-                <option disabled selected>Appel</option>
-                <option value="[object Object]">Entrant</option>
-                <option value="[object Object]">Sortant</option>
+              <select class="form-control" name="ES" required>
+                <option value="" disabled selected>Appel</option>
+                <option value="1">Entrant</option>
+                <option value="0">Sortant</option>
               </select>
             </div>
                           `;

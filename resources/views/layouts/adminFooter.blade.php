@@ -63,16 +63,14 @@
 
 <script>
   $(function () {
-    $('#example1').DataTable();
-    $('#example2').DataTable({
+    $('#example1').DataTable({
       'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : false,//pour ne par trier le tableau automatiquement juste change this parameter to false
       'info'        : true,
-      'autoWidth'   : false
+      'autoWidth'   : true
     });
-    //"aaSorting": []; //cette ligne c'est pour ne pas trier (sort) le tableau automaiquement ---> sa marche pas
   });
 
   $(function() {
