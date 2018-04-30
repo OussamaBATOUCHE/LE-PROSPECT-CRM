@@ -29,4 +29,8 @@ class User extends Authenticatable
 
     public $timestamps = false;
 
+    public function messages(){
+        return $this->hasMany(Message::class);
+    }
+
 }
