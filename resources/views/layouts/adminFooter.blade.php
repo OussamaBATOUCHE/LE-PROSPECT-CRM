@@ -49,7 +49,8 @@
 <!-- Select2 -->
 <script src="{{asset('adminLTE/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- for chat -->
-<script src="js/app.js"></script>
+<script src="{{ asset('assets/js/app.js') }}"></script>
+
 
 
 <script>
@@ -167,9 +168,8 @@
     })
   });
 
-
-
 </script>
+
 
 
 </body>
