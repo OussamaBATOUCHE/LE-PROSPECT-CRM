@@ -48,6 +48,9 @@
 <script src="{{asset('adminLTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('adminLTE/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+<!-- for chat -->
+<script src="js/app.js"></script>
+
 
 <script>
   $(function () {
