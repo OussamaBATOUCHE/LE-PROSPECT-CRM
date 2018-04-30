@@ -13,6 +13,8 @@ use App\cntct_appel;
 use App\cntct_email;
 use Auth;
 
+use App\Tache_etat;
+
 class ContactController extends Controller
 {
 
@@ -22,6 +24,7 @@ class ContactController extends Controller
     $contact->idUser = Auth::user()->id;
     $contact->idTach = $tache;
     $contact->idProsp = $prospect;
+    $contact->idScore = $rq->score;
     $contact->date = $rq->date;
     $contact->remarque = $rq->remarque;
     $contact->type = $rq->type;
@@ -66,7 +69,15 @@ class ContactController extends Controller
       $cntct_email->save();
     }
 
-    return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Contact ajouté '.$emailSendResult.'avec succée !</div>');
+    //si ce contact corespand a une tache , je doit recuperer l'etat d'avancement de cette tache
+    if ($tache!=0) {
+      $tache_etat = new Tache_etat;
+      $tache_etat->idEtat = $rq->etatTache;
+      $tache_etat->idTache = $tache;
+      $tache_etat->save();
+    }
+
+    return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Contact ajouté '.$emailSendResult.'avec succée !</div>');
   }
 
   public function delete($id)

@@ -115,6 +115,11 @@ th.sub-info > span{
   transition: .3s;
 }
 
+.fa-check-circle{
+  color: #34b534;
+  font-size: 20px;
+}
+
 /* END Oussama */
 
 #showMessagesModal .row{

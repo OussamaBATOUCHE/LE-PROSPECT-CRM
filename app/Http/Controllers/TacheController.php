@@ -13,12 +13,14 @@ use App\Priorite;
 use App\User;
 use App\Prospect;
 
+use App\Score;
+
 class TacheController extends Controller
 {
 
-   public function get()
+   public function get($termine = 0)
    {
-      $taches = Tache::where('termine',0)->orderByRaw('id DESC')->get();
+      $taches = Tache::where('termine',$termine)->orderByRaw('id DESC')->get();
 
       $lesPrioritesTaches=array();
       $usersTaches = array();
@@ -39,7 +41,7 @@ class TacheController extends Controller
         //pour chaque tache elle lui corespend une tache dans une moment donne .
         //dans ce cas je doit recuperer le dernier etat ajouter dans la table tache_etats
         //et ceci pour chaque tache
-        $tach_etat = Tache_etat::where('idTache',$tache->id)->first();
+        $tach_etat = Tache_etat::where('idTache',$tache->id)->latest()->first();
         $etat = Etat::where('num',$tach_etat->idEtat)->first();
         $date = $tach_etat->created_at->format('m/d/Y');
         //dd($date);
@@ -47,11 +49,17 @@ class TacheController extends Controller
       }
       //dd($dernierEtat);
 
+      //pour l'ajout des contact , je doit envoye tous les info necessaire
+      $tousLesEtats = Etat::get();
+      $tousLesScores = Score::get();
+
       return view('taches')->with('taches',$taches)
                            ->with('lesPrioritesTaches', $lesPrioritesTaches)
                            ->with('lesProspects', array_values($lesProspects))
                            ->with('dernierEtats',$dernierEtat)
-                           ->with('usersTaches', $usersTaches);
+                           ->with('usersTaches', $usersTaches)
+                           ->with('etats', $tousLesEtats)
+                           ->with('tousLeScores', $tousLesScores);
    }
 
 
