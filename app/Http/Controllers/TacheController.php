@@ -18,7 +18,7 @@ class TacheController extends Controller
 
    public function get()
    {
-      $taches = Tache::where('termine',0)->get();
+      $taches = Tache::where('termine',0)->orderByRaw('id DESC')->get(); 
 
       $lesPrioritesTaches=array();
       $usersTaches = array();
@@ -43,9 +43,9 @@ class TacheController extends Controller
         $etat = Etat::where('num',$tach_etat->idEtat)->first();
         $date = $tach_etat->created_at->format('m/d/Y');
         //dd($date);
-        $dernierEtat[] = array( $date => $etat);//je doit savoir quand est ce que cette etat a ete marqué.
+        $dernierEtat[] =  $etat;//je doit savoir quand est ce que cette etat a ete marqué.
       }
-      //dd($lesProspects);
+      //dd($dernierEtat);
 
       return view('taches')->with('taches',$taches)
                            ->with('lesPrioritesTaches', $lesPrioritesTaches)

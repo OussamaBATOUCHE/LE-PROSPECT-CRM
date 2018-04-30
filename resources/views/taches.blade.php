@@ -28,7 +28,6 @@
                 <th>Deadline</th>
                 <th>Etat</th>
                 <th>Commrcial</th>
-                <th> -- </th>
               </tr>
             </thead>
             <tbody>
@@ -42,11 +41,7 @@
                 <th> <ul><?php
                   $b=false ;
                   $j=0;
-                  $id = $tache->id;
-                  // $arr2 = array_map(function($id) {
-                  //                         return $lesProspects[$id];
-                  //                     }, $lesProspects);
-                  $arr2= array_column($lesProspects, $id);
+                  $arr2= array_column($lesProspects, $tache->id);//pour recuperer les object prospects
                   while ($j < sizeof($arr2) ) {
                       echo "<li><a href=\"/#\">".$arr2[$j]->societe."</a></li>";
 
@@ -57,11 +52,9 @@
                 </th>
                 <th>{{$tache->dateDebut}} jusqu'a {{$tache->dateFin}}</th>
                 {{-- <th>{{$dernierEtats[$i][]}}</th> pff --}}
+                <th>{{$dernierEtats[$i]->LibEtat}} </th>
                 <th>
-                </th>
-                <th>
-                  <a class="btn btn-info col" title="Nouveau contact" onclick="" data-toggle="modal" data-target="#nouveauContact"><i class="fa fa-plus-square"></i></a>
-                  <a class="btn btn-info col" title="Programmer une Tache" onclick=""  data-toggle="modal" data-target="#nouvelleTache"><i class="fa fa-calendar"></i></a>
+                  {{$usersTaches[$i]->name." ".$usersTaches[$i]->prenom}}
                 </th>
               @php $i++; @endphp
               @endforeach
