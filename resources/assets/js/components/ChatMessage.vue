@@ -4,7 +4,7 @@
 	<div class="container">
         <img src="adminLTE/dist/img/user2-160x160.jpg" alt="Avatar">
         <p>{{ message.message }}</p>
-        <span class="time-right">{{ message.user_id }}</span>
+        <span class="time-right">{{ message.created_at }}</span>
     </div>
 </div>
     
@@ -13,7 +13,7 @@
  	<div class="container darker">
         <img src="adminLTE/dist/img/user3-128x128.jpg" alt="Avatar">
         <p>{{ message.message }}</p>
-        <span class="time-left">{{ message.user_id }}</span>
+        <span class="time-left">{{ message.created_at }}</span>
     </div>
     </div> 
 
