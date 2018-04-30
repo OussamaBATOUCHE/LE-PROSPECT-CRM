@@ -26,6 +26,7 @@ class TacheController extends Controller
       $usersTaches = array();
       $lesProspects = array();
       $dernierEtat = array();
+      $tache_produits = array();
       foreach ($taches as $tache) {
         $user = User::where('id',$tache->idUser)->first();
         $prio = Priorite::where('id',$tache->idPrio)->first();
@@ -45,7 +46,10 @@ class TacheController extends Controller
         $etat = Etat::where('num',$tach_etat->idEtat)->first();
         $date = $tach_etat->created_at->format('m/d/Y');
         //dd($date);
-        $dernierEtat[] =  $etat;//je doit savoir quand est ce que cette etat a ete marqué.
+        $dernierEtat[] =  $etat;
+
+        //pour la vue des comemrcial , je doit afficher les produit/service en question
+        $tache_produits[] = Tache_produit::where('idTach',$tache->id)->get();
       }
       //dd($dernierEtat);
 
@@ -53,13 +57,15 @@ class TacheController extends Controller
       $tousLesEtats = Etat::get();
       $tousLesScores = Score::get();
 
+
       return view('taches')->with('taches',$taches)
                            ->with('lesPrioritesTaches', $lesPrioritesTaches)
                            ->with('lesProspects', array_values($lesProspects))
                            ->with('dernierEtats',$dernierEtat)
                            ->with('usersTaches', $usersTaches)
                            ->with('etats', $tousLesEtats)
-                           ->with('tousLeScores', $tousLesScores);
+                           ->with('tousLeScores', $tousLesScores)
+                           ->with('tache_produits', $tache_produits);
    }
 
 

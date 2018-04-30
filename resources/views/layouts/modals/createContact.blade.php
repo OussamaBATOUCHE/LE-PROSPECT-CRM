@@ -81,7 +81,7 @@
       $("#js").hide();
 
       var idP,idT; //had les var c'est pour les utilisé dans les fonctions ou j'ai pas acces au param necessaire
-      chargeNouveauContact = function(societe , idProsp , idTache ) {
+      chargeNouveauContact = function(societe , idProsp , idTache , tach_produits) {
         //initialiser les button du top
              $("#phone").addClass("btn-info");
              $("#mail").removeClass("btn-info");
@@ -91,7 +91,8 @@
             $('#cntct-form').attr('action',"createContact/"+idTache+"/phone/"+idProsp); // le 0 c'est pour le id de tache.
             idP = idProsp;
             idT = idTache;
-            if (idTache != 0 ) {
+            if (idTache != 0 ) {//donc sa concerne une tache
+              alert("tach_produits");
               var etatNum = $("#etatTache").Etat ;
               //je cree une liste d'etat , et l'initialiser avec le dernier etat ->to the controller
               var tacheEtat = `<div class="form-group col-md-12 ">
