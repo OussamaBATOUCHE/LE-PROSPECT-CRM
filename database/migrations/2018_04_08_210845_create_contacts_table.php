@@ -19,6 +19,7 @@ class CreateContactsTable extends Migration
             $table->integer('idTach');
             $table->integer('idProsp');
             $table->integer('idScore');
+            $table->string('objet');
             $table->date('date');
             $table->longText('remarque');
             $table->enum('type', ['A', 'E','T']); //sa va me servire pour le updateContact Modal
