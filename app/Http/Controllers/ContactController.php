@@ -27,6 +27,7 @@ class ContactController extends Controller
     $contact->idTach = $tache;
     $contact->idProsp = $prospect;
     $contact->idScore = $rq->score;
+    $contact->objet = $rq->objet;
     $contact->date = $rq->date;
     $contact->remarque = $rq->remarque;
     $contact->type = $rq->type;

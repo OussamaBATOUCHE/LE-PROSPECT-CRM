@@ -20,6 +20,10 @@
               <input type="text" class="form-control" name="prenom" value="{{Auth::user()->prenom}}" >
             </div>
             <div class="form-group">
+              <label class="form-control-label">Poste de travaille</label>
+              <input type="text" class="form-control" name="poste" value="{{Auth::user()->poste}}" >
+            </div>
+            <div class="form-group">
               <label class="form-control-label">Adresse</label>
               <input type="text" class="form-control" name="adresse" value="{{Auth::user()->adresse}}" >
             </div>

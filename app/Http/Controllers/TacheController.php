@@ -14,6 +14,7 @@ use App\User;
 use App\Prospect;
 
 use App\Score;
+use App\Produit;
 
 class TacheController extends Controller
 {
@@ -35,6 +36,7 @@ class TacheController extends Controller
 
         //pour une tache , elle lui corespend 1 ou plusieur prospect , je doit les recuperer tous dans une liste . et c'est un probleme (29.04 17:40)
         $Tch_prospects = Tache_prospect::where('idTach',$tache->id)->get();
+      //  dd($Tch_prospects);
         foreach ($Tch_prospects as $prospect) {
           $lesProspects[] = array($tache->id => Prospect::where('id',$prospect->idProsp)->first());
         }
@@ -48,14 +50,15 @@ class TacheController extends Controller
         //dd($date);
         $dernierEtat[] =  $etat;
 
-        //pour la vue des comemrcial , je doit afficher les produit/service en question
+        //pour la vue des comemrcial , je doit afficher les produits/services en question
         $tache_produits[] = Tache_produit::where('idTach',$tache->id)->get();
       }
-      //dd($dernierEtat);
+    //  dd($taches);
 
       //pour l'ajout des contact , je doit envoye tous les info necessaire
       $tousLesEtats = Etat::get();
       $tousLesScores = Score::get();
+      $tousLesProduits = Produit::get();
 
 
       return view('taches')->with('taches',$taches)
@@ -65,7 +68,8 @@ class TacheController extends Controller
                            ->with('usersTaches', $usersTaches)
                            ->with('etats', $tousLesEtats)
                            ->with('tousLeScores', $tousLesScores)
-                           ->with('tache_produits', $tache_produits);
+                           ->with('tache_produits', $tache_produits)
+                           ->with('tousLesProduits', $tousLesProduits);
    }
 
 
@@ -105,7 +109,7 @@ class TacheController extends Controller
       }
 
       //definition de/des prospect(s) concerné(s) par cette tache .
-      if ($id != 0) {
+      if ($rq->prospects == null) {
         //donc sa concerne un seul prospect
         $tache_prospect = new Tache_prospect;
         $tache_prospect->idTach = $tache->id;

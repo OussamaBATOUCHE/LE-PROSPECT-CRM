@@ -23,7 +23,7 @@
                   @csrf
                   <div class="row">
                     <div class="form-group col-md-8">
-                      <input type="text" class="form-control" name="titre" placeholder="Titre">
+                      <input type="text" class="form-control" name="objet" placeholder="Titre">
                     </div>
 
                     <div class="form-group col-md-4">
@@ -58,6 +58,11 @@
                   </div>
 
                     <div class="row etats"></div>
+                    <div class="form-group col-md-12">
+                      <select id="tchPrds" class="form-control select2 select2-hidden-accessible " name="produits[]" required multiple="" data-placeholder="Produits/Services" style="width: 100%;" tabindex="-1" aria-hidden="true">
+
+                      </select>
+                    </div>
 
                   <div class="form-group">
                       <textarea class="textarea form-control" name="remarque" rows="8" style="width:100%; " placeholder="Contenu ..." required></textarea>
@@ -81,18 +86,36 @@
       $("#js").hide();
 
       var idP,idT; //had les var c'est pour les utilisé dans les fonctions ou j'ai pas acces au param necessaire
-      chargeNouveauContact = function(societe , idProsp , idTache , tach_produits) {
+      chargeNouveauContact = function(societe , idProsp , idTache , tach_produits , tousLesProduits) {
         //initialiser les button du top
              $("#phone").addClass("btn-info");
              $("#mail").removeClass("btn-info");
              $("#map").removeClass("btn-info");
         // END sinitialiser les button du top
             $('#societe').html(societe);
-            $('#cntct-form').attr('action',"createContact/"+idTache+"/phone/"+idProsp); // le 0 c'est pour le id de tache.
+            $('#cntct-form').attr('action',"createContact/"+idTache+"/phone/"+idProsp); // le 0 c'est pour le id de tache. je l'envoye auto , au moment de l'appel de fonction
             idP = idProsp;
             idT = idTache;
+            //affichage des produits en question
+           var b ='';
+           var produits ='';
+
+           for(var k=0 ; k < tousLesProduits.length ;k++){
+
+              for(var l = 0 ; l < tach_produits.length ; l++){
+                if (b != "selected" && tach_produits[l]['idPrd'] == tousLesProduits[k]['id']) {
+                  b = "selected";
+                }
+                produits += '<option '+b+'>'+tousLesProduits[k]['LibProd']+'</option>';
+                b='';
+              }
+            }
+
+            $("#tchPrds").html(produits);
             if (idTache != 0 ) {//donc sa concerne une tache
-              alert("tach_produits");
+
+
+            //  alert(tach_produits[0]["idPrd"]);
               var etatNum = $("#etatTache").Etat ;
               //je cree une liste d'etat , et l'initialiser avec le dernier etat ->to the controller
               var tacheEtat = `<div class="form-group col-md-12 ">
@@ -106,6 +129,8 @@
               if($(".etats").html() == ''){ // if the DOM element doasn't exist
                 $(".etats").html(tacheEtat);
               }
+
+
             }
       };
 
