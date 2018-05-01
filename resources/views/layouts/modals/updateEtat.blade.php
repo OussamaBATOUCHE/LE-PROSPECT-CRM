@@ -1,4 +1,4 @@
-@if(!$etats->isEmpty())
+
 <div class="modal fade" id="updateetatModal">
   <div class="modal-dialog modal-lg modal-T1">
     <div class="modal-content">
@@ -27,7 +27,7 @@
     </div>
   </div>
 </div>
-@endif
+
 
 <script>
 function charge(id,lib,num) {
@@ -37,17 +37,4 @@ function charge(id,lib,num) {
   document.getElementById('num').value=num;
 
 }
-</script>
-<script>
-  $(function () {
-    $('#example1').DataTable();
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
 </script>
