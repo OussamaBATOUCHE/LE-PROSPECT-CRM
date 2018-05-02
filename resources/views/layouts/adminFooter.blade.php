@@ -8,8 +8,9 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- Chat -->
+<!--
 <script src="js/app.js"></script>
+-->
 
 <!-- jQuery 3 -->
 <script src="{{asset('adminLTE/bower_components/jquery/dist/jquery.min.js')}}"></script>

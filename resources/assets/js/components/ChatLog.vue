@@ -1,3 +1,4 @@
+<!--
 <template lang="html">
 	<div class="chat-log">
         <div class="myContent">

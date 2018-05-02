@@ -1,3 +1,4 @@
+<!--
 <template lang="html">
 	<div class="chat-composer">
 	  <div class="modal-footer" style="padding-left: 0px;margin-left: auto; width: 95%;">
