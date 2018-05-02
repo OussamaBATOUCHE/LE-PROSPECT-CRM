@@ -17,7 +17,7 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">Menu de navigation</li>
       <li class="treeview">
-        <a href="#">
+        <a href="/home">
           <i class="fa fa-tachometer"></i> <span>Principal</span>
         </a>
       </li>

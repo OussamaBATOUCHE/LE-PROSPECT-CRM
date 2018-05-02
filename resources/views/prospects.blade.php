@@ -9,36 +9,31 @@
   </div>
   <div style="float:left">
     <div class="form-group col" style="float:left;margin:5px 5px;">
-      <label for="champActivite">Champ d'Activité</label>
       <select class="form-control" id="champActivite" name="champActivite">
-        <option value=1"">1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+        <option value="0" disabled selected>Champ d'Activite</option>
+        @foreach ($tousLesChampActiv as $champActiv)
+          <option value="{{$champActiv->id}}" >{{$champActiv->LibChampAct}}</option>
+        @endforeach
       </select>
     </div>
     <div class="form-group col" style="float:left;margin:5px 5px;">
-      <label for="groupe">Groupe</label>
       <select class="form-control" id="group" name="group">
-        <option value=1"">1</option>
-        <option>heloooooooo</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+        <option value="0" disabled selected>Groupe</option>
+        @foreach ($tousLesGroupes as $groupe)
+          <option value="{{$groupe->id}}" >{{$groupe->LibGrp}}</option>
+        @endforeach
       </select>
     </div>
     <div class="form-group col" style="float:left;margin:5px 5px;">
-      <label for="region">Region</label>
       <select class="form-control" id="region" name="region">
-        <option value=1"">1</option>
+        <option value=1"">Adrar</option>
         <option>2</option>
         <option>3</option>
         <option>4</option>
         <option>5</option>
       </select>
     </div>
-    <div class="form-group col" style="float:left;margin:5px 5px;padding-top: 25px;">
+    <div class="form-group col" style="float:left;margin:5px 5px;">
       <a id="btn-filtrer" class="btn btn-warning" ><i class="fa fa-search"></i>&nbsp; Filtrer</a>
     </div>
 
@@ -113,7 +108,7 @@
 
                 </th>
                 <th>
-                  <a class="btn btn-info col" title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}},0)" data-toggle="modal" data-target="#nouveauContact"><i class="fa fa-plus-square"></i></a>
+                  <a class="btn btn-info col" title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}},0,{{str_replace('"',"'",$produitsPropose)}}, {{str_replace('"',"'",$tousLesProduits)}})" data-toggle="modal" data-target="#nouveauContact"><i class="fa fa-plus-square"></i></a>
                   <a class="btn btn-info col" title="Programmer une Tache" onclick="chargeNouvelleTache('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}} , {{$tousLesProduits}} , {{$produitsPropose}})"  data-toggle="modal" data-target="#nouvelleTache"><i class="fa fa-calendar"></i></a>
                 </th>
               @php $i++; @endphp

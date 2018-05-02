@@ -15,9 +15,10 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="box">
-        <div class="box-header " style="clear:both">
-          <a class="btn btn-success" data-toggle="modal" data-target="#chargeNouvelleTache" ><i class="fa "></i>&nbsp; Afficher les tache terminées</a>
-        </div><!-- /.box-header -->
+        <div class="box-header ">
+          <a href="{{url('tachesTermine/1')}}" class="btn btn-success"><i class="fa fa-check-circle" style="color:white"></i>&nbsp; Afficher les taches terminées</a>
+          <a href="{{url('taches')}}" class="btn "><i class="fa fa-fire" style="color:blue;font-size:20px;"></i>&nbsp; Toutes les taches</a>
+        </div>
         <div class="box-body">
           <table id="example1" class="table table-bordered table-striped">
             <thead>
@@ -28,7 +29,6 @@
                 <th>Deadline</th>
                 <th>Etat</th>
                 <th>Commrcial</th>
-                <th>Contact</th>
               </tr>
             </thead>
             <tbody>
@@ -38,12 +38,21 @@
               @foreach($taches as $tache)
               <tr>
                 <th><span data-toggle="popover" data-trigger="hover"  title="{{$tache->created_at}}" data-content="{{$tache->remarque}}">{{$tache->titre}}</span></th>
-                <th style="background-color:{{$lesPrioritesTaches[$i]['couleur']}}" >{{$lesPrioritesTaches[$i]['num']}}-{{$lesPrioritesTaches[$i]['libPrio']}}</th>
-                <th> <ul><?php
+                <th><span class="label" style="background-color:{{$lesPrioritesTaches[$i]['couleur']}}">{{$lesPrioritesTaches[$i]['num']}} - {{$lesPrioritesTaches[$i]['libPrio']}}</span></th>
+                <th> <ul>
+                  <?php
                   $j=0;
                   $arr2= array_column($lesProspects, $tache->id);//pour recuperer les object prospects
+                  $arr3= array();
+                  $t = 0;
+
                   while ($j < sizeof($arr2) ) {
-                      echo "<li><a title=\"Nouveau contact\" onclick=\"chargeNouveauContact('".$arr2[$j]->societe."',".$arr2[$j]->id.",{$tache->id})\" data-toggle=\"modal\" data-target=\"#nouveauContact\">".$arr2[$j]->societe."</a></li>";
+                     //je doit sauvgarder le id de tache afin de bien recuperer les produits.
+                     if ($tache->id != $t) {
+                       $t = $tache->id;
+                       $arr3 = $tache_produits[$j];
+                     }
+                      echo "<li><a title=\"Nouveau contact\" onclick=\"chargeNouveauContact('".$arr2[$j]->societe."',".$arr2[$j]->id.",{$tache->id},".str_replace('"',"'",$arr3).",".str_replace('"',"'",$tousLesProduits).")\" data-toggle=\"modal\" data-target=\"#nouveauContact\">".$arr2[$j]->societe."</a></li>";
 
                     $j++;
                   }
@@ -52,10 +61,11 @@
                 </th>
                 <th>{{$tache->dateDebut}} jusqu'a {{$tache->dateFin}}</th>
                 <th id="etatTache" Etat="{{$dernierEtats[$i]->num}}">
-                  @if ($dernierEtats[$i]->LibEtat == 'Terminé')<i class="fa fa-check-circle" color="green"></i> @endif{{$dernierEtats[$i]->LibEtat}}
+                  @if ($dernierEtats[$i]->LibEtat == 'Terminé')<i class="fa fa-check-circle" ></i> @endif{{$dernierEtats[$i]->LibEtat}}
                 </th>
-                <th>
+                <th><a href="profil/{{$usersTaches[$i]->id}}">
                   {{$usersTaches[$i]->name." ".$usersTaches[$i]->prenom}}
+                    </a>
                 </th>
                 {{--  ici c'est un peut compliquer , je doit faire un contacte pour un groupe de prospects ,
                 ce qui fait que je doit cree une liste de prospects et la transmetre comme
@@ -66,9 +76,6 @@
                 $arr2= array_column($lesProspects, $tache->id);//je peut envoyer cette list directement
 
                 ?>
-                {{-- pour ne pas trop changer sur la fonction(parametre d'entrer), je vais
-                envoyé des valuer de base pour les parametre qui je ne pas besoins --}}
-                <th><a class="btn btn-info col" ><i class="fa fa-plus-square"></i></a></th>
               @php $i++; @endphp
               @endforeach
             </tbody>
