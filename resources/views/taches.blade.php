@@ -4,8 +4,6 @@
 <section class="content">
   <div style="text-align:right;float: right">
   <a class="btn btn-info" onclick="" ><i class="fa fa-plus-square"></i>&nbsp; Taches en groupe</a>
-
-
   </div>
   <div style="float:left">
 
@@ -16,7 +14,7 @@
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header ">
-          <a href="{{url('tachesTermine/1')}}" class="btn btn-success"><i class="fa fa-check-circle" style="color:white"></i>&nbsp; Afficher les taches terminées</a>
+          <a href="{{url('tachesTermine/1')}}" class="btn "><i class="fa fa-check-circle" style="color:blue;font-size:20px;"></i>&nbsp; Afficher les taches terminées</a>
           <a href="{{url('taches')}}" class="btn "><i class="fa fa-fire" style="color:blue;font-size:20px;"></i>&nbsp; Toutes les taches</a>
         </div>
         <div class="box-body">

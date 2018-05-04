@@ -2,9 +2,10 @@
 
 @section('content')
 <section class="content">
+    <h3 class="box-title">Gestion des prospects</h3>
   <div style="text-align:right;float: right">
-  <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect({{$tousLesProduits}})" ><i class="fa fa-plus-square"></i>&nbsp; Taches en groupe</a>
-  <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-plus-square"></i>&nbsp; Ajouter un prospect</a>
+  <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect({{$tousLesProduits}})" ><i class="fa fa-calendar"></i>&nbsp; Taches en groupe</a>
+  <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-user-plus"></i>&nbsp; Ajouter un prospect</a>
 
   </div>
   <div style="float:left">
@@ -43,7 +44,10 @@
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Gestion des prospects</h3>
+          <a href="{{url('cntctQue/1')}}" class="btn "><i class="fa fa-fire" style="color:blue;font-size:20px;"></i>&nbsp; Prospects</a>
+          <a href="{{url('cntctQue/2')}}" class="btn "><i class="fa fa-users" style="color:blue;font-size:20px;"></i>&nbsp; Clients</a>
+          <a href="{{url('contacts')}}" class="btn "><i class="fa fa-list" style="color:blue;font-size:20px;"></i>&nbsp; Tous</a>
+
         </div><!-- /.box-header -->
         <div class="box-body">
           <table id="example1" class="table table-bordered table-striped">

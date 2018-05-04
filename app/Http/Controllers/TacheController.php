@@ -26,7 +26,12 @@ class TacheController extends Controller
 
    public function get($termine = 0)
    {
-      $taches = Tache::where('termine',$termine)->orderByRaw('id DESC')->get();
+      if($this->UserType() == 1){//c'est l'admin
+        $taches = Tache::where('termine',$termine)->orderByRaw('id DESC')->get();
+      }else{//un simple commercial
+        $taches = Tache::where('termine',$termine)->where('idUser',Auth::user()->id)->orderByRaw('id DESC')->get();
+      }
+
 
       $lesPrioritesTaches=array();
       $usersTaches = array();
@@ -87,85 +92,88 @@ class TacheController extends Controller
          // dans le premier cas je ne luis permet de consulter que les contacts qui luis a fait .
 
          $tache = Tache::where('id',$id)->first();
-         if ( ! $tache->userId == Auth::user()->id) {
-          return $this->messageDroitAccee();
+
+             if ( $tache->idUser != Auth::user()->id ) {
+              return $this->messageDroitAccee();
+             }
+
+             $tache_contact = Contact::where('idTach',$id)->where('idUser',Auth::user()->id)->orderByRaw('id DESC')->get();
+
+            }
+
+
+
+            $userContact = array();
+            $prospectContact = array();
+            $details = array();
+            $scores = array();
+            //pour recuperer les gens/prospect qui ont fait/luis_fait les contact afin de les utiliser dans la fonction chargeUpdateContact
+            foreach ($tache_contact as $cntct) {
+              $userContact[] = User::find($cntct->idUser);
+              $prospectContact[] = Prospect::find($cntct->idProsp);
+
+              //pour les details
+              switch ($cntct->type) {
+
+                case 'A':
+                  $details[] = cntct_appel::where('idCntct',$cntct->id)->first();//c sur que y'a q'un seul appel pour un contact
+                  break;
+                case 'E':
+                  $details[] = cntct_email::where('idCntct',$cntct->id)->first();//c sur que y'a q'un seul mail pour un contact
+                  break;
+                  default:return $cntct->type; break;
+              }
+              $scores[] = Score::find($cntct->idScore);
+
+            }
+            //dd($scores);
+           $lesProspects = array();
+           $user = User::where('id',$tache->idUser)->first();
+           $priorite = Priorite::where('id',$tache->idPrio)->first();
+
+           //pour une tache , elle lui corespend 1 ou plusieur prospect , je doit les recuperer tous dans une liste .
+           $Tch_prospects = Tache_prospect::where('idTach',$id)->get();
+           foreach ($Tch_prospects as $prospect) {
+             $lesProspects[] = Prospect::where('id',$prospect->idProsp)->first();
+           }
+
+           //pour chaque tache elle lui corespend une tache dans une moment donne .
+           //dans ce cas je doit recuperer tous les etats
+           $etats = array();
+           $tach_etat = Tache_etat::where('idTache',$id)->orderByRaw('created_at DESC')->get();
+           foreach ($tach_etat as $tachEtat) {
+              $etats[] = Etat::where('num',$tachEtat->idEtat)->first();
+           }
+
+
+           //afficher les produits/services en question
+         $tps = Tache_produit::where('idTach',$id)->get();
+         foreach ($tps as $tp) {
+           $tache_produits[] = Produit::find($tp->idPrd);
          }
 
-         $tache_contact = Contact::where('idTach',$id)->where('idUser',Auth::user()->id)->orderByRaw('id DESC')->get();
-
-        }
-
-
-        $userContact = array();
-        $prospectContact = array();
-        $details = array();
-        $scores = array();
-        //pour recuperer les gens/prospect qui ont fait/luis_fait les contact afin de les utiliser dans la fonction chargeUpdateContact
-        foreach ($tache_contact as $cntct) {
-          $userContact[] = User::find($cntct->idUser);
-          $prospectContact[] = Prospect::find($cntct->idProsp);
-
-          //pour les details
-          switch ($cntct->type) {
-
-            case 'A':
-              $details[] = cntct_appel::where('idCntct',$cntct->id)->first();//c sur que y'a q'un seul appel pour un contact
-              break;
-            case 'E':
-              $details[] = cntct_email::where('idCntct',$cntct->id)->first();//c sur que y'a q'un seul mail pour un contact
-              break;
-              default:return $cntct->type; break;
-          }
-          $scores[] = Score::find($cntct->idScore);
-
-        }
-        //dd($scores);
-       $lesProspects = array();
-       $user = User::where('id',$tache->idUser)->first();
-       $priorite = Priorite::where('id',$tache->idPrio)->first();
-
-       //pour une tache , elle lui corespend 1 ou plusieur prospect , je doit les recuperer tous dans une liste .
-       $Tch_prospects = Tache_prospect::where('idTach',$id)->get();
-       foreach ($Tch_prospects as $prospect) {
-         $lesProspects[] = Prospect::where('id',$prospect->idProsp)->first();
-       }
-
-       //pour chaque tache elle lui corespend une tache dans une moment donne .
-       //dans ce cas je doit recuperer tous les etats
-       $etats = array();
-       $tach_etat = Tache_etat::where('idTache',$id)->orderByRaw('created_at DESC')->get();
-       foreach ($tach_etat as $tachEtat) {
-          $etats[] = Etat::where('num',$tachEtat->idEtat)->first();
-       }
+         //pour l'ajout des nouveau contact , je doit envoye tous les info necessaire
+         $tousLesEtats = Etat::get();
+         $tousLesScores = Score::get();
+         $tousLesProduits = Produit::get();
 
 
-       //afficher les produits/services en question
-     $tps = Tache_produit::where('idTach',$id)->get();
-     foreach ($tps as $tp) {
-       $tache_produits[] = Produit::find($tp->idPrd);
-     }
+         return view('tacheDetails')->with('tache',$tache)
+                                    ->with('priorite', $priorite)
+                                    ->with('lesProspects', $lesProspects)
+                                    ->with('contacts',$tache_contact)
+                                    ->with('details',$details)
+                                    ->with('scores',$scores)
+                                    ->with('userContact',$userContact)
+                                    ->with('prospectContact',$prospectContact)
+                                    ->with('HistoriqueEtats',$etats)
+                                    ->with('etatDate',$tach_etat)
+                                    ->with('user', $user)
+                                    ->with('etats', $tousLesEtats)
+                                    ->with('tousLeScores', $tousLesScores)
+                                    ->with('tache_produits', $tache_produits)
+                                    ->with('tousLesProduits', $tousLesProduits);
 
-     //pour l'ajout des nouveau contact , je doit envoye tous les info necessaire
-     $tousLesEtats = Etat::get();
-     $tousLesScores = Score::get();
-     $tousLesProduits = Produit::get();
-
-
-     return view('tacheDetails')->with('tache',$tache)
-                                ->with('priorite', $priorite)
-                                ->with('lesProspects', $lesProspects)
-                                ->with('contacts',$tache_contact)
-                                ->with('details',$details)
-                                ->with('scores',$scores)
-                                ->with('userContact',$userContact)
-                                ->with('prospectContact',$prospectContact)
-                                ->with('HistoriqueEtats',$etats)
-                                ->with('etatDate',$tach_etat)
-                                ->with('user', $user)
-                                ->with('etats', $tousLesEtats)
-                                ->with('tousLeScores', $tousLesScores)
-                                ->with('tache_produits', $tache_produits)
-                                ->with('tousLesProduits', $tousLesProduits);
    }
 
 
@@ -220,7 +228,7 @@ class TacheController extends Controller
           $tache_prospect->save();
         }
       }
-      return back()->with('status','<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>La <a href="taches">tache</a> a bien été crée et affecté au <a href="tacheByCommId/'.$rq->user.'">commercial</a> designé .</div>');
+      return back()->with('status','<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>La <a href="tache/'.$tache->id.'">tache</a> a bien été crée et affecté au <a href="profil/'.$rq->user.'">commercial</a> designé .</div>');
 
     }
 
@@ -235,5 +243,43 @@ class TacheController extends Controller
        Tache::find($id)->delete();
        return $this->get()->with('status','<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>La tache est Annulé.</div>');;
 
+    }
+
+
+    public function Notifications(){
+        $mesTaches = Tache::where('idUser',Auth::user()->id)->where('termine',0)->orderByRaw('id DESC')->get();
+        // return 222;
+
+        $listeTache = '<a href="#" onclick="loadNotifications()" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        ';
+                        if ($mesTaches->count() > 0) {
+                          $listeTache .= '<span class="label label-warning">'.$mesTaches->count().'</span>
+                                            </a>
+                                            <ul class="dropdown-menu" >
+                                              <li class="header">Vous avez '.$mesTaches->count().' tâches non terminées</li>';
+                        }else {
+                          $listeTache .= '
+                                            </a>
+                                            <ul class="dropdown-menu" >
+                                              <li class="header">Toutes vos tâches sont terminées</li>';
+                        }
+       $listeTache .= '
+                        <li>
+                          <!-- inner menu: contains the actual data -->
+                          <ul class="menu" id="mesNotifications" >';
+                            foreach ($mesTaches as $tache) {
+                              $listeTache .= '<li>
+                                                <a href="'.url('tache/'.$tache->id).'">
+                                                  <i class="fa fa-users text-aqua"></i> '.$tache->titre.'
+                                                </a>
+                                              </li>';
+                            }
+           $listeTache .='  </ul>
+                          </li>
+                          <li class="footer"><a href="taches">Afficher tous</a></li>
+                        </ul>';
+
+        return $listeTache;
     }
 }

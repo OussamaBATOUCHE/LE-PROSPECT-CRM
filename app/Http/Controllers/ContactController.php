@@ -22,12 +22,34 @@ use App\User;
 class ContactController extends Controller
 {
 
-  public function get(){
+  public function get($type = 0){
     //verification des droits d'acces
     if($this->UserType()==1){//dans ce cas , c'est le admin qu'est en ligne , ainsi je lui return toute la liste
-    $contacts = Contact::orderByRaw('id DESC')->get();
+      switch ($type) {
+        case 0:
+          $contacts = Contact::orderByRaw('id DESC')->get();
+          break;
+          case 1:
+            $contacts = Contact::where('type','A')->orderByRaw('id DESC')->get();
+            break;
+            case 2:
+              $contacts = Contact::where('type','E')->orderByRaw('id DESC')->get();
+              break;
+      }
+
     }else {//dans ce cas c'est un simple commercial , ainsi je luis return sa propre liste de contacte
-    $contacts = Contact::where('idUser',Auth::user()->id)->orderByRaw('id DESC')->get();
+      switch ($type) {
+        case 0:
+          $contacts = Contact::where('idUser',Auth::user()->id)->orderByRaw('id DESC')->get();
+          break;
+          case 1:
+            $contacts = Contact::where('type','A')->where('idUser',Auth::user()->id)->orderByRaw('id DESC')->get();
+            break;
+            case 2:
+              $contacts = Contact::where('type','A')->where('idUser',Auth::user()->id)->orderByRaw('id DESC')->get();
+              break;
+      }
+
     }
     // et je contenu la procedure le plus normalement possible
     $users=array();

@@ -3,7 +3,7 @@
 @section('content')
 <section class="content">
   <div style="text-align:right;float: right">
-  <a class="btn btn-info" onclick="" ><i class="fa fa-plus-square"></i>&nbsp; Email en groupe</a>
+  <a class="btn btn-info" onclick="" ><i class="fa fa-at"></i>&nbsp; Email en groupe</a>
 
 
   </div>
@@ -16,8 +16,9 @@
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header ">
-          <a href="{{url('contactsTermine/1')}}" class="btn btn-success"><i class="fa fa-phone" style="color:white"></i>&nbsp; Appels</a>
-          <a href="{{url('contacts')}}" class="btn "><i class="fa fa-envelope" style="color:blue;font-size:20px;"></i>&nbsp; Emails</a>
+          <a href="{{url('cntctQue/1')}}" class="btn "><i class="fa fa-phone" style="color:blue;font-size:20px;"></i>&nbsp; Appels</a>
+          <a href="{{url('cntctQue/2')}}" class="btn "><i class="fa fa-envelope" style="color:blue;font-size:20px;"></i>&nbsp; Emails</a>
+          <a href="{{url('contacts')}}" class="btn "><i class="fa fa-list" style="color:blue;font-size:20px;"></i>&nbsp; Tous les contacts</a>
         </div>
         <div class="box-body">
           <table id="example1" class="table table-bordered table-striped">
