@@ -35,6 +35,7 @@ class CreateProspectsTable extends Migration
             $table->integer('nbreEmplyes')->nullable();
             $table->longText('description');
             $table->boolean('bloquer');
+            $table->boolean('client');
             $table->timestamps();
         });
     }

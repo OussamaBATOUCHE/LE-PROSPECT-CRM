@@ -44,9 +44,9 @@
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <a href="{{url('cntctQue/1')}}" class="btn "><i class="fa fa-fire" style="color:blue;font-size:20px;"></i>&nbsp; Prospects</a>
-          <a href="{{url('cntctQue/2')}}" class="btn "><i class="fa fa-users" style="color:blue;font-size:20px;"></i>&nbsp; Clients</a>
-          <a href="{{url('contacts')}}" class="btn "><i class="fa fa-list" style="color:blue;font-size:20px;"></i>&nbsp; Tous</a>
+          <a href="{{url('prospectQue/0/1')}}" class="btn "><i class="fa fa-fire" style="color:blue;font-size:20px;"></i>&nbsp; Prospects</a>
+          <a href="{{url('prospectQue/0/2')}}" class="btn "><i class="fa fa-users" style="color:blue;font-size:20px;"></i>&nbsp; Clients</a>
+          <a href="{{url('prospectQue/0/0')}}" class="btn "><i class="fa fa-list" style="color:blue;font-size:20px;"></i>&nbsp; Tous</a>
 
         </div><!-- /.box-header -->
         <div class="box-body">
