@@ -13,7 +13,7 @@ class MessageController extends Controller
     	$messages = Message::get();
         $html = '
             <div class="modal-body" style="padding: 0px;">
-            
+
                  <div class="row">
                    <div class="col-md-4" style="overflow: overlay; height: 24.3em;">
                      <ul>
@@ -49,7 +49,7 @@ class MessageController extends Controller
                 foreach($messages as $message){
                 	if ($message->user_id != Auth::User()->id) {
                 		//Me
-                        $html .=' 
+                        $html .='
                          <div class="container darker">
                            <img src="adminLTE/dist/img/user2-160x160.jpg" alt="Avatar">
                            <p>'.$message->message.'</p>
@@ -57,7 +57,7 @@ class MessageController extends Controller
                          </div> ';
                 	} else {
                 		//Another User
-                		$html .='     
+                		$html .='
                          <div class="container">
                            <img src="adminLTE/dist/img/user4-128x128.jpg" alt="Avatar">
                            <p>'.$message->message.'</p>
@@ -77,10 +77,10 @@ class MessageController extends Controller
               </div>
               </div>
               <div>
-      
+
       </div>
-        ';    
-          
+        ';
+
                     return $html;
 
 
@@ -93,29 +93,29 @@ class MessageController extends Controller
     	$message->save();
     }
 
-    public function ajax(){
-info('bdit ajax');
-        ini_set('max_execution_time',7200);
-        info('rah nedkhol fal while');
-    	while (Message::where('check',0)->count() < 1) {
-    		info('rah ndir sleep');
-    		sleep(1);
-    		info('rani kamalt sleep');
-    	}
-    	info('khrajt mal while rani rayah if');
-    	if (Message::where('check',0)->count() > 0) {
-    		info('rani fal if');
-    		$data = Message::where('check',0)->first();
-    		$id = $data->id;
-    		$edit = Message::find($id);
-    		$edit->check = 1;
-    		$edit->save();
-info('rah nretourni');
-    		return response()->json([
-               'message'=>$data->message
-    		]);
-    		info('rani retournit');
-    	}
-    info('rani kamalt ajax');
-    }
+//     public function ajax(){
+// info('bdit ajax');
+//         ini_set('max_execution_time',7200);
+//         info('rah nedkhol fal while');
+//     	while (Message::where('check',0)->count() < 1) {
+//     		info('rah ndir sleep');
+//     		sleep(1);
+//     		info('rani kamalt sleep');
+//     	}
+//     	info('khrajt mal while rani rayah if');
+//     	if (Message::where('check',0)->count() > 0) {
+//     		info('rani fal if');
+//     		$data = Message::where('check',0)->first();
+//     		$id = $data->id;
+//     		$edit = Message::find($id);
+//     		$edit->check = 1;
+//     		$edit->save();
+// info('rah nretourni');
+//     		return response()->json([
+//                'message'=>$data->message
+//     		]);
+//     		info('rani retournit');
+//     	}
+//     info('rani kamalt ajax');
+//     }
 }

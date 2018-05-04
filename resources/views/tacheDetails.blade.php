@@ -4,9 +4,12 @@
 <section class="content">
   <div class="row">
       <span class="col-md-7"> <h4 onclick="location.href='{{url('taches')}}'" style="cursor:pointer">Taches > Details</h4> </span>
-      <div class="col-md-4" style="text-align:right;margin-left:25px">
-        <button class="btn" title="Annuler cette tache"  data-toggle="modal" data-target="#ouiNonAnnuler" ><i class="fa fa-edit"></i>&nbsp; Annuler</button>
-      </div>
+      @if (Auth::user()->type == 1)
+        <div class="col-md-4" style="text-align:right;margin-left:25px">
+          <button class="btn" title="Annuler cette tache"  data-toggle="modal" data-target="#ouiNonAnnuler" ><i class="fa fa-ban"></i>&nbsp; Annuler</button>
+        </div>
+      @endif
+
   </div>
   @if (session('status')){!! session('status') !!}@endif
   <div class="row">
