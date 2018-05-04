@@ -16,7 +16,7 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">Menu de navigation</li>
-      <li class="treeview">
+      <li>
         <a href="/home">
           <i class="fa fa-tachometer"></i> <span>Principal</span>
         </a>
@@ -31,6 +31,12 @@
           <i class="fa fa-calendar"></i> <span>Tâches</span>
         </a>
       </li>
+      <li >
+        <a href="/contacts">
+          <i class="fa fa-phone"></i>
+          <span>Contacts</span>
+        </a>
+      </li>
       <li class="treeview">
         <a href="#">
           <i class="fa fa-th"></i>
@@ -40,20 +46,6 @@
           <li><a href="#"><i class="fa fa-circle-o"></i> Monsuelle</a></li>
           <li><a href="#"><i class="fa fa-circle-o"></i> Annuelle</a></li>
           <li><a href="#"><i class="fa fa-circle-o"></i> Tous</a></li>
-        </ul>
-      </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-phone"></i>
-          <span>Contacts</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Visite</a></li>
-          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Email</a></li>
-          <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Appel</a></li>
         </ul>
       </li>
       <li>

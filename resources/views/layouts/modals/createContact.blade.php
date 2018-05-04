@@ -103,7 +103,8 @@
            for(var k=0 ; k < tousLesProduits.length ;k++){
 
               for(var l = 0 ; l < tach_produits.length ; l++){
-                if (b != "selected" && tach_produits[l]['idPrd'] == tousLesProduits[k]['id']) {
+                console.log(tach_produits[l]['idTach']);
+                if (b != "selected" && tach_produits[l]['idPrd'] == tousLesProduits[k]['id'] && tach_produits[l]['idTach'] == idT) {
                   b = "selected";
                 }
                 produits += '<option '+b+'>'+tousLesProduits[k]['LibProd']+'</option>';

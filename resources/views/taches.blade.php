@@ -37,23 +37,17 @@
               @endphp
               @foreach($taches as $tache)
               <tr>
-                <th><span data-toggle="popover" data-trigger="hover"  title="{{$tache->created_at}}" data-content="{{$tache->remarque}}">{{$tache->titre}}</span></th>
+                <th><span data-toggle="popover" data-trigger="hover"  title="{{$tache->created_at}}" data-content="{{$tache->remarque}}">{{$tache->titre}}</span>  <a href="{{url('tache/'.$tache->id)}}" title="Details">>></a></th>
                 <th><span class="label" style="background-color:{{$lesPrioritesTaches[$i]['couleur']}}">{{$lesPrioritesTaches[$i]['num']}} - {{$lesPrioritesTaches[$i]['libPrio']}}</span></th>
                 <th> <ul>
                   <?php
                   $j=0;
                   $arr2= array_column($lesProspects, $tache->id);//pour recuperer les object prospects
                   $arr3= array();
-                  $t = 0;
 
                   while ($j < sizeof($arr2) ) {
-                     //je doit sauvgarder le id de tache afin de bien recuperer les produits.
-                     if ($tache->id != $t) {
-                       $t = $tache->id;
-                       $arr3 = $tache_produits[$j];
-                     }
+                     $arr3 = $tache_produits[$i];
                       echo "<li><a title=\"Nouveau contact\" onclick=\"chargeNouveauContact('".$arr2[$j]->societe."',".$arr2[$j]->id.",{$tache->id},".str_replace('"',"'",$arr3).",".str_replace('"',"'",$tousLesProduits).")\" data-toggle=\"modal\" data-target=\"#nouveauContact\">".$arr2[$j]->societe."</a></li>";
-
                     $j++;
                   }
                 ?>
@@ -67,15 +61,6 @@
                   {{$usersTaches[$i]->name." ".$usersTaches[$i]->prenom}}
                     </a>
                 </th>
-                {{--  ici c'est un peut compliquer , je doit faire un contacte pour un groupe de prospects ,
-                ce qui fait que je doit cree une liste de prospects et la transmetre comme
-                parametre a la fonction chargeNouvrauContact qui elle doit se changer un petit
-                peut pour qu'elle puisse traiter une liste de prospect et une tache.--}}
-                <?php
-                $j=0;
-                $arr2= array_column($lesProspects, $tache->id);//je peut envoyer cette list directement
-
-                ?>
               @php $i++; @endphp
               @endforeach
             </tbody>
@@ -86,9 +71,6 @@
     </div><!-- /.col -->
   </div><!-- /.row -->
 </section><!-- /.content -->
-
-{{-- <!--Nouveau Tache-->
-@include('layouts.modals.createTache') --}}
 
 <!--Nouveau Contact-->
 @include('layouts.modals.createContact')

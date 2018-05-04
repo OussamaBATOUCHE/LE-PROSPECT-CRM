@@ -30,7 +30,7 @@ class HomeController extends Controller
     public function paramList()
     {
 
-        if($this->checkAccess()==1){
+        if($this->UserType()==1){
             return view('listParam');
         }else {
          return  $this->messageDroitAccee();

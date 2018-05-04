@@ -13,7 +13,7 @@ class ChampActiviteController extends Controller
 
     public function get()
     {
-      if($this->checkAccess()==1){
+      if($this->UserType()==1){
           $champs = ChampActivite::get();
           return view('champActivite')->with('champs',$champs);
       }else {

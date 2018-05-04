@@ -15,7 +15,7 @@ class ScoreController extends Controller
 
     public function get()
     {
-      if($this->checkAccess()==1){
+      if($this->UserType()==1){
           $scores = Score::get();
           return view('scores')->with('scores',$scores);
       }else {

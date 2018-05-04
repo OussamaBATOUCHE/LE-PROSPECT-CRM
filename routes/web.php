@@ -44,9 +44,14 @@ Route::get('/etat_delete/{etat}','EtatController@destroy');
 
 
 Route::get('/taches','TacheController@get');
+Route::get('/tache/{id}','TacheController@getById');
+Route::get('/destroyTache/{id}','TacheController@destroy');
 Route::get('tachesTermine/{termine}','TacheController@get');
 
+
 Route::get('profil/{id}','Controller@getUserById');
+
+Route::get('contacts','ContactController@get');
 
 
 /* --- POST --- */
