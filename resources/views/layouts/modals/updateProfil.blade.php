@@ -38,7 +38,7 @@
             <div class="form-group" id="updtPass">
               <label for="changePass"><a onclick="showUpdatePassForm()">Modifer mot de passe</a></label>
             </div>
-
+            {{-- <input type="hidden" name="type" value="{{Auth::user()->type}}"> j'ai cru que j'ai besoins de sa pour garder le type de user connecter et ne pas le craser dans la fonction update user--}}
             <input class="btn btn-primary" type="submit" value="Modifier">
           </form>
         </div>

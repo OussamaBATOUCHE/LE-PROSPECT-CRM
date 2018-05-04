@@ -81,14 +81,14 @@
               <tr>
                 <th><input class="check" type="checkbox" value="{{$prospect->id}}"/></th>
                 <th>{{$prospect->codeProsp}}</th>
-                <th class="sub-info"><a href="{{url('detailsProspect/'.$prospect->id)}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{$prospect->description}}">{{$prospect->societe}}</a> <span><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
-                <th style="background-color:{{$infosProsp[$i]["couleur"]}};" > <span class="text-white">{{$infosProsp[$i]["score"]}}</span> <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{$infosProsp[$i]["remarque"]}}"></i></th>
+                <th class="sub-info"><a href="{{url('detailsProspect/'.$prospect->id)}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{substr($prospect->description,0,50)}}">{{$prospect->societe}}</a> <span><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
+                <th style="background-color:{{$infosProsp[$i]["couleur"]}};" > <span class="text-white">{{$infosProsp[$i]["score"]}}</span> <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{substr($infosProsp[$i]["remarque"],0,60)}}"></i></th>
                 <th class="sub-info">{{$prospect->genre}}.{{$prospect->nom}} {{$prospect->prenom}} <span><br/> {{$prospect->email}} <br/> {{$prospect->tele1}}</span></th>
                 <th>{{$infosProsp[$i]["champActiv"]}}</th>
                 <th>
 
                      @if ($infosProsp[$i]["cntct_user"] != "")
-                       <a href="" title="Mettre à joure"
+                       <a href="" title="Details & Mettre à joure"
                           onclick="chargeUpdateContact( {{$infosProsp[$i]["idDernierCntct"]}},
                                                         '{{$infosProsp[$i]["typeDernierCntct"]}}',
                                                         '{{str_replace("'","\'",$infosProsp[$i]["remarqueDernierCntct"])}}',

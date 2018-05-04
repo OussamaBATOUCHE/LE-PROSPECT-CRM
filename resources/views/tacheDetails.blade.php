@@ -3,44 +3,39 @@
 @section('content')
 <section class="content">
   <div class="row">
-      <span class="col-md-7"> <h4 onclick="location.href='{{url('prospects')}}'" style="cursor:pointer">Prospects > Details</h4> </span>
+      <span class="col-md-7"> <h4 onclick="location.href='{{url('taches')}}'" style="cursor:pointer">Taches > Details</h4> </span>
       <div class="col-md-4" style="text-align:right;margin-left:25px">
-        @if ($prospect->bloquer == "1")
-          <a class="btn btn-danger " title="Debloquer ce prospect"  data-toggle="modal" data-target="#ouiNonDebloque" ><i class="fa fa-edit"></i>&nbsp; Debloquer</a>
-        @endif
-      <a class="btn btn-info " title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}})" data-toggle="modal" data-target="#updateprospectModal" ><i class="fa fa-pencil"></i>&nbsp; Modifier</a>
+        <button class="btn" title="Annuler cette tache"  data-toggle="modal" data-target="#ouiNonAnnuler" ><i class="fa fa-edit"></i>&nbsp; Annuler</button>
       </div>
   </div>
   @if (session('status')){!! session('status') !!}@endif
   <div class="row">
     <div class="col-md-7 ">
       <div class="det-prosp-soc ">
-        <h2>{{$prospect->societe}} - <span style="background-color:{{$score->couleur}}">[ {{$score->LibScore}} ]</span></h2>
+        <h2>{{$tache->titre}} - <span style="background-color:{{$priorite->couleur}}">[ {{$priorite->libPrio}} ]</span></h2>
         <hr/>
-        <div class="prospect-info"> <i class="fa fa-map-marker"></i> &nbsp;{{$prospect->adresse}} {{$prospect->codePostal}} </div>
-        <div class="prospect-info"><i class="fa fa-map-signs"></i> <span  id="r-prospect-wilaya">{{$prospect->wilaya}}</span> </div>
-        <div class="prospect-info"><i class="fa fa-users"></i> {{$prospect->nbreEmplyes}} Employes </div>
-      </div>
-      <div class="det-prosp-soc" >
-         <label for="h">Remarques </label>
-         <textarea class="form-control" rows="4" disabled>{{$prospect->description}}</textarea>
+        <div class="tache-info"> <i class="fa fa-calendar"></i> &nbsp;{{$tache->dateDebut}} -> {{$tache->dateFin}} </div>
+        <hr/>
+      <div class="" >
+         <label>Remarques </label>
+         <div class="form-control" disabled>{!!$tache->remarque!!}</div>
       </div>
     </div>
-
+ </div>
     <div class="col-md-4 det-prosp-soc">
-      <h3>Contact </h3>
+      <h3>Commercial </h3>
       <hr/>
-      <div class="prospect-info"> {{$prospect->genre}}.{{$prospect->nom}} {{$prospect->prenom}} </div>
-      <div class="prospect-info"> <i class="fa fa-phone"></i> 1- &nbsp;{{$prospect->tele1}} </div>
-      <div class="prospect-info"> <i class="fa fa-phone"></i> 2- &nbsp;{{$prospect->tele2}} </div>
-      <div class="prospect-info"> <i class="fa fa-phone"></i> 3- &nbsp;{{$prospect->tele3}} </div>
-      <div class="prospect-info"> <i class="fa fa-fax"></i> &nbsp;{{$prospect->fax}} </div>
-      <div class="prospect-info"><i class="fa fa-skype"></i> {{$prospect->skype}} </div>
-      <div class="prospect-info"><i class="fa fa-at"></i> {{$prospect->email}} </div>
-      <div class="prospect-info"><i class="fa fa-globe"></i> <a href="http://{{$prospect->siteWeb}}">{{$prospect->siteWeb}}</a> </div>
+      <div class="tache-info">{{$user->name}} {{$user->prenom}} </div>
+      <h3>Prospects concernés </h3>
+      <hr/>
+      <ul>
+        @foreach ($lesProspects  as $prospect)
+          <li>{{$prospect->societe}}</li>
+        @endforeach
+      </ul>
     </div>
 
-  </div>
+</div>
   <div class="row">
 
     <div class="col-md-6 ">
@@ -58,11 +53,11 @@
                                             '{{$contact->type}}',
                                             '{{str_replace("'","\'",$contact->remarque)}}',
                                             '{{$contact->date}}',
-                                            '{{str_replace("'","\'",$prospect->societe)}}',
-                                            {{$prospect->id}},
-                                            {{ json_encode($cntct_infos[$i]) }},
+                                            '{{str_replace("'","\'",$prospectContact[$i]->societe)}}',
+                                            {{$prospectContact[$i]->id}},
+                                            {{ json_encode($details[$i]) }},
                                             '{{$userContact[$i]["name"]." ".$userContact[$i]["prenom"]}}',
-                                            '{{$score->LibScore}}'
+                                            '{{$scores[$i]->LibScore}}'
                                           )"
                  data-toggle="modal" data-target="#updateContact">
                 @if ($contact->type == "A")
@@ -83,17 +78,27 @@
 
     </div>
     <div class="col-md-5 det-prosp-soc">
-      <h3>Champ d'activites : <span><a href="{{url('champActivite')}}"> -Gestion des champs d'activités</a></span></h3>
+      <h3>Suivie de tache :</h3>
       <hr/>
-      <div class="prospect-info"> {{$chamActiv->LibChampAct}} </div>
-      <h3>Groupe : <span><a href="{{url('groupes')}}"> -Gestion des groupe</a></span></h3>
-      <hr/>
-      <div class="prospect-info"> @if(! $monGroupe) / @else {{$monGroupe->LibGrp}}. @endif </div>
-      <h3>Produits & Services : <span><a href="{{url('produits')}}"> - Gestion des produits/services</a></span></h3>
-      <hr/>
-      <div class="prospect-info">
+      <div class="tache-info">
         <div class="list-group">
-           @foreach ($produits as $produit)
+          @php
+            $k=0;
+          @endphp
+           @foreach ($HistoriqueEtats as $etat)
+             <a href="#" class="list-group-item list-group-item-action"><i class=""></i> {{$etat->LibEtat }} <i class="fa fa-clock-o"></i> {{$etatDate[$k]->created_at }} </a>
+             @php
+               $k++;
+             @endphp
+           @endforeach
+        </div>
+      </div>
+
+      <h3>Produits & Services : </h3>
+      <hr/>
+      <div class="tache-info">
+        <div class="list-group">
+           @foreach ($tache_produits as $produit)
              <a href="#" class="list-group-item list-group-item-action"><i class=""></i> {{$produit->LibProd }} <i class="fa fa-clock-o"></i> {{$produit->typePrd }} </a>
            @endforeach
         </div>
@@ -108,27 +113,28 @@
 
 </section><!-- /.content -->
 
-<!--Update Prospect-->
-@include('layouts.modals.updateProspect')
+<!--Update tache-->
+{{-- @include('layouts.modals.updatetache') --}}
 
 <!--Update Contact-->
 @include('layouts.modals.updateContact')
 
-  <div class="modal fade" id="ouiNonDebloque">
+  <div class="modal fade" id="ouiNonAnnuler">
     <div class="modal-dialog modal-lg modal-T1" >
       <div class="modal-content">
         <div class="modal-body">
 
             <div class="row">
               <div class="col-md-12">
-              <h2>Voullez vous vraiment debloquer ce prospect ?</h2>
+              <h2>Voullez vous vraiment annuler cette tache ?</h2>
+              <span>*ceci implique la suppression de toute autre information en relation avec cette tache.</span>
               </div>
             </div>
             <hr/>
 
             <div class="row">
               <div class="col-md-12">
-                <button class="col-md-6 btn btn-info" onclick="location.href='{{url('debloquerProspect/'.$prospect->id)}}'">Oui</button>
+                <button class="col-md-6 btn btn-info" onclick="location.href='{{url('destroyTache/'.$tache->id)}}'">Oui</button>
                 <button class="col-md-6 btn btn-danger" data-dismiss="modal">Non</button>
               </div>
             </div>
@@ -153,11 +159,11 @@
                                                                '{{$contact->type}}',
                                                                '{{str_replace("'","\'",$contact->remarque)}}',
                                                                '{{$contact->date}}',
-                                                               '{{str_replace("'","\'",$prospect->societe)}}',
-                                                               {{$prospect->id}},
-                                                               {{ json_encode($cntct_infos[$i]) }},
+                                                               '{{str_replace("'","\'",$tache->societe)}}',
+                                                               {{$tache->id}},
+                                                               {{ json_encode($details[$i]) }},
                                                                '{{$userContact[$i]["name"]." ".$userContact[$i]["prenom"]}}',
-                                                               '{{$score->LibScore}}'
+                                                               '{{$scores[$i]->LibScore}}'
                                                              )"
                                     data-toggle="modal" data-target="#updateContact">
                                    @if ($contact->type == "A")

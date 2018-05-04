@@ -13,7 +13,7 @@ class ProduitController extends Controller
 {
  public function get()
     {
-      if($this->checkAccess()==1){
+      if($this->UserType()==1){
           $produits = Produit::get();
           return view('produits')->with('produits',$produits);
       }else {
