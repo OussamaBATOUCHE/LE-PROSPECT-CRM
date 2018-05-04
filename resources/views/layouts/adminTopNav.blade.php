@@ -1,5 +1,5 @@
 @include('layouts.modals.updateProfil')
-@include('layouts.modals.showMessages2')
+@include('layouts.modals.showMessages')
 
 <header class="main-header">
   <!-- Logo -->
@@ -58,7 +58,7 @@
 
               </ul>
             </li>
-            <li class="footer"><a class="btn btn-success" data-toggle="modal" data-target="#showMessagesModal2">Afficher tous les messages</a></li>
+            <li class="footer"><a href="/messages" class="btn btn-success" data-toggle="modal" data-target="#showMessagesModal">Afficher tous les messages</a></li>
           </ul>
         </li>
         <!-- Notifications: style can be found in dropdown.less -->

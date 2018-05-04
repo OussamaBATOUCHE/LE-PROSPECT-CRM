@@ -1,3 +1,4 @@
+<!--
 <template lang="html">
 
    <div v-if="message.user_id == 1">

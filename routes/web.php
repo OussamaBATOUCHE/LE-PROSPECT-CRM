@@ -91,16 +91,16 @@ Route::get('/produit_delete/{produit}','ProduitController@destroy');
 
 Route::get('/prospects','ProspectController@get');
 
+/*
 Route::get('/messages',function(){
 	return App\Message::all();
 });
-
-
-
+*/
 
 				/*    ----- POST ------ */
 
 
+/*
 Route::post('/messages',function(){
 	$user = Auth::user();
 
@@ -110,6 +110,7 @@ Route::post('/messages',function(){
 
 	return ['status' => 'OK'];
 })->middleware('auth');
+*/
 
 
 Route::post('/createChamp','ChampActiviteController@create');
@@ -127,6 +128,14 @@ Route::patch('/updateScore/{score}', 'ScoreController@update');
 Route::patch('/updateChamp/{champ}', 'ChampActiviteController@update');
 
 Route::patch('/updateProduit/{produit}', 'ProduitController@update');
+
+
+
+/* For Chat */
+
+Route::get('messages','MessageController@get');
+Route::get('messages/ajax','MessageController@ajax');
+Route::post('messages/add','MessageController@store');
 
 
 
