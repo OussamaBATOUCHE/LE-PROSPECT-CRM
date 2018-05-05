@@ -22,12 +22,23 @@ class MessageController extends Controller
 
 			$html .= '
 			<div class="modal-body" style="padding: 0px;">
-				
+
 					 <div class="row">
 						 <div class="col-md-4" style="overflow: overlay; height: 24.3em;">
 							 <ul>';
+<<<<<<< HEAD
+<<<<<<< HEAD
+			foreach($users as $user){
+=======
 			foreach($users as $user){	
 				if ($user != Auth::user() ){
+>>>>>>> master
+=======
+
+			foreach($users as $user){	
+				if ($user != Auth::user() ){
+
+>>>>>>> ece5af2d8aeac786cb9f0291c5844136e00cc8e4
 			$html .= '
                       <li onclick="myfunction('.$user->id.')">
 		                  <a href="#">
@@ -124,11 +135,23 @@ info('rah nretourni');
     info('rani kamalt ajax');
 		}
 		*/
-       
+
 		public function ajax(){
 			ini_set('max_execution_time',7200);
 			if (Message::where('check',0)->count() < 1) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ece5af2d8aeac786cb9f0291c5844136e00cc8e4
+
 				ajax(); 
+
+<<<<<<< HEAD
+=======
+				ajax(); 
+>>>>>>> master
+=======
+>>>>>>> ece5af2d8aeac786cb9f0291c5844136e00cc8e4
 			}else {
 				$data = Message::where('check',0)->first();
 				$id = $data->id;
@@ -172,7 +195,7 @@ info('rah nretourni');
 
 
 //by oussama
-/*
+
  public function getAll(){
 
      if($this->UserType() == 1){
@@ -203,6 +226,6 @@ info('rah nretourni');
      Message::find($id)->delete();
    return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Un Message a été supprimé.</div>');
  }
- */
+ 
 //end by oussama
 }

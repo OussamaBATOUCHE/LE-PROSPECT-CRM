@@ -5,7 +5,7 @@
 
           <div class="row">
             <div class="col-md-12">
-            <h3>Aucune entite de la liste n'est selectioné !</h3>
+            <h3>Aucune entité de la liste n'est sélectionné !</h3>
             </div>
           </div>
           <hr/>
