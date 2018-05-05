@@ -21,6 +21,8 @@ use App\Tache_etat;
 use App\Etat;
 use App\Prospect;
 
+use App\Contact;
+
 
 class Controller extends BaseController
 {
@@ -62,7 +64,8 @@ class Controller extends BaseController
                                            'adresse' => $rq->adresse,
                                            'telephone' => $rq->telephone,
                                            'type'=>$type,
-                                           'poste'=>$rq->poste
+                                           'poste'=>$rq->poste,
+                                           'bloque'=>0
                                          )
                                    );
           }else{
@@ -76,6 +79,7 @@ class Controller extends BaseController
                                            'telephone' => $rq->telephone,
                                            'type'=>$type,
                                            'poste'=>$rq->poste,
+                                           'bloque'=>0,
                                            'password'=>Hash::make($rq->password)
                                          )
                                    );
@@ -122,6 +126,62 @@ class Controller extends BaseController
            }
         }
 
+        public function getAllUsers(){
+          $dependance = false;
+
+          $users = User::get();
+          $list ='';
+          foreach ($users as $user) {
+           $list .= '
+                       <tr>
+                         <td>'.$user->id.'</td>
+                         <td><a href="'.url('profil/'.$user->id).'">'.$user->name.'</a></td>
+                         <td>'.$user->email.'</td>
+                         <td>'.$user->telephone.'</td>
+                         <td>';
+                         $tache = Tache::where('idUser',$user->id)->get();
+                         $contact = Contact::where('idUser',$user->id)->get();
+                         if ($tache->count() == 0 && $contact->count() == 0) {
+                           $list .= '<a class="btn btn-danger fa fa-times" title="Supprimer cette utilisateur" href="'.url('deleteUser/'.$user->id).'"></a>';
+                         }
+                         if ($user->bloque == 0) {
+                            $list .= '<a class="btn btn-warning fa fa-ban" title="Bloquer cette utilisateur" href="'.url('bloquerUser/'.$user->id).'"></a>';
+                         }else{
+                            $list .= '<a class="btn btn-succes fa fa-user" title="Debloquer cette utilisateur" href="'.url('debloquerUser/'.$user->id).'"></a>';
+                         }
+
+           $list.='
+                         </td>
+                       </tr>
+                       ';
+          }
+          return $list;
+        }
+
+        public function bloquerUser($id){
+          $user = User::find($id);
+          $user->update(["bloque"=>1]);
+          return back()->with('status', '<div class="alert alert-warning alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>L\'Utilisateur <a href="'.url('profil/'.$user->id).'">'.$user->name." ".$user->prenom.'</a> est bloqué.</div>');
+        }
+        public function debloquerUser($id){
+          $user = User::find($id);
+          $user->update(["bloque"=>0]);
+          return back()->with('status', '<div class="alert alert-warning alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>L\'Utilisateur <a href="'.url('profil/'.$user->id).'">'.$user->name." ".$user->prenom.'</a> est debloqué.</div>');
+        }
+        public function deleteUser($id){
+          $tache = Tache::where('idUser',$id)->get();
+          $contact = Contact::where('idUser',$id)->get();
+          $user = User::find($id);
+          if ($tache->count() == 0 && $contact->count() == 0) {
+             $user->delete();
+             $statu = '<div class="alert alert-warning alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>L\'Utilisateur '.$user->name." ".$user->prenom.' est supprimé ainsi que tous ces messages et autres dependances.</div>';
+          }else{
+             $statu = '<div class="alert alert-warning alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>L\'Utilisateur '.$user->name." ".$user->prenom.' ne peux pas être supprimé car il a des dependances.</div>';
+          }
+
+          return back()->with('status', $statu);
+        }
+
 
         public function sendEmail($rq,$titre,$msg)
         {
@@ -132,6 +192,25 @@ class Controller extends BaseController
               $m->to('kamatcho1513@gmail.com', $rq->name)->subject($titre);
           });
 
+        }
+
+
+
+        public function createUser(Request $data)
+        {
+
+            User::create([
+                'name' => strtoupper($data['name']),
+                'prenom' => ucfirst(strtolower($data['prenom'])),
+                'email' => $data['email'],
+                'adresse' => $data['adresse'],
+                'telephone' => $data['telephone'],
+                'type' => $data['type'],
+                'poste' => $data['poste'],
+                'bloque' => 0,
+                'password' => Hash::make($data['password']),
+            ]);
+            return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Un nouveau utilisateur a bien été crée.</div>');
         }
 
 

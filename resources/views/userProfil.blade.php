@@ -35,8 +35,10 @@
                   <b>Emails envoyés</b> <a class="pull-right">13</a>
                 </li>
               </ul>
+              @if ($me->bloque == 1)
+              <a href="/debloquerUser/{{$me->id}}" class="btn btn-primary btn-block"><b>Debloquer le compte</b></a>  
+              @endif
 
-              <a href="/prospects" class="btn btn-primary btn-block"><b>Affecter une tache</b></a>
             </div>
             <!-- /.box-body -->
           </div>

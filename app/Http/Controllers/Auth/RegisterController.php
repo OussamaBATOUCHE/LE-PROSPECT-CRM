@@ -32,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -65,7 +65,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    public function create(array $data)
     {
 
         return User::create([
@@ -76,8 +76,13 @@ class RegisterController extends Controller
             'telephone' => $data['telephone'],
             'type' => $data['type'],
             'poste' => $data['poste'],
+            'bloque' => 0,
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function test(){
+      return 1;
     }
 
 

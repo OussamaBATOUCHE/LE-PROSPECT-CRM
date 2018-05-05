@@ -1,5 +1,6 @@
 @include('layouts.modals.updateProfil')
 @include('layouts.modals.showMessages')
+@include('layouts.modals.listUsers')
 
 <header class="main-header">
   <!-- Logo -->
@@ -90,10 +91,11 @@
                     </a>
                   </div>
                   <div class="col-md-6" id="c2">
-                    <a href="#" id="c2a">
+                    <a id="c2a"   data-toggle="modal" data-target="#usersModal">
                       <i class="fa fa-user top-param"></i>
                       <p>Utilisateurs</p>
                     </a>
+
                   </div>
                 </div>
               </div>
