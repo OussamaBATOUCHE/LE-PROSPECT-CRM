@@ -159,6 +159,7 @@ info('rah nretourni');
 
 
 //by oussama
+/*
  public function getAll(){
      $messages = Message::get();
      $list = array();
@@ -184,5 +185,6 @@ info('rah nretourni');
      Message::find($id)->delete();
    return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Un Message a été supprimé.</div>');
  }
+ */
 //end by oussama
 }
