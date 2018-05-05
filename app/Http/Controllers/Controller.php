@@ -22,6 +22,7 @@ use App\Etat;
 use App\Prospect;
 
 use App\Contact;
+use App\Message;
 
 
 class Controller extends BaseController
@@ -173,7 +174,9 @@ class Controller extends BaseController
           $contact = Contact::where('idUser',$id)->get();
           $user = User::find($id);
           if ($tache->count() == 0 && $contact->count() == 0) {
+             Message::where('user_id',$user->id)->orWhere('receiver',$user->id)->delete();
              $user->delete();
+
              $statu = '<div class="alert alert-warning alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>L\'Utilisateur '.$user->name." ".$user->prenom.' est supprimé ainsi que tous ces messages et autres dependances.</div>';
           }else{
              $statu = '<div class="alert alert-warning alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>L\'Utilisateur '.$user->name." ".$user->prenom.' ne peux pas être supprimé car il a des dependances.</div>';
