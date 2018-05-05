@@ -27,11 +27,18 @@ class MessageController extends Controller
 						 <div class="col-md-4" style="overflow: overlay; height: 24.3em;">
 							 <ul>';
 <<<<<<< HEAD
+<<<<<<< HEAD
 			foreach($users as $user){
 =======
 			foreach($users as $user){	
 				if ($user != Auth::user() ){
 >>>>>>> master
+=======
+
+			foreach($users as $user){	
+				if ($user != Auth::user() ){
+
+>>>>>>> ece5af2d8aeac786cb9f0291c5844136e00cc8e4
 			$html .= '
                       <li onclick="myfunction('.$user->id.')">
 		                  <a href="#">
@@ -133,12 +140,18 @@ info('rah nretourni');
 			ini_set('max_execution_time',7200);
 			if (Message::where('check',0)->count() < 1) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ece5af2d8aeac786cb9f0291c5844136e00cc8e4
 
-				ajax();
+				ajax(); 
 
+<<<<<<< HEAD
 =======
 				ajax(); 
 >>>>>>> master
+=======
+>>>>>>> ece5af2d8aeac786cb9f0291c5844136e00cc8e4
 			}else {
 				$data = Message::where('check',0)->first();
 				$id = $data->id;
