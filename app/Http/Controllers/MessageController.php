@@ -27,13 +27,15 @@ class MessageController extends Controller
 						 <div class="col-md-4" style="overflow: overlay; height: 24.3em;">
 							 <ul>';
 			foreach($users as $user){	
+				if ($user != Auth::user() ){
 			$html .= '
                       <li onclick="myfunction('.$user->id.')">
 		                  <a href="#">
 		                    <h4>'.$user->name.'</h4>
 		                  </a>
 		              </li>';
-			}
+			    }
+		    }
 			$html .= '
 		              </ul>
 					</div>
@@ -45,7 +47,7 @@ class MessageController extends Controller
 
 	}
 	public function message($id){
-		$messages = Message::where('user_id',$id)->orWhere('receiver',$id)->get();
+		$messages = Message::orderBy('id', 'asc')->where('user_id',$id)->where('receiver',Auth::user()->id)->orWhere('receiver',$id)->where('user_id',Auth::user()->id)->get();
 	    $html = '';
 	    $html .= '
 	    <div class="col-md-8">
@@ -53,7 +55,7 @@ class MessageController extends Controller
 
                 foreach($messages as $message){
                 	if ($message->user_id != Auth::User()->id) {
-                		//Me
+                		//machi ana li b3at
                         $html .='
                          <div class="container darker">
                            <img src="adminLTE/dist/img/user2-160x160.jpg" alt="Avatar">
@@ -61,10 +63,10 @@ class MessageController extends Controller
                            <span class="time-left">'.$message->created_at.'</span>
                          </div> ';
                 	} else {
-                		//Another User
+                		//ana li B3at
                 		$html .='
                          <div class="container">
-                           <img src="adminLTE/dist/img/user4-128x128.jpg" alt="Avatar">
+                           <img src="adminLTE/dist/img/user8-128x128.jpg" alt="Avatar">
                            <p>'.$message->message.'</p>
                            <span class="time-right">'.$message->created_at.'</span>
                          </div> ';
@@ -76,7 +78,7 @@ class MessageController extends Controller
 
               <div style="width: 95%;">
 
-                    <input type="text" class="col-md-10 send" placeholder="Votre Message" required style="    margin-top: 5px;    width: 90.333333%;">
+                    <input user="'.$id.'" type="text" class="col-md-10 send" placeholder="Votre Message" required style="    margin-top: 5px;    width: 90.333333%;">
                     <img class="btn-send" src="adminLTE/dist/img/sendSemiCircle.png" title="Envoyer" style="width:9%">
 
               </div>
@@ -89,10 +91,12 @@ class MessageController extends Controller
 	}
 
 	
-	public function store(Request $rq){
+	public function store($id,Request $rq){
     	$message = new Message;
     	$message->message = $rq->input('message');
-    	$message->user_id = Auth::User()->id;
+		$message->user_id = Auth::User()->id;
+		$message->receiver = $id;
+		
     	$message->save();
     }
 
@@ -122,16 +126,9 @@ info('rah nretourni');
 		*/
        
 		public function ajax(){
-			info('rah nedkhol ajax');
-
 			ini_set('max_execution_time',7200);
-
-			 info("rah ndir while");
-
 			if (Message::where('check',0)->count() < 1) {
-
 				ajax(); 
-
 			}else {
 				$data = Message::where('check',0)->first();
 				$id = $data->id;

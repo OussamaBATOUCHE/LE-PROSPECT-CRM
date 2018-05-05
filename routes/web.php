@@ -155,7 +155,7 @@ Route::patch('/updateProduit/{produit}', 'ProduitController@update');
 
 Route::get('messages','MessageController@get');
 Route::get('messages/ajax','MessageController@ajax');
-Route::post('messages/add','MessageController@store');
+Route::post('messages/add/{id}','MessageController@store');
 Route::get('messages/{id}','MessageController@message');
 
 
