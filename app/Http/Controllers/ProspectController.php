@@ -358,7 +358,7 @@ class ProspectController extends Controller
       foreach ($prospects as $prospect) {
        $list .= '
                    <tr>
-                     <td><input class="check " type="checkbox"/></td>
+                     <td><input class="check " type="checkbox" value="'.$prospect->id.'"/></td>
                      <td>'.$prospect->societe.'</td>
                      <td>'.$prospect->email.'</td>
                      <td>'.$prospect->tele1.'</td>

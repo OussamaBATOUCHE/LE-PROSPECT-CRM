@@ -152,6 +152,35 @@ class ContactController extends Controller
 
     return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Contact ajouté '.$emailSendResult.'avec succée !</div>');
   }
+  public function GrpEmail(Request $rq){
+    foreach ($rq->prospects as $prospect) {
+    //  return $rq->prospects;
+      $contact = new contact ;
+      $contact->idUser = Auth::user()->id;
+      $contact->idTach = 0;
+      $contact->idProsp = $prospect;
+      $score = Prospect_score::where('idPros',$prospect)->latest()->first();
+    //  return $score;
+      $contact->idScore = $score->idScore;//pour garder le meme score (dernier)
+      $contact->objet = "Email en groupe.";
+      $contact->date = date("Y-m-d");
+      $contact->remarque = "Email en groupe.";
+      $contact->type = "E";
+      $contact->save();
+
+      $Reciever = Prospect::where('id',$prospect)->first();
+      $this->sendEmail($Reciever,$rq->titre,$rq->remarque);
+
+      $cntct_email = new cntct_email;
+      $cntct_email->idCntct = $contact->id;
+      $cntct_email->idGrp = 0;
+      $cntct_email->contenu = $rq->remarque;
+      $cntct_email->envoye = 'oui';
+      $cntct_email->save();
+    }
+    return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Emails envoyés avec succée !</div>');
+
+  }
 
   public function delete($id)
   {

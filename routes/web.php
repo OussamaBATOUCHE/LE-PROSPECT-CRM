@@ -90,6 +90,8 @@ Route::post('createTache/{id}','TacheController@create');
 
 Route::post('deleteMsgs','MessageController@deleteMsgs');
 
+Route::post('GrpEmail','ContactController@GrpEmail');
+
 
 /*  END  List route oussama  */
 
