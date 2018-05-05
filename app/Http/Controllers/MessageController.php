@@ -10,12 +10,17 @@ use App\User;
 class MessageController extends Controller
 {
     public function get(){
-    	$html = '';
+    	$html = '<script>
+		myfunction = function(id){
 
-			$messages = Message::orderBy('id', 'asc')->get();
+		$(\'#anahowa\').load(\'/messages/\'+id);
+		}
+		</script>';
+
+			
 			$users = User::get();
 
-			$html = '
+			$html .= '
 			<div class="modal-body" style="padding: 0px;">
 				
 					 <div class="row">
@@ -23,16 +28,27 @@ class MessageController extends Controller
 							 <ul>';
 			foreach($users as $user){	
 			$html .= '
-                      <li>
+                      <li onclick="myfunction('.$user->id.')">
 		                  <a href="#">
 		                    <h4>'.$user->name.'</h4>
 		                  </a>
-		                  </li>';
+		              </li>';
 			}
 			$html .= '
 		              </ul>
-		            </div>
-                    <div class="col-md-8">
+					</div>
+					<div id="anahowa">
+
+					</div>
+					';
+                    return $html;
+
+	}
+	public function message($id){
+		$messages = Message::where('user_id',$id)->orWhere('receiver',$id)->get();
+	    $html = '';
+	    $html .= '
+	    <div class="col-md-8">
                       <div class="myContent">';
 
                 foreach($messages as $message){
@@ -68,14 +84,12 @@ class MessageController extends Controller
               <div>
 
       </div>
-        ';
+		';
+		return $html;
+	}
 
-                    return $html;
-
-
-    }
-
-    public function store(Request $rq){
+	
+	public function store(Request $rq){
     	$message = new Message;
     	$message->message = $rq->input('message');
     	$message->user_id = Auth::User()->id;
@@ -129,6 +143,8 @@ info('rah nretourni');
 				]);
 			}
 		}
+
+
 
 
 //     public function ajax(){
