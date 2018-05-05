@@ -19,7 +19,7 @@ class CreateMessagesTable extends Migration
             $table->integer('user_id');
             $table->integer('receiver')->nullable();
             $table->text('message');
-            $table->integer('check');
+            $table->integer('check')->default(0);
             
         });
     }

@@ -1,18 +1,19 @@
 <script>
   $(document).on('keydown','.send',function(e){
     var message = $(this).val();
+    var user = $(this).attr('user');
     var element = $(this);
     if(!message == '' && e.keyCode == 13 && !e.shiftKey){
-      console.log(10);
       //$('.myContent').append('<div class="container darker"><img src="adminLTE/dist/img/user2-160x160.jpg" alt="Avatar"><p>'+message+'</p><span class="time-left">{{ Carbon\Carbon::now()->toDateTimeString() }}<span/></div>');
       $.ajax({
-        url:'{{ url("messages/add") }}',
+        url:'{{ url("messages/add") }}/'+user,
         type:'post',
-        data:{_token:'{{csrf_token()}}',message:message}
+        data:{_token:'{{ csrf_token() }}',message:message}
       });
       element.val('');
     }
   }); 
+  
 
   $(function(){
       liveChat();
@@ -22,11 +23,12 @@
          url:'{{ url("messages/ajax") }}',
          data:{_token:'{{ csrf_token() }}'},
          success:function(data){
-          $('.myContent').append('<div class="container darker"><img src="adminLTE/dist/img/user2-160x160.jpg" alt="Avatar"><p>'+data['message']+'</p><span class="time-left">{{ Carbon\Carbon::now()->toDateTimeString() }}<span/></div>');
-          setTimeout(liveChat,1000);
+               // On doit savoir si je suis entrain d'envoyé ou si on m'envois
+          $('.myContent').append('<div class="container"><img src="adminLTE/dist/img/user8-128x128.jpg" alt="Avatar"><p>'+data['message']+'</p><span class="time-right">{{ Carbon\Carbon::now()->toDateTimeString() }}<span/></div>');
+          setTimeout(liveChat,500);
          },
          error:function(){
-          setTimeout(liveChat,5000);
+          setTimeout(liveChat,3000);
          }
     });
   }
