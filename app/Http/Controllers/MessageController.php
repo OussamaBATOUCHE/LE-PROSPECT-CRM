@@ -10,34 +10,56 @@ use App\User;
 class MessageController extends Controller
 {
     public function get(){
-    	$html = '';
+    	$html = '<script>
+		myfunction = function(id){
 
-			$messages = Message::orderBy('id', 'asc')->get();
+		$(\'#anahowa\').load(\'/messages/\'+id);
+		}
+		</script>';
+
+			
 			$users = User::get();
 
-			$html = '
+			$html .= '
 			<div class="modal-body" style="padding: 0px;">
 
 					 <div class="row">
 						 <div class="col-md-4" style="overflow: overlay; height: 24.3em;">
 							 <ul>';
+<<<<<<< HEAD
 			foreach($users as $user){
+=======
+			foreach($users as $user){	
+				if ($user != Auth::user() ){
+>>>>>>> master
 			$html .= '
-                      <li>
+                      <li onclick="myfunction('.$user->id.')">
 		                  <a href="#">
 		                    <h4>'.$user->name.'</h4>
 		                  </a>
-		                  </li>';
-			}
+		              </li>';
+			    }
+		    }
 			$html .= '
 		              </ul>
-		            </div>
-                    <div class="col-md-8">
+					</div>
+					<div id="anahowa">
+
+					</div>
+					';
+                    return $html;
+
+	}
+	public function message($id){
+		$messages = Message::orderBy('id', 'asc')->where('user_id',$id)->where('receiver',Auth::user()->id)->orWhere('receiver',$id)->where('user_id',Auth::user()->id)->get();
+	    $html = '';
+	    $html .= '
+	    <div class="col-md-8">
                       <div class="myContent">';
 
                 foreach($messages as $message){
                 	if ($message->user_id != Auth::User()->id) {
-                		//Me
+                		//machi ana li b3at
                         $html .='
                          <div class="container darker">
                            <img src="adminLTE/dist/img/user2-160x160.jpg" alt="Avatar">
@@ -45,10 +67,10 @@ class MessageController extends Controller
                            <span class="time-left">'.$message->created_at.'</span>
                          </div> ';
                 	} else {
-                		//Another User
+                		//ana li B3at
                 		$html .='
                          <div class="container">
-                           <img src="adminLTE/dist/img/user4-128x128.jpg" alt="Avatar">
+                           <img src="adminLTE/dist/img/user8-128x128.jpg" alt="Avatar">
                            <p>'.$message->message.'</p>
                            <span class="time-right">'.$message->created_at.'</span>
                          </div> ';
@@ -60,7 +82,7 @@ class MessageController extends Controller
 
               <div style="width: 95%;">
 
-                    <input type="text" class="col-md-10 send" placeholder="Votre Message" required style="    margin-top: 5px;    width: 90.333333%;">
+                    <input user="'.$id.'" type="text" class="col-md-10 send" placeholder="Votre Message" required style="    margin-top: 5px;    width: 90.333333%;">
                     <img class="btn-send" src="adminLTE/dist/img/sendSemiCircle.png" title="Envoyer" style="width:9%">
 
               </div>
@@ -68,17 +90,17 @@ class MessageController extends Controller
               <div>
 
       </div>
-        ';
+		';
+		return $html;
+	}
 
-                    return $html;
-
-
-    }
-
-    public function store(Request $rq){
+	
+	public function store($id,Request $rq){
     	$message = new Message;
     	$message->message = $rq->input('message');
-    	$message->user_id = Auth::User()->id;
+		$message->user_id = Auth::User()->id;
+		$message->receiver = $id;
+		
     	$message->save();
     }
 
@@ -108,16 +130,15 @@ info('rah nretourni');
 		*/
 
 		public function ajax(){
-			info('rah nedkhol ajax');
-
 			ini_set('max_execution_time',7200);
-
-			 info("rah ndir while");
-
 			if (Message::where('check',0)->count() < 1) {
+<<<<<<< HEAD
 
 				ajax();
 
+=======
+				ajax(); 
+>>>>>>> master
 			}else {
 				$data = Message::where('check',0)->first();
 				$id = $data->id;
@@ -129,6 +150,8 @@ info('rah nretourni');
 				]);
 			}
 		}
+
+
 
 
 //     public function ajax(){
