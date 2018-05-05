@@ -352,4 +352,19 @@ class ProspectController extends Controller
                                     ->with('lesProduits',$tousLesProduits);
 
     }
+    public function GetList(){
+      $prospects = Prospect::where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+      $list ='';
+      foreach ($prospects as $prospect) {
+       $list .= '
+                   <tr>
+                     <td><input class="check " type="checkbox"/></td>
+                     <td>'.$prospect->societe.'</td>
+                     <td>'.$prospect->email.'</td>
+                     <td>'.$prospect->tele1.'</td>
+                   </tr>
+                   ';
+      }
+      return $list;
+    }
 }

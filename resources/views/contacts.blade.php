@@ -1,9 +1,10 @@
 @extends('admin')
 
 @section('content')
+@include('layouts.modals.createEmailGroupe')
 <section class="content">
   <div style="text-align:right;float: right">
-  <a class="btn btn-info" onclick="" ><i class="fa fa-at"></i>&nbsp; Email en groupe</a>
+  <a class="btn btn-info" onclick=""  data-toggle="modal" data-target="#emailGroupe"><i class="fa fa-at"></i>&nbsp; Email en groupe</a>
 
 
   </div>

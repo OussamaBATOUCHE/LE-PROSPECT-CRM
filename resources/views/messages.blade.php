@@ -63,7 +63,7 @@
   supprimerPlusieurMsg = function(){
      messageCheck = someChecked();
      if( messageCheck != false){
-       // alert('klj');
+
        var listMessage = `@csrf
                           <select class="form-control" name="messages[]" multiple="" required style="display:  none;">`;
         for(var i = 0 ; i < messageCheck.length ; i++){
@@ -72,11 +72,11 @@
         listMessage += `</select>
                        <input type="submit" id="msgDt" value="" hidden>
                        `;
-      //  alert('lkj');
+
         $("#ls-msg").html(listMessage);
      }
       $('#msgDt').click();
-    //  alert('ok');
+
    }
 
 someChecked = function(){
@@ -94,7 +94,7 @@ someChecked = function(){
    return false;
  }
  else {
-   // alert('kje');
+   
   return messageCheck;
  }
 

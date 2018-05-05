@@ -76,6 +76,7 @@
     });
   });
 
+
   $(function() {
     $('#c1').hover(function() {
       $('#c1a').css('color', '#232e33');

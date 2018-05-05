@@ -36,6 +36,7 @@ Route::get('/debloquerProspect/{id}','ProspectController@debloquer');
 
 Route::get('/prospectsBloques/{bloque}','ProspectController@get');
 Route::get('prospectQue/{bloque}/{type}','ProspectController@get');
+Route::get('prospectsGetList','ProspectController@GetList');
 
 Route::get('/priorites','PrioriteController@get');
 Route::get('/priorite_delete/{priorite}','PrioriteController@destroy');
