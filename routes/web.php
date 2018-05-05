@@ -35,6 +35,7 @@ Route::get('/bloquerProspect/{id}','ProspectController@bloquer');
 Route::get('/debloquerProspect/{id}','ProspectController@debloquer');
 
 Route::get('/prospectsBloques/{bloque}','ProspectController@get');
+Route::get('prospectQue/{bloque}/{type}','ProspectController@get');
 
 Route::get('/priorites','PrioriteController@get');
 Route::get('/priorite_delete/{priorite}','PrioriteController@destroy');
@@ -54,6 +55,11 @@ Route::get('profil/{id}','Controller@getUserById');
 
 Route::get('contacts','ContactController@get');
 Route::get('cntctQue/{type}','ContactController@get');
+
+Route::get('/users','Controller@getAllUsers');
+Route::get('/bloquerUser/{id}','Controller@bloquerUser');
+Route::get('/debloquerUser/{id}','Controller@debloquerUser');
+Route::get('/deleteUser/{id}','Controller@deleteUser');
 
 
 /* --- POST --- */
@@ -76,6 +82,9 @@ Route::patch('/updateGroupe/{champ}', 'GroupeController@update');
 Route::post('/updateProspect/{prospect}', 'ProspectController@update');
 
 Route::post('createTache/{id}','TacheController@create');
+
+
+//Route::post('register','Auth\RegisterController@test');
 
 
 /*  END  List route oussama  */
