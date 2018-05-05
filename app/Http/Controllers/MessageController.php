@@ -177,7 +177,12 @@ info('rah nretourni');
 //by oussama
 /*
  public function getAll(){
-     $messages = Message::get();
+
+     if($this->UserType() == 1){
+       $messages = Message::get();
+     }else{
+       $messages = Message::where('user_id',Auth::user()->id)->orWhere('receiver',Auth::user()->id)->get();
+     }
      $list = array();
      $i=0;
      foreach ($messages as $message) {

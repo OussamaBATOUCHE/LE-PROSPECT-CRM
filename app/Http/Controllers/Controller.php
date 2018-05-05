@@ -128,7 +128,6 @@ class Controller extends BaseController
         }
 
         public function getAllUsers(){
-          $dependance = false;
 
           $users = User::get();
           $list ='';
