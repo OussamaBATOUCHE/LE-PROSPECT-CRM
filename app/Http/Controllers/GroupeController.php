@@ -12,7 +12,7 @@ class GroupeController extends Controller
 {
   public function get()
   {
-    if($this->checkAccess()==1){
+    if($this->UserType()==1){
         $Groupes = Groupe::get();
         return view('groupes')->with('Groupes',$Groupes);
     }else {

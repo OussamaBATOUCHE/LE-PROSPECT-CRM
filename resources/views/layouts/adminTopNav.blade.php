@@ -1,5 +1,6 @@
 @include('layouts.modals.updateProfil')
 @include('layouts.modals.showMessages')
+@include('layouts.modals.listUsers')
 
 <header class="main-header">
   <!-- Logo -->
@@ -61,27 +62,16 @@
             <li class="footer"><a href="/messages" class="btn btn-success" data-toggle="modal" data-target="#showMessagesModal">Afficher tous les messages</a></li>
           </ul>
         </li>
-        <!-- Notifications: style can be found in dropdown.less -->
-        <li class="dropdown notifications-menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-bell-o"></i>
-            <span class="label label-warning">10</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li class="header">Vous avez 10 notifications</li>
-            <li>
-              <!-- inner menu: contains the actual data -->
-              <ul class="menu">
-                <li>
-                  <a href="#">
-                    <i class="fa fa-users text-aqua"></i> 5 reservations
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="footer"><a href="#">Afficher tous</a></li>
-          </ul>
+        <!-- Notifications: mes taches a faire et qui non pas encore terminées -->
+        <li class="dropdown notifications-menu" id="mesNotifications" >
+
         </li>
+        <script>
+           loadNotifications = function(){
+              $('#mesNotifications').load("/mesNotifications");
+          }
+          loadNotifications();
+        </script>
         <!-- parametres -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -101,10 +91,11 @@
                     </a>
                   </div>
                   <div class="col-md-6" id="c2">
-                    <a href="#" id="c2a">
+                    <a id="c2a"   data-toggle="modal" data-target="#usersModal">
                       <i class="fa fa-user top-param"></i>
                       <p>Utilisateurs</p>
                     </a>
+
                   </div>
                 </div>
               </div>
@@ -167,5 +158,3 @@
     </div>
   </nav>
 </header>
-
-

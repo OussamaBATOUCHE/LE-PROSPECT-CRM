@@ -2,9 +2,10 @@
 
 @section('content')
 <section class="content">
+    <h3 class="box-title">Gestion des prospects</h3>
   <div style="text-align:right;float: right">
-  <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect({{$tousLesProduits}})" ><i class="fa fa-plus-square"></i>&nbsp; Taches en groupe</a>
-  <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-plus-square"></i>&nbsp; Ajouter un prospect</a>
+  <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect({{$tousLesProduits}})" ><i class="fa fa-calendar"></i>&nbsp; Taches en groupe</a>
+  <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-user-plus"></i>&nbsp; Ajouter un prospect</a>
 
   </div>
   <div style="float:left">
@@ -43,7 +44,10 @@
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Gestion des prospects</h3>
+          <a href="{{url('prospectQue/0/1')}}" class="btn "><i class="fa fa-fire" style="color:blue;font-size:20px;"></i>&nbsp; Prospects</a>
+          <a href="{{url('prospectQue/0/2')}}" class="btn "><i class="fa fa-users" style="color:blue;font-size:20px;"></i>&nbsp; Clients</a>
+          <a href="{{url('prospectQue/0/0')}}" class="btn "><i class="fa fa-list" style="color:blue;font-size:20px;"></i>&nbsp; Tous</a>
+
         </div><!-- /.box-header -->
         <div class="box-body">
           <table id="example1" class="table table-bordered table-striped">
@@ -81,14 +85,14 @@
               <tr>
                 <th><input class="check" type="checkbox" value="{{$prospect->id}}"/></th>
                 <th>{{$prospect->codeProsp}}</th>
-                <th class="sub-info"><a href="{{url('detailsProspect/'.$prospect->id)}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{$prospect->description}}">{{$prospect->societe}}</a> <span><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
-                <th style="background-color:{{$infosProsp[$i]["couleur"]}};" > <span class="text-white">{{$infosProsp[$i]["score"]}}</span> <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{$infosProsp[$i]["remarque"]}}"></i></th>
+                <th class="sub-info"><a href="{{url('detailsProspect/'.$prospect->id)}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{substr($prospect->description,0,50)}}">{{$prospect->societe}}</a> <span><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
+                <th style="background-color:{{$infosProsp[$i]["couleur"]}};" > <span class="text-white">{{$infosProsp[$i]["score"]}}</span> <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{substr($infosProsp[$i]["remarque"],0,60)}}"></i></th>
                 <th class="sub-info">{{$prospect->genre}}.{{$prospect->nom}} {{$prospect->prenom}} <span><br/> {{$prospect->email}} <br/> {{$prospect->tele1}}</span></th>
                 <th>{{$infosProsp[$i]["champActiv"]}}</th>
                 <th>
 
                      @if ($infosProsp[$i]["cntct_user"] != "")
-                       <a href="" title="Mettre à joure"
+                       <a href="" title="Details & Mettre à joure"
                           onclick="chargeUpdateContact( {{$infosProsp[$i]["idDernierCntct"]}},
                                                         '{{$infosProsp[$i]["typeDernierCntct"]}}',
                                                         '{{str_replace("'","\'",$infosProsp[$i]["remarqueDernierCntct"])}}',

@@ -12,7 +12,7 @@ class PrioriteController extends Controller
 {
   public function get()
   {
-    if($this->checkAccess()==1){
+    if($this->UserType()==1){
         $priorites = priorite::get();
         return view('priorites')->with('priorites',$priorites);
     }else {

@@ -12,7 +12,7 @@ class EtatController extends Controller
 {
   public function get()
   {
-    if($this->checkAccess()==1){
+    if($this->UserType()==1){
         $etats = Etat::get();
         return view('etats')->with('etats',$etats);
     }else {

@@ -1,4 +1,4 @@
-<script>
+{{-- <script>
   $(document).on('keydown','.send',function(e){
     var message = $(this).val();
     var element = $(this);
@@ -13,6 +13,7 @@
       element.val('');
     }
   }); 
+
   $(function(){
       liveChat();
   });
@@ -37,7 +38,7 @@
         <h3 class="modal-title" id="addUserModalLabel" style="color:white" >Descussion</h3>
       </div>
         <div id="listeMessage">
-          
+
         </div>
 
     </div>
@@ -51,3 +52,4 @@
                 $('#listeMessage').load('/messages');
                 $('#listeMessage').append('<p> Connection ... </p>');
               </script>   
+

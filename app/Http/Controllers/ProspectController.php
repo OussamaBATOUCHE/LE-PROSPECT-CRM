@@ -22,9 +22,21 @@ use App\Etat;
 
 class ProspectController extends Controller
 {
-    public function get($bloque = 0)
+    public function get($bloque = 0,$type=1)
     {
-          $prospects = Prospect::where('bloquer',$bloque)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
+          switch ($type) {
+            case 0:
+              $prospects = Prospect::where('bloquer',$bloque)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
+              break;
+              case 1:
+                $prospects = Prospect::where('bloquer',$bloque)->where('client',0)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
+                break;
+                case 2:
+                  $prospects = Prospect::where('bloquer',$bloque)->where('client',1)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
+                  break;
+          }
+//          dd($prospects);
+
           $tousLesScores = Score::get();//pour un nouveau contact/prospect
           $tousLesChampActiv = ChampActivite::get();
           $tousLesGroupes = Groupe::get();
@@ -174,6 +186,7 @@ class ProspectController extends Controller
           $prospect->idGrp = $rq->idGrp;
           $prospect->idChampAct = $rq->idChampAct;
           $prospect->bloquer = 0;
+          $prospect->client = 0;
           //$prospect->created_at = \Carbon\Carbon::now()->toDateTimeString() ;
 
           //Done
@@ -243,6 +256,22 @@ class ProspectController extends Controller
           $prospect_score->date = date("d/m/Y H:i:s");//la date est en format string
           $prospect_score->remarque = 'Modification de prospect.';
           $prospect_score->save();
+
+        }
+
+        //si le score donne est le max des score c'est a dire que ce prospect devient un client
+        //ainsi je doit mis a jour l'attribut client et ajouter un tuple dans la table client_produits
+
+        $clientScore = Score::whereRaw('num = (select max(`num`) from Scores)')->first();
+        if($rq->score == $clientScore->id ){
+          Prospect::where('id',$prospect)
+                    ->update(["client"=>1]);
+          // $client_produit = new Client_produit;
+          // $client_produit->idProsp = $prospect;
+          // $client_produit->produitService = $prospect;
+        }else{
+          Prospect::where('id',$prospect)
+                    ->update(["client"=>0]);
         }
 
 

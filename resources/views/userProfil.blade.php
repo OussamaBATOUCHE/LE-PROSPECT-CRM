@@ -18,7 +18,7 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <span class="profile-user-img img-responsive img-circle" >A</span>
+              <span class="profile-user-img img-responsive img-circle" >  A-B</span>
 
               <h3 class="profile-username text-center">{{$me->name." ".$me->prenom}}</h3>
 
@@ -35,8 +35,10 @@
                   <b>Emails envoyés</b> <a class="pull-right">13</a>
                 </li>
               </ul>
+              @if ($me->bloque == 1)
+              <a href="/debloquerUser/{{$me->id}}" class="btn btn-primary btn-block"><b>Debloquer le compte</b></a>  
+              @endif
 
-              <a href="#" class="btn btn-primary btn-block"><b>Affecter une tache</b></a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -95,8 +97,7 @@
                   <div class="col-xs-12">
                     <div class="box">
                       <div class="box-header ">
-                        <a href="{{url('tachesTermine/1')}}" class="btn btn-success"><i class="fa fa-check-circle" style="color:white"></i>&nbsp; Afficher les taches terminées</a>
-                        <a href="{{url('taches')}}" class="btn "><i class="fa fa-fire" style="color:blue;font-size:20px;"></i>&nbsp; Toutes les taches</a>
+                        <h3>La liste des taches.</h3>
                       </div>
                       <div class="box-body">
                         <table id="example1" class="table table-bordered table-striped">
@@ -163,58 +164,60 @@
               <!-- /.tab-pane -->
 
               <div class="tab-pane" id="profil">
-                <form class="form-horizontal">
+                <form  method="POST" action="{{ url('updateProfile') }}" class="form-horizontal">
+                  @csrf
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Nom</label>
 
                     <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputName" placeholder="Name">
+                      <input name="name" type="text" class="form-control" id="inputName" placeholder="Name" value="{{$me->name}}">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Prenom</label>
 
                     <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputName" placeholder="Name">
+                      <input name="prenom" type="text" class="form-control" id="inputName" placeholder="Name" value="{{$me->prenom}}">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                    <label for="poste" class="col-sm-2 control-label">Poste de travail</label>
 
                     <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                      <input name="poste" type="text" class="form-control" id="inputName" placeholder="Poste de travail" value="{{$me->poste}}">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Adresse</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" placeholder="Name">
+                      <input name="adresse" type="text" class="form-control" id="inputName" placeholder="Name" value="{{$me->adresse}}">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Telephone</label>
 
                     <div class="col-sm-10">
-                      <input type="number" class="form-control" id="inputExperience" placeholder="Experience">
+                      <input name="telephone" type="number" class="form-control" id="inputExperience" placeholder="Experience" min="0" maxlength="10" value="{{$me->telephone}}">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                      <input name="email" type="email" class="form-control" id="inputEmail" placeholder="Email" value="{{$me->email}}">
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox"> Directeur Commercial <a href="#">terms and conditions</a>
+                          <input name="type" type="checkbox" @if($me->type == 1) checked  @endif value="1"> Directeur Commercial <a href="#">(prévilèges)</a>
                         </label>
                       </div>
                     </div>
                   </div>
+                  <input type="hidden" name="id" value="{{$me->id}}">
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button type="submit" class="btn btn-danger">Enregistrer</button>

@@ -22,13 +22,13 @@
                     <textarea name="adresse" class="form-control" rows="4" style="width:100%; " placeholder="Adresse" required></textarea>
                   </div>
                   <div class="form-group">
-                    <input type="number" class="form-control" name="codePostal" placeholder="Code Postal" required>
+                    <input type="number" class="form-control" name="codePostal" placeholder="Code Postal" min="1000" >
                   </div>
                   <div class="form-group" id="wilayas">
 
                   </div>
                   <div class="form-group">
-                    <input type="number" class="form-control" name="nbreEmplyes" placeholder="Nombre d'employes" required>
+                    <input type="number" class="form-control" name="nbreEmplyes" placeholder="Nombre d'employes" min="1" >
                   </div>
 
                 </div>
@@ -48,7 +48,7 @@
                       <input type="text" class="form-control" name="nom" placeholder="Nom" required>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" name="prenom" placeholder="Prenom" required>
+                      <input type="text" class="form-control" name="prenom" placeholder="Prenom" >
                     </div>
                     <div class="form-group">
                       <input type="email" class="form-control" name="email" placeholder="Email" required>
@@ -57,21 +57,21 @@
                       <input type="text" class="form-control" name="tele1" placeholder="Telephone " maxlength="10" required>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" name="tele2" placeholder="Telephone 2" maxlength="10" required>
+                      <input type="text" class="form-control" name="tele2" placeholder="Telephone 2" maxlength="10" >
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input type="text" class="form-control" name="tele3" placeholder="Telephone 3" maxlength="10" required>
+                      <input type="text" class="form-control" name="tele3" placeholder="Telephone 3" maxlength="10" >
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" name="fax" placeholder="Fax " maxlength="10" required>
+                      <input type="text" class="form-control" name="fax" placeholder="Fax " maxlength="10" >
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" name="skype" placeholder="Skype " required>
+                      <input type="text" class="form-control" name="skype" placeholder="Skype " >
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" name="siteWeb" placeholder="Site Web (url) " required>
+                      <input type="text" class="form-control" name="siteWeb" placeholder="Site Web (url) " >
                     </div>
                   </div>
                 </div>
@@ -91,7 +91,7 @@
                    </select>
                  </div>
                  <div class="form-group">
-                   <select class="form-control" name="idGrp" required>
+                   <select class="form-control" name="idGrp" >
                      <option value="0" disabled selected>Groupe</option>
                      @foreach ($tousLesGroupes as $groupe)
                        <option value="{{$groupe->id}}" >{{$groupe->LibGrp}}</option>

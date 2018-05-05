@@ -35,6 +35,7 @@ Route::get('/bloquerProspect/{id}','ProspectController@bloquer');
 Route::get('/debloquerProspect/{id}','ProspectController@debloquer');
 
 Route::get('/prospectsBloques/{bloque}','ProspectController@get');
+Route::get('prospectQue/{bloque}/{type}','ProspectController@get');
 
 Route::get('/priorites','PrioriteController@get');
 Route::get('/priorite_delete/{priorite}','PrioriteController@destroy');
@@ -44,9 +45,25 @@ Route::get('/etat_delete/{etat}','EtatController@destroy');
 
 
 Route::get('/taches','TacheController@get');
+Route::get('/tache/{id}','TacheController@getById');
+Route::get('/destroyTache/{id}','TacheController@destroy');
 Route::get('tachesTermine/{termine}','TacheController@get');
+Route::get('/mesNotifications','TacheController@Notifications');
+
 
 Route::get('profil/{id}','Controller@getUserById');
+
+Route::get('contacts','ContactController@get');
+Route::get('cntctQue/{type}','ContactController@get');
+
+Route::get('/users','Controller@getAllUsers');
+Route::get('/bloquerUser/{id}','Controller@bloquerUser');
+Route::get('/debloquerUser/{id}','Controller@debloquerUser');
+Route::get('/deleteUser/{id}','Controller@deleteUser');
+
+Route::get('messagesAll','MessageController@getAll');
+Route::get('message_delete/{id}','MessageController@deleteMsg');
+
 
 
 /* --- POST --- */
@@ -69,6 +86,8 @@ Route::patch('/updateGroupe/{champ}', 'GroupeController@update');
 Route::post('/updateProspect/{prospect}', 'ProspectController@update');
 
 Route::post('createTache/{id}','TacheController@create');
+
+Route::post('deleteMsgs','MessageController@deleteMsgs');
 
 
 /*  END  List route oussama  */

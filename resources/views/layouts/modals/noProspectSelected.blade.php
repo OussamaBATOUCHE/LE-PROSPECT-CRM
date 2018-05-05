@@ -5,7 +5,7 @@
 
           <div class="row">
             <div class="col-md-12">
-            <h3>Voulez devez d'abord sélectionner des prospects de votre liste !</h3>
+            <h3>Aucune entite de la liste n'est selectioné !</h3>
             </div>
           </div>
           <hr/>

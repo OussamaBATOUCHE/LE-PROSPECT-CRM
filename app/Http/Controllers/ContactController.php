@@ -17,8 +17,72 @@ use App\Tache_etat;
 use App\Etat;
 use App\Tache;
 
+use App\User;
+
 class ContactController extends Controller
 {
+
+  public function get($type = 0){
+    //verification des droits d'acces
+    if($this->UserType()==1){//dans ce cas , c'est le admin qu'est en ligne , ainsi je lui return toute la liste
+      switch ($type) {
+        case 0:
+          $contacts = Contact::orderByRaw('id DESC')->get();
+          break;
+          case 1:
+            $contacts = Contact::where('type','A')->orderByRaw('id DESC')->get();
+            break;
+            case 2:
+              $contacts = Contact::where('type','E')->orderByRaw('id DESC')->get();
+              break;
+      }
+
+    }else {//dans ce cas c'est un simple commercial , ainsi je luis return sa propre liste de contacte
+      switch ($type) {
+        case 0:
+          $contacts = Contact::where('idUser',Auth::user()->id)->orderByRaw('id DESC')->get();
+          break;
+          case 1:
+            $contacts = Contact::where('type','A')->where('idUser',Auth::user()->id)->orderByRaw('id DESC')->get();
+            break;
+            case 2:
+              $contacts = Contact::where('type','A')->where('idUser',Auth::user()->id)->orderByRaw('id DESC')->get();
+              break;
+      }
+
+    }
+    // et je contenu la procedure le plus normalement possible
+    $users=array();
+    $prospects =array();
+    $scores = array();
+    $taches = array();
+    $details = array();
+    foreach ($contacts as $contact) {
+      $users[] = User::find($contact->idUser);
+      $prospects[] = Prospect::find($contact->idProsp);
+      $scores[] = Score::find($contact->idScore);
+      $taches[] = Tache::find($contact->idTach);
+      switch ($contact->type) {
+
+        case 'A':
+          $details[] = cntct_appel::where('idCntct',$contact->id)->first();//c sur que y'a q'un seul appel pour un contact
+          break;
+        case 'E':
+          $details[] = cntct_email::where('idCntct',$contact->id)->first();//c sur que y'a q'un seul mail pour un contact
+          break;
+          default:return $contact->type; break;
+      }
+    }
+
+    //dd($taches);
+    return view('contacts')->with('contacts',$contacts)
+                           ->with('details',$details)
+                           ->with('users',$users)
+                           ->with('prospects',$prospects)
+                           ->with('scores',$scores)
+                           ->with('taches',$taches);
+
+  }
 
 
   public function create(Request $rq,$tache,$type,$prospect){

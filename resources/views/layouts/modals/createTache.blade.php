@@ -124,8 +124,6 @@
              prospectCheck.push(this.value) ;
          }
        });
-      // console.log(prospectCheck);
-
        if (b==false) {
          $('#NoProspectSelected').modal('show');
          return false;
