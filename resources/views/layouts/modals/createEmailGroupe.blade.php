@@ -6,13 +6,13 @@
         <h3 class="modal-title" style="color:white" >Emails en groupe</h3>
       </div>
       <div class="modal-body">
-          <hr/>
           <section class="content">
             <div class="row">
               <div class="col-xs-12">
                 <div class="box">
                   <div class="box-header">
-                    <a id="switchButton" onclick="nextStepMsgGrp()" class="btn btn-info pull-right" value="1"><i class="fa fa-envelope" style="color:white;font-size:20px;"></i>&nbsp; Suivant >></a>
+                    <a id="switchButton" onclick="nextStepMsgGrp()" class="btn btn-info pull-right" value="1"><i class="fa fa-envelope" style="color:white;font-size:20px;"></i>&nbsp; <span id="nextStp">Suivant >></span></a>
+                    <a id="previeusStp" onclick="prev()" class="btn btn-info pull-right" disabled >&nbsp; <span id="nextStp"> << Precedent</span></a>
                   </div><!-- /.box-header -->
                     @if (session('status')){!! session('status') !!}@endif
                   <div class="box-body" id="contentMailGrp">
@@ -48,7 +48,14 @@
 </div>
 @include('layouts.modals.noProspectSelected')
 <script>
- $('#step2').hide();
+$('#step2').hide();
+
+ prev = function(){
+
+   $('#previeusStp').prop('disable');
+   //alert('lkjl');
+ }
+
   loadPrspcts = function(){
    $('#prspcts').load('/prospectsGetList');
   }
@@ -79,7 +86,14 @@
 
              $("#step2").append(listProspect);
              $('#step1').hide();
+             $('#step1_length').hide();
+             $('#step1_filter').hide();
+             $('#step1_info').hide();
+             $('#step1_paginate').hide();
+             $('#nextStp').html('Envoyer');
+
              $('#step2').show();
+             $('#previeusStp').removeAttr('disabled');
         }
 
 

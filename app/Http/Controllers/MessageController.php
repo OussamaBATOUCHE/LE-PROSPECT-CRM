@@ -17,11 +17,11 @@ class MessageController extends Controller
 
 			$html = '
 			<div class="modal-body" style="padding: 0px;">
-				
+
 					 <div class="row">
 						 <div class="col-md-4" style="overflow: overlay; height: 24.3em;">
 							 <ul>';
-			foreach($users as $user){	
+			foreach($users as $user){
 			$html .= '
                       <li>
 		                  <a href="#">
@@ -106,7 +106,7 @@ info('rah nretourni');
     info('rani kamalt ajax');
 		}
 		*/
-       
+
 		public function ajax(){
 			info('rah nedkhol ajax');
 
@@ -116,7 +116,7 @@ info('rah nretourni');
 
 			if (Message::where('check',0)->count() < 1) {
 
-				ajax(); 
+				ajax();
 
 			}else {
 				$data = Message::where('check',0)->first();
@@ -159,7 +159,7 @@ info('rah nretourni');
 
 
 //by oussama
-/*
+
  public function getAll(){
 
      if($this->UserType() == 1){
@@ -190,6 +190,6 @@ info('rah nretourni');
      Message::find($id)->delete();
    return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Un Message a été supprimé.</div>');
  }
- */
+ 
 //end by oussama
 }
