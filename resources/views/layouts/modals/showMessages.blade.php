@@ -1,4 +1,4 @@
-{{-- <script>
+<script>
   $(document).on('keydown','.send',function(e){
     var message = $(this).val();
     var element = $(this);
