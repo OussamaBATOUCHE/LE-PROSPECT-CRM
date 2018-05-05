@@ -61,6 +61,10 @@ Route::get('/bloquerUser/{id}','Controller@bloquerUser');
 Route::get('/debloquerUser/{id}','Controller@debloquerUser');
 Route::get('/deleteUser/{id}','Controller@deleteUser');
 
+Route::get('messagesAll','MessageController@getAll');
+Route::get('message_delete/{id}','MessageController@deleteMsg');
+
+
 
 /* --- POST --- */
 
@@ -83,8 +87,7 @@ Route::post('/updateProspect/{prospect}', 'ProspectController@update');
 
 Route::post('createTache/{id}','TacheController@create');
 
-
-//Route::post('register','Auth\RegisterController@test');
+Route::post('deleteMsgs','MessageController@deleteMsgs');
 
 
 /*  END  List route oussama  */

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Message;
 use Auth;
+use App\User;
 
 class MessageController extends Controller
 {
@@ -118,4 +119,33 @@ class MessageController extends Controller
 //     	}
 //     info('rani kamalt ajax');
 //     }
+
+
+//by oussama
+ public function getAll(){
+     $messages = Message::get();
+     $list = array();
+     $i=0;
+     foreach ($messages as $message) {
+        $sender = User::where('id',$message->user_id)->first();
+        $reciever = User::where('id',$message->receiver)->first();
+        $list[$i] = ['sender'=> $sender->name." ".$sender->prenom,
+                         'reciever'=> $reciever->name." ".$reciever->prenom];
+                         $i++;
+     }
+     //return $list[0]["sender"];
+     return view("messages")->with('messages', $messages)->with('detailsMessage', $list);
+ }
+
+ public function deleteMsgs(Request $rq){
+   foreach ($rq->messages as $message) {
+     Message::find($message)->delete();
+   }
+   return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Messages supprimés.</div>');
+ }
+ public function deleteMsg($id){
+     Message::find($id)->delete();
+   return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Un Message a été supprimé.</div>');
+ }
+//end by oussama
 }

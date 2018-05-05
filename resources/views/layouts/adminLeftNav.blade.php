@@ -49,7 +49,7 @@
         </ul>
       </li>
       <li>
-        <a href="">
+        <a href="/messagesAll">
           <i class="fa fa-envelope"></i> <span>Message</span>
         </a>
       </li>
