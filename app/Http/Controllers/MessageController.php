@@ -5,42 +5,30 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Message;
 use Auth;
+use App\User;
 
 class MessageController extends Controller
 {
     public function get(){
     	$html = '';
-    	$messages = Message::get();
-        $html = '
-            <div class="modal-body" style="padding: 0px;">
-            
-                 <div class="row">
-                   <div class="col-md-4" style="overflow: overlay; height: 24.3em;">
-                     <ul>
-                        <li>
+			$messages = Message::orderBy('id', 'asc')->get();
+			$users = User::get();
+
+			$html = '
+			<div class="modal-body" style="padding: 0px;">
+				
+					 <div class="row">
+						 <div class="col-md-4" style="overflow: overlay; height: 24.3em;">
+							 <ul>';
+			foreach($users as $user){	
+			$html .= '
+                      <li>
 		                  <a href="#">
-		                    <h4>Bensaib Kamel</h4>
-		                    <small> 24/04 22H30</small>
+		                    <h4>'.$user->name.'</h4>
 		                  </a>
-		                </li>
-		                <li>
-		                  <a href="#">
-		                    <h4>Batouch Oussama</h4>
-		                    <small> 24/03 23H25</small>
-		                   </a>
-		                </li>
-		                <li>
-		                  <a href="#">
-		                   <h4>Sid-Ahmed Abderrahim</h4>
-		                   <small> 20/02 11H48</small>
-		                  </a>
-		                </li>
-		                <li>
-		                  <a href="#">
-		                    <h4>Bensaib Kamel</h4>
-		                    <small> 24/04 22H30</small>
-		                  </a>
-		                </li>
+		                  </li>';
+			}
+			$html .= '
 		              </ul>
 		            </div>
                     <div class="col-md-8">
@@ -92,17 +80,14 @@ class MessageController extends Controller
     	$message->user_id = Auth::User()->id;
     	$message->save();
     }
-
+/*
     public function ajax(){
 info('bdit ajax');
         ini_set('max_execution_time',7200);
-        info('rah nedkhol fal while');
     	while (Message::where('check',0)->count() < 1) {
-    		info('rah ndir sleep');
     		sleep(1);
     		info('rani kamalt sleep');
     	}
-    	info('khrajt mal while rani rayah if');
     	if (Message::where('check',0)->count() > 0) {
     		info('rani fal if');
     		$data = Message::where('check',0)->first();
@@ -117,5 +102,29 @@ info('rah nretourni');
     		info('rani retournit');
     	}
     info('rani kamalt ajax');
-    }
+		}
+		*/
+       
+		public function ajax(){
+			info('rah nedkhol ajax');
+
+			ini_set('max_execution_time',7200);
+
+			 info("rah ndir while");
+
+			if (Message::where('check',0)->count() < 1) {
+
+				ajax(); 
+
+			}else {
+				$data = Message::where('check',0)->first();
+				$id = $data->id;
+				$edit = Message::find($id);
+				$edit->check = 1;
+				$edit->save();
+				return response()->json([
+          'message' => $data->message
+				]);
+			}
+		}
 }
