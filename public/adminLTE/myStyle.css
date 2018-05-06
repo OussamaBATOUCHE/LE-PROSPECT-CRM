@@ -181,12 +181,16 @@ th.sub-info > span{
 /* Darker chat container */
 .darker {
     border-color: #ccc;
-    background-color: #ddd;
+    background-color: #4b4b4b;
     width : initial;
 }
 
 .darker p{
   text-align: right;
+  color: white;
+}
+.darker span{
+  color: #ecf0f1;
 }
 
 /* Clear floats */

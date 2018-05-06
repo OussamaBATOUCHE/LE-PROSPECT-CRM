@@ -13,8 +13,9 @@ class MessageController extends Controller
     	$html = '<script>
 		myfunction = function(id){
 
-		$(\'#anahowa\').load(\'/messages/\'+id);
+		$(\'#anahowa\').load(\'/messages/\'+id);		
 		}
+		
 		</script>';
 
 
@@ -47,7 +48,7 @@ class MessageController extends Controller
 
 	}
 	public function message($id){
-		$messages = Message::orderBy('id', 'asc')->where('user_id',$id)->where('receiver',Auth::user()->id)->orWhere('receiver',$id)->where('user_id',Auth::user()->id)->get();
+		$messages = Message::orderBy('id', 'desc')->where('user_id',$id)->where('receiver',Auth::user()->id)->orWhere('receiver',$id)->where('user_id',Auth::user()->id)->get();
 	    $html = '';
 	    $html .= '
 	    <div class="col-md-8">
@@ -57,18 +58,18 @@ class MessageController extends Controller
                 	if ($message->user_id != Auth::User()->id) {
                 		//machi ana li b3at
                         $html .='
-                         <div class="container darker">
-                           <img src="adminLTE/dist/img/user2-160x160.jpg" alt="Avatar">
-                           <p>'.$message->message.'</p>
-                           <span class="time-left">'.$message->created_at.'</span>
-                         </div> ';
-                	} else {
-                		//ana li B3at
-                		$html .='
                          <div class="container">
                            <img src="adminLTE/dist/img/user8-128x128.jpg" alt="Avatar">
                            <p>'.$message->message.'</p>
                            <span class="time-right">'.$message->created_at.'</span>
+                         </div> ';
+                	} else {
+                		//ana li B3at
+                		$html .='
+                         <div class="container darker">
+                           <img src="adminLTE/dist/img/user2-160x160.jpg" alt="Avatar">
+                           <p>'.$message->message.'</p>
+                           <span class="time-left">'.$message->created_at.'</span>
                          </div> ';
                 	}
                 }
@@ -100,30 +101,7 @@ class MessageController extends Controller
     	$message->save();
     }
 
-/*
-    public function ajax(){
-info('bdit ajax');
-        ini_set('max_execution_time',7200);
-    	while (Message::where('check',0)->count() < 1) {
-    		sleep(1);
-    		info('rani kamalt sleep');
-    	}
-    	if (Message::where('check',0)->count() > 0) {
-    		info('rani fal if');
-    		$data = Message::where('check',0)->first();
-    		$id = $data->id;
-    		$edit = Message::find($id);
-    		$edit->check = 1;
-    		$edit->save();
-info('rah nretourni');
-    		return response()->json([
-               'message'=>$data->message
-    		]);
-    		info('rani retournit');
-    	}
-    info('rani kamalt ajax');
-		}
-		*/
+
 
 		public function ajax(){
 			//if (Message::where('check',0)->count() < 1) {
@@ -136,53 +114,71 @@ info('rah nretourni');
 					'code' => 1337
 				]);
 			}
-			if (Message::where('check',0)->count() > 0) {
-				$data = Message::where('check',0)->first();
-				if($data->receiver == Auth::user()->id){
-					$id = $data->id;
-					$edit = Message::find($id);
-					$edit->check = 1;
-					$edit->save();
-					return response()->json([
-			        'message' => $data->message
-					]);
-				}else{ return response()->json([
+				$datas = Message::where('check',0)->get();
+				foreach ($datas as $data) {
+					if($data->receiver == Auth::user()->id){
+						$id = $data->id;
+						$edit = Message::find($id);
+						$edit->check = 1;
+						$edit->save();
+						return response()->json([
+						'message' => $data->message
+						]);
+					}
+				}
+				return response()->json([
 					'message' => 'ERROR',
 					'code' => 1337
 				]);
-				}
+				
+			}
+
+
+
+    public function notification (){
+		$messages = Message::orderBy('id','desc')->where('receiver',Auth::user()->id)->get();
+		$users = [];
+		$nbr=0;
+		$i=0;
+		$notif = '		  
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-envelope-o"></i>
+        </a>
+	  <ul class="dropdown-menu">
+		<li class="header">Vos derniers messages</li>
+		<li>
+		  <!-- inner menu: contains the actual data -->
+		  <ul class="menu">';
+				 
+						   
+        while($nbr < $messages->count() && $i<3){
+			if(!in_array($messages[$nbr]->user,$users)){
+				$notif .= '
+				<li><!-- start message -->
+				<a href="#">
+				  <div class="pull-left">
+					<img src="adminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+				  </div>
+				  <h4>'.$messages[$nbr]->user->name.'
+				  <small><i class="fa fa-clock-o"></i>'.$messages[$nbr]->created_at->totimestring().'</small>
+				  </h4>
+				  <p>'.$messages[$nbr]->message.'</p>
+				</a>
+			  </li>';
+			    $users[$i] = $messages[$nbr]->user;
+				$nbr++;
+				$i++;
+			}else{
+				$nbr++;
 			}
 		}
-
-
-
-
-//     public function ajax(){
-// info('bdit ajax');
-//         ini_set('max_execution_time',7200);
-//         info('rah nedkhol fal while');
-//     	while (Message::where('check',0)->count() < 1) {
-//     		info('rah ndir sleep');
-//     		sleep(1);
-//     		info('rani kamalt sleep');
-//     	}
-//     	info('khrajt mal while rani rayah if');
-//     	if (Message::where('check',0)->count() > 0) {
-//     		info('rani fal if');
-//     		$data = Message::where('check',0)->first();
-//     		$id = $data->id;
-//     		$edit = Message::find($id);
-//     		$edit->check = 1;
-//     		$edit->save();
-// info('rah nretourni');
-//     		return response()->json([
-//                'message'=>$data->message
-//     		]);
-//     		info('rani retournit');
-//     	}
-//     info('rani kamalt ajax');
-//     }
-
+			$notif .='
+		  </ul>
+		</li>
+		<li class="footer"><a href="/messages" class="btn btn-success" data-toggle="modal" data-target="#showMessagesModal">Afficher tous les messages</a></li>
+	  </ul>';
+	  return $notif;
+	}
 
 //by oussama
 
