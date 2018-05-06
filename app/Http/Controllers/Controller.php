@@ -185,19 +185,6 @@ class Controller extends BaseController
         }
 
 
-        public function sendEmail($rq,$titre,$msg)
-        {
-
-          Mail::send('emails.template' , ['msg'=>$msg] , function ($m) use($rq,$titre) {
-              $m->from('prspection@fecomit.com');
-
-              $m->to('kamatcho1513@gmail.com', $rq->name)->subject($titre);
-          });
-
-        }
-
-
-
         public function createUser(Request $data)
         {
 
@@ -213,6 +200,19 @@ class Controller extends BaseController
                 'password' => Hash::make($data['password']),
             ]);
             return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Un nouveau utilisateur a bien été crée.</div>');
+        }
+
+
+
+        public function sendEmail($rq,$titre,$msg)
+        {
+
+          Mail::send('emails.template' , ['msg'=>$msg] , function ($m) use($rq,$titre) {
+              $m->from('prspection@fecomit.com');
+
+              $m->to($rq->email, $rq->name)->subject($titre);
+          });
+
         }
 
 

@@ -30,8 +30,12 @@
 
                       </tbody>
                     </table>
-                    <form id="step2" action="index.html" method="post">
-                      <textarea class="textarea" name="name" rows="8" cols="80"></textarea>
+                    <form id="step2" action="GrpEmail" method="post">
+                      <div id="cntntStep2">
+
+                      </div>
+                      <input type="text" name="titre" value="" placeholder="Objet">
+                      <textarea class="textarea" name="remarque" rows="8" cols="80"></textarea>
                     </form>
                   </div><!-- /.box-body -->
                 </div><!-- /.box -->
@@ -52,8 +56,14 @@ $('#step2').hide();
 
  prev = function(){
 
-   $('#previeusStp').prop('disable');
-   //alert('lkjl');
+   $('#previeusStp').attr('disabled','true');
+   $('#step2').hide();
+   $('#step1').show();
+   $('#step1_length').show();
+   $('#step1_filter').show();
+   $('#step1_info').show();
+   $('#step1_paginate').show();
+
  }
 
   loadPrspcts = function(){
@@ -72,6 +82,10 @@ $('#step2').hide();
   });
 
      nextStepMsgGrp = function(){
+        if($('#nextStp').html() == 'Envoyer'){
+           $('#sbmtEmailGrp').click();
+          //alert('hello');
+        }
         prospectCheck = someChecked();
         if( prospectCheck != false){
 
@@ -81,10 +95,10 @@ $('#step2').hide();
              listProspect += `<option value="`+prospectCheck[i]+`" selected></option>`;
            }
            listProspect += `</select>
-                            <input type="submit" id="msgDt" value="" hidden>
+                            <input type="submit" id="sbmtEmailGrp" value="" hidden>
                           `;
 
-             $("#step2").append(listProspect);
+             $("#cntntStep2").html(listProspect);
              $('#step1').hide();
              $('#step1_length').hide();
              $('#step1_filter').hide();
