@@ -6,7 +6,6 @@
         <h3 class="modal-title" style="color:white" >Modifier un Score</h3>
       </div>
       <div class="modal-body">
-
         <form id="updateScore" method="post" action="#">
           @csrf
           {{ method_field('PATCH') }}
