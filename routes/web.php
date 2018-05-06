@@ -67,6 +67,11 @@ Route::get('message_delete/{id}','MessageController@deleteMsg');
 
 
 
+// STATISTIQUES
+Route::get('scoresStat',"HomeController@scoresStat");
+
+
+
 /* --- POST --- */
 
 Route::post('/createScore','ScoreController@create');

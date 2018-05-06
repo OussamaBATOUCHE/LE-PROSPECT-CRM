@@ -163,6 +163,7 @@ class ContactController extends Controller
     return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Contact ajouté '.$emailSendResult.'avec succée !</div>');
   }
   public function GrpEmail(Request $rq){
+  if($rq->prospects!= null) {
     foreach ($rq->prospects as $prospect) {
     //  return $rq->prospects;
       $contact = new contact ;
@@ -172,9 +173,9 @@ class ContactController extends Controller
       $score = Prospect_score::where('idPros',$prospect)->latest()->first();
     //  return $score;
       $contact->idScore = $score->idScore;//pour garder le meme score (dernier)
-      $contact->objet = "Email en groupe.";
-      $contact->date = date("Y-m-d");
-      $contact->remarque = "Email en groupe.";
+      $contact->objet = $rq->titre." -EmailGroupe.";
+      $contact->date = date("Y-m-d H:m");
+      $contact->remarque = $rq->remarque." -EmailGroupe.";
       $contact->type = "E";
       $contact->save();
 
@@ -188,20 +189,20 @@ class ContactController extends Controller
       $cntct_email->envoye = 'oui';
       $cntct_email->save();
     }
+   }
+   if($rq->idGrp!= null) {
     foreach ($rq->idGrp as $grp) {
        $prospects = Prospect::where('idGrp',$grp)->get();
        foreach ($prospects as $prospect) {
-       //  return $rq->prospects;
          $contact = new contact ;
          $contact->idUser = Auth::user()->id;
          $contact->idTach = 0;
          $contact->idProsp = $prospect->id;
          $score = Prospect_score::where('idPros',$prospect->id)->latest()->first();
-       //  return $score;
          $contact->idScore = $score->idScore;//pour garder le meme score (dernier)
-         $contact->objet = "Email en groupe.";
-         $contact->date = date("Y-m-d");
-         $contact->remarque = "Email en groupe.";
+         $contact->objet = $rq->titre." -EmailGroupe.";
+         $contact->date = date("Y-m-d H:m");
+         $contact->remarque = $rq->remarque." -EmailGroupe.";
          $contact->type = "E";
          $contact->save();
 
@@ -216,6 +217,8 @@ class ContactController extends Controller
          $cntct_email->save();
        }
     }
+  }
+  if($rq->idChampAct!= null) {
     foreach ($rq->idChampAct as $champActiv) {
 
        $prospects = Prospect::where('idChampAct',$champActiv)->get();
@@ -229,9 +232,9 @@ class ContactController extends Controller
          $score = Prospect_score::where('idPros',$prospect->id)->latest()->first();
        //  return $score;
          $contact->idScore = $score->idScore;//pour garder le meme score (dernier)
-         $contact->objet = "Email en groupe.";
-         $contact->date = date("Y-m-d");
-         $contact->remarque = "Email en groupe.";
+         $contact->objet = $rq->titre." -EmailGroupe.";
+         $contact->date = date("Y-m-d H:m");
+         $contact->remarque = $rq->remarque." -EmailGroupe.";
          $contact->type = "E";
          $contact->save();
 
@@ -246,6 +249,7 @@ class ContactController extends Controller
          $cntct_email->save();
        }
     }
+  }
     return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Emails envoyés avec succée !</div>');
 
   }
@@ -255,7 +259,7 @@ class ContactController extends Controller
     $rowAppel = cntct_appel::where('idCntct',$id)->delete(); //ici je supprime tous les rows qui concernent le contact dont je vient de le supprimer..
     $rowEmail = cntct_email::where('idCntct',$id)->delete(); //ici je supprime tous les rows qui concernent le contact dont je vient de le supprimer..
     $contact = Contact::find($id)->delete();
-    return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button> Supprimé avec succée !</div>');
+    return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button> Supprimé avec succée !</div>');
 
   }
 
