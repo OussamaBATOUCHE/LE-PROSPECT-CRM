@@ -1,4 +1,4 @@
-{{-- <script>
+<script>
   $(document).on('keydown','.send',function(e){
     var message = $(this).val();
     var user = $(this).attr('user');
@@ -55,4 +55,4 @@
               <script>
                 $('#listeMessage').load('/messages');
                 $('#listeMessage').append('<p> Connection ... </p>');
-              </script> --}}
+              </script>
