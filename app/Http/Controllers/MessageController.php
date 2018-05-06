@@ -126,18 +126,31 @@ info('rah nretourni');
 		*/
 
 		public function ajax(){
-			ini_set('max_execution_time',7200);
-			if (Message::where('check',0)->count() < 1) {
-				ajax();
-			}else {
-				$data = Message::where('check',0)->first();
-				$id = $data->id;
-				$edit = Message::find($id);
-				$edit->check = 1;
-				$edit->save();
+			//if (Message::where('check',0)->count() < 1) {
+			//	ajax();
+			//}else
+            if(Message::where('check',0)->count() < 1){
+				usleep(5000);
 				return response()->json([
-          'message' => $data->message
+					'message' => 'ERROR',
+					'code' => 1337
 				]);
+			}
+			if (Message::where('check',0)->count() > 0) {
+				$data = Message::where('check',0)->first();
+				if($data->receiver == Auth::user()->id){
+					$id = $data->id;
+					$edit = Message::find($id);
+					$edit->check = 1;
+					$edit->save();
+					return response()->json([
+			        'message' => $data->message
+					]);
+				}else{ return response()->json([
+					'message' => 'ERROR',
+					'code' => 1337
+				]);
+				}
 			}
 		}
 
