@@ -16,7 +16,25 @@
                   </div><!-- /.box-header -->
                     @if (session('status')){!! session('status') !!}@endif
                   <div class="box-body" id="contentMailGrp">
+                    <form  action="GrpEmail" method="post">
+                      @csrf
                     <table id="step1" class="table table-bordered table-striped">
+
+                      <div class="form-group">
+                        <select id="idGrp" class="form-control select2 select2-hidden-accessible" name="idGrp[]" multiple="" data-placeholder="Groupes" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                          @foreach ($tousLesGroupes as $groupe)
+                            <option value="{{$groupe->id}}" >{{$groupe->LibGrp}}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <select id="idChampAct" class="form-control select2 select2-hidden-accessible" name="idChampAct[]" multiple="" data-placeholder="Champs d'activitées" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                          @foreach ($tousLesChampActiv as $champActiv)
+                            <option value="{{$champActiv->id}}" >{{$champActiv->LibChampAct}}</option>
+                          @endforeach
+                        </select>
+                      </div>
+
                       <thead>
                         <tr>
                           <th>#</th>
@@ -30,12 +48,20 @@
 
                       </tbody>
                     </table>
-                    <form id="step2" action="GrpEmail" method="post">
-                      <div id="cntntStep2">
 
+                      <div id="step2">
+
+                          <div id="cntntStep2">
+
+                          </div>
+
+                          <div class="form-group">
+                            <input type="text" class="form-control" name="titre" value="" placeholder="Objet" required>
+                          </div>
+                          <div class="form-group">
+                           <textarea class="textarea form-control" name="remarque" rows="8" cols="80" required></textarea>
+                          </div>
                       </div>
-                      <input type="text" name="titre" value="" placeholder="Objet">
-                      <textarea class="textarea" name="remarque" rows="8" cols="80"></textarea>
                     </form>
                   </div><!-- /.box-body -->
                 </div><!-- /.box -->
@@ -52,6 +78,8 @@
 </div>
 @include('layouts.modals.noProspectSelected')
 <script>
+
+var b=false ;
 $('#step2').hide();
 
  prev = function(){
@@ -63,6 +91,7 @@ $('#step2').hide();
    $('#step1_filter').show();
    $('#step1_info').show();
    $('#step1_paginate').show();
+   $('#nextStp').html('Suivant >>');
 
  }
 
@@ -87,9 +116,9 @@ $('#step2').hide();
           //alert('hello');
         }
         prospectCheck = someChecked();
-        if( prospectCheck != false){
-
-          var listProspect = `@csrf
+        if( b != false){
+  //alert('else');
+          var listProspect = `
                              <select class="form-control" name="prospects[]" multiple="" required style="display:  none;">`;
            for(var i = 0 ; i < prospectCheck.length ; i++){
              listProspect += `<option value="`+prospectCheck[i]+`" selected></option>`;
@@ -114,7 +143,7 @@ $('#step2').hide();
       }
 
    someChecked = function(){
-    var b=false ,i=1;
+     b=false ;
     var prospectCheck = [] ;
 
     $(".check").each(function(){
@@ -122,7 +151,13 @@ $('#step2').hide();
           b = true ;
           prospectCheck.push(this.value) ;
       }
+
     });
+    // alert($("#idGrp").val());
+    if($("#idGrp").val() != null || $("#idChampAct").val() != null ){
+      b = true;
+    }
+    //alert(b);
     if (b==false) {
       $('#NoProspectSelected').modal('show');
       return false;

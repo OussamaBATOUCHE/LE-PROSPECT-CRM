@@ -19,6 +19,9 @@ use App\Tache;
 
 use App\User;
 
+use App\Groupe;
+use App\ChampActivite;
+
 class ContactController extends Controller
 {
 
@@ -74,13 +77,20 @@ class ContactController extends Controller
       }
     }
 
+    //pour les email en groupe
+    $tousLesGroupes = Groupe::get();
+    $tousLesChampActiv = ChampActivite::get();
+
+
     //dd($taches);
     return view('contacts')->with('contacts',$contacts)
                            ->with('details',$details)
                            ->with('users',$users)
                            ->with('prospects',$prospects)
                            ->with('scores',$scores)
-                           ->with('taches',$taches);
+                           ->with('taches',$taches)
+                           ->with('tousLesGroupes', $tousLesGroupes)
+                           ->with('tousLesChampActiv', $tousLesChampActiv);
 
   }
 
@@ -177,6 +187,64 @@ class ContactController extends Controller
       $cntct_email->contenu = $rq->remarque;
       $cntct_email->envoye = 'oui';
       $cntct_email->save();
+    }
+    foreach ($rq->idGrp as $grp) {
+       $prospects = Prospect::where('idGrp',$grp)->get();
+       foreach ($prospects as $prospect) {
+       //  return $rq->prospects;
+         $contact = new contact ;
+         $contact->idUser = Auth::user()->id;
+         $contact->idTach = 0;
+         $contact->idProsp = $prospect->id;
+         $score = Prospect_score::where('idPros',$prospect->id)->latest()->first();
+       //  return $score;
+         $contact->idScore = $score->idScore;//pour garder le meme score (dernier)
+         $contact->objet = "Email en groupe.";
+         $contact->date = date("Y-m-d");
+         $contact->remarque = "Email en groupe.";
+         $contact->type = "E";
+         $contact->save();
+
+         $Reciever = Prospect::where('id',$prospect)->first();
+         $this->sendEmail($Reciever,$rq->titre,$rq->remarque);
+
+         $cntct_email = new cntct_email;
+         $cntct_email->idCntct = $contact->id;
+         $cntct_email->idGrp = 0;
+         $cntct_email->contenu = $rq->remarque;
+         $cntct_email->envoye = 'oui';
+         $cntct_email->save();
+       }
+    }
+    foreach ($rq->idChampAct as $champActiv) {
+
+       $prospects = Prospect::where('idChampAct',$champActiv)->get();
+        // return $prospects;
+       foreach ($prospects as $prospect) {
+       //  return $rq->prospects;
+         $contact = new contact ;
+         $contact->idUser = Auth::user()->id;
+         $contact->idTach = 0;
+         $contact->idProsp = $prospect->id;
+         $score = Prospect_score::where('idPros',$prospect->id)->latest()->first();
+       //  return $score;
+         $contact->idScore = $score->idScore;//pour garder le meme score (dernier)
+         $contact->objet = "Email en groupe.";
+         $contact->date = date("Y-m-d");
+         $contact->remarque = "Email en groupe.";
+         $contact->type = "E";
+         $contact->save();
+
+         $Reciever = Prospect::where('id',$prospect->id)->first();
+         $this->sendEmail($Reciever,$rq->titre,$rq->remarque);
+
+         $cntct_email = new cntct_email;
+         $cntct_email->idCntct = $contact->id;
+         $cntct_email->idGrp = 0;
+         $cntct_email->contenu = $rq->remarque;
+         $cntct_email->envoye = 'oui';
+         $cntct_email->save();
+       }
     }
     return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Emails envoyés avec succée !</div>');
 
