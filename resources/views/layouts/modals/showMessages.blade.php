@@ -1,4 +1,5 @@
 <script>
+  //hada commentaire zyada
   $(document).on('keydown','.send',function(e){
     var message = $(this).val();
     var user = $(this).attr('user');
