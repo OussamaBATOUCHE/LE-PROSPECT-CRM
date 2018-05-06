@@ -13,9 +13,9 @@ class MessageController extends Controller
     	$html = '<script>
 		myfunction = function(id){
 
-		$(\'#anahowa\').load(\'/messages/\'+id);		
+		$(\'#anahowa\').load(\'/messages/\'+id);
 		}
-		
+
 		</script>';
 
 
@@ -104,10 +104,7 @@ class MessageController extends Controller
 
 
 		public function ajax(){
-			//if (Message::where('check',0)->count() < 1) {
-			//	ajax();
-			//}else
-            if(Message::where('check',0)->count() < 1){
+      if(Message::where('check',0)->count() < 1){
 				usleep(5000);
 				return response()->json([
 					'message' => 'ERROR',
@@ -130,7 +127,7 @@ class MessageController extends Controller
 					'message' => 'ERROR',
 					'code' => 1337
 				]);
-				
+
 			}
 
 
@@ -140,7 +137,7 @@ class MessageController extends Controller
 		$users = [];
 		$nbr=0;
 		$i=0;
-		$notif = '		  
+		$notif = '
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-envelope-o"></i>
         </a>
@@ -149,8 +146,8 @@ class MessageController extends Controller
 		<li>
 		  <!-- inner menu: contains the actual data -->
 		  <ul class="menu">';
-				 
-						   
+
+
         while($nbr < $messages->count() && $i<3){
 			if(!in_array($messages[$nbr]->user,$users)){
 				$notif .= '

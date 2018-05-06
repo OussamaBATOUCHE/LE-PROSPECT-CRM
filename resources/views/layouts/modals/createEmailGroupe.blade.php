@@ -117,9 +117,9 @@ $('#step2').hide();
         }
         prospectCheck = someChecked();
         if( b != false){
-  //alert('else');
+
           var listProspect = `
-                             <select class="form-control" name="prospects[]" multiple="" required style="display:  none;">`;
+                             <select class="form-control" name="prospects[]" multiple="" style="display:  none;">`;
            for(var i = 0 ; i < prospectCheck.length ; i++){
              listProspect += `<option value="`+prospectCheck[i]+`" selected></option>`;
            }
@@ -153,8 +153,7 @@ $('#step2').hide();
       }
 
     });
-    // alert($("#idGrp").val());
-    if($("#idGrp").val() != null || $("#idChampAct").val() != null ){
+    if($("#idGrp").val() != "" || $("#idChampAct").val() != "" ){
       b = true;
     }
     //alert(b);
