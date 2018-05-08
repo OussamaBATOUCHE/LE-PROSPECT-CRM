@@ -37,6 +37,11 @@
           <span>Contacts</span>
         </a>
       </li>
+      <li>
+        <a href="/messagesAll">
+          <i class="fa fa-envelope"></i> <span>Message</span>
+        </a>
+      </li>
       <li class="treeview">
         <a href="#">
           <i class="fa fa-th"></i>
@@ -47,11 +52,6 @@
           <li><a href="#"><i class="fa fa-circle-o"></i> Annuelle</a></li>
           <li><a href="#"><i class="fa fa-circle-o"></i> Tous</a></li>
         </ul>
-      </li>
-      <li>
-        <a href="/messagesAll">
-          <i class="fa fa-envelope"></i> <span>Message</span>
-        </a>
       </li>
     </ul>
   </section>

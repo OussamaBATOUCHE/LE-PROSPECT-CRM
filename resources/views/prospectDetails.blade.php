@@ -16,6 +16,10 @@
     <div class="col-md-7 ">
       <div class="det-prosp-soc ">
         <h2>{{$prospect->societe}} - <span style="background-color:{{$score->couleur}}">[ {{$score->LibScore}} ]</span></h2>
+        Produits/Services Achetés :
+        @foreach ($clientProduit as $cp)
+             - {{$cp[0]->LibProd}}
+        @endforeach
         <hr/>
         <div class="prospect-info"> <i class="fa fa-map-marker"></i> &nbsp;{{$prospect->adresse}} {{$prospect->codePostal}} </div>
         <div class="prospect-info"><i class="fa fa-map-signs"></i> <span  id="r-prospect-wilaya">{{$prospect->wilaya}}</span> </div>

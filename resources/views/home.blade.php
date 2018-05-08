@@ -21,14 +21,14 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
           <div class="inner">
-            <h3 id="rq-nbPrspct">N/A</h3>
+            <h3 id="rq-nbPrspct" class="connexion">N/A</h3>
 
             <p>Prospects</p>
           </div>
           <div class="icon">
             <i class="ion ion-bag"></i>
           </div>
-          <a href="#" class="small-box-footer">M.12 / A.100 / T.234 <br/>Bloqués.12</a>
+          <a href="#" class="small-box-footer">M.<span id="rq-nbPrspct-M" class="connexion"></span> / A.<span id="rq-nbPrspct-A" class="connexion"></span> / T.<span id="rq-nbPrspct-T" class="connexion"></span> <br/><span onclick="location.href = 'prospectsBloques/1'">Bloqués.<span id="rq-nbPrspct-B" class="connexion"></span></span></a>
         </div>
       </div>
       <!-- ./col -->
@@ -36,14 +36,14 @@
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
-            <h3><span id="rq-tachEnCour"></span> </h3>
+            <h3><span id="rq-tachEnCour" class="connexion"></span> </h3>
 
             <p>Taches en cour</p>
           </div>
           <div class="icon">
             <i class="ion ion-stats-bars"></i>
           </div>
-          <a href="#" class="small-box-footer"> Terminé : M.10 / Y.34 / T.120</a>
+          <a href="#" class="small-box-footer"> Terminé : M.<span id="rq-tachEnCourT-M" class="connexion"></span> / A.<span id="rq-tachEnCourT-A" class="connexion"></span> / T.<span id="rq-tachEnCourT-T" class="connexion"></span></a>
         </div>
       </div>
       <!-- ./col -->
@@ -51,16 +51,16 @@
         <!-- small box -->
         <div class="small-box bg-yellow">
           <div class="inner">
-            <h3 id="rq-nbCntct">N/A</h3>
+            <h3 id="rq-nbCntct" class="connexion">N/A</h3>
 
             <p>Contacts effectués</p>
           </div>
           <div class="icon">
             <i class="fa fa-phone"></i>
           </div>
-          <a href="#" class="small-box-footer">M. <i class="fa fa-envelope"></i> 12 <i class="fa fa-phone"></i> 8 <br/>
-                                               A. <i class="fa fa-envelope"></i> 12 <i class="fa fa-phone"></i> 8 <br/>
-                                               T. <i class="fa fa-envelope"></i> 12 <i class="fa fa-phone"></i> 8  </a>
+          <a href="#" class="small-box-footer">M. <i class="fa fa-envelope"></i> <span id="rq-nbCntctE-M" class="connexion"></span> <i class="fa fa-phone"></i> <span id="rq-nbCntctA-M" class="connexion"></span> <br/>
+                                               A. <i class="fa fa-envelope"></i> <span id="rq-nbCntctE-A" class="connexion"></span> <i class="fa fa-phone"></i> <span id="rq-nbCntctA-A" class="connexion"></span> <br/>
+                                               T. <i class="fa fa-envelope"></i> <span id="rq-nbCntctE-T" class="connexion"></span> <i class="fa fa-phone"></i> <span id="rq-nbCntctA-T" class="connexion"></span>  </a>
         </div>
       </div>
       <!-- ./col -->
@@ -69,14 +69,14 @@
         <!-- small box -->
         <div class="small-box bg-red">
           <div class="inner">
-            <h3 id="rq-nbClient">N/A</h3>
+            <h3 id="rq-nbClient" class="connexion">N/A</h3>
 
             <p>Clients</p>
           </div>
           <div class="icon">
             <i class="ion ion-pie-graph"></i>
           </div>
-          <a href="#" class="small-box-footer">M.8 / A.20 / T.210</a>
+          <a href="#" class="small-box-footer">M.<span id="rq-nbClient-M" class="connexion"></span> / A.<span id="rq-nbClient-A" class="connexion"></span> / T.<span id="rq-nbClient-T" class="connexion"></span></a>
         </div>
       </div>
       <!-- ./col -->
@@ -172,8 +172,8 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Liste des Taches non terminées</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Liste des Contacts</a>
+              <a href="taches" class="btn btn-sm btn-info btn-flat pull-left">Liste des Taches non terminées</a>
+              <a href="contacts" class="btn btn-sm btn-default btn-flat pull-right">Liste des Contacts</a>
             </div>
             <!-- /.box-footer -->
           </div>
@@ -201,23 +201,25 @@
             <!-- /. tools -->
           </div>
           <div class="box-body">
-            <form action="#" method="post">
+            <form action="{{url('directEmail')}}" method="POST">
+              @csrf
               <div class="form-group">
-                <input type="email" class="form-control" name="emailto" placeholder="Destinataire :">
+                <input type="email" class="form-control" name="email" placeholder="Destinataire :">
               </div>
               <div class="form-group">
                 <input type="text" class="form-control" name="subject" placeholder="Sujet">
               </div>
               <div>
-                <textarea class="textarea" placeholder="Message"
+                <textarea class="textarea" name="msg" placeholder="Message"
                     style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
               </div>
-            </form>
+
           </div>
           <div class="box-footer clearfix">
-            <button type="button" class="pull-right btn btn-default" id="sendEmail">Envoyer
+            <button type="submit" class="pull-right btn btn-default"  id="sendEmail">Envoyer
               <i class="fa fa-arrow-circle-right"></i></button>
           </div>
+          </form>
         </div>
 
       </section>
@@ -232,7 +234,7 @@
           <div class="box-header">
             <i class="fa fa-calendar"></i>
 
-            <h3 class="box-title">Calendar</h3>
+            <h3 class="box-title">Calendrier</h3>
             <!-- tools box -->
             <div class="pull-right box-tools">
               <!-- button with a dropdown -->
@@ -240,10 +242,10 @@
                 <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-bars"></i></button>
                 <ul class="dropdown-menu pull-right" role="menu">
-                  <li><a href="#">Add new event</a></li>
-                  <li><a href="#">Clear events</a></li>
+                <li><a href="#">Ajouter un RDV</a></li>
+                  <li><a href="#">Annuler un RDV</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">View calendar</a></li>
+                  <li><a href="#">Afficher la version tabulaire</a></li>
                 </ul>
               </div>
               <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -259,48 +261,6 @@
             <div id="calendar" style="width: 100%"></div>
           </div>
           <!-- /.box-body -->
-          <div class="box-footer text-black">
-            <div class="row">
-              <div class="col-sm-6">
-                <!-- Progress bars -->
-                <div class="clearfix">
-                  <span class="pull-left">Task #1</span>
-                  <small class="pull-right">90%</small>
-                </div>
-                <div class="progress xs">
-                  <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
-                </div>
-
-                <div class="clearfix">
-                  <span class="pull-left">Task #2</span>
-                  <small class="pull-right">70%</small>
-                </div>
-                <div class="progress xs">
-                  <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
-                </div>
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-6">
-                <div class="clearfix">
-                  <span class="pull-left">Task #3</span>
-                  <small class="pull-right">60%</small>
-                </div>
-                <div class="progress xs">
-                  <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
-                </div>
-
-                <div class="clearfix">
-                  <span class="pull-left">Task #4</span>
-                  <small class="pull-right">40%</small>
-                </div>
-                <div class="progress xs">
-                  <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
-                </div>
-              </div>
-              <!-- /.col -->
-            </div>
-            <!-- /.row -->
-          </div>
         </div>
         <!-- /.box -->
 
@@ -313,21 +273,41 @@
   <!-- /.content -->
 
   <script>
+  //stat scores
+  $("#rq-prsptc").load("scoresStat");
+
      // top stikers
+     //prospects
     $("#rq-nbPrspct").load("nbPrspct");
-    $("#rq-nbPrspct").html('N/A');
+    $("#rq-nbPrspct-M").load("nbPrspctM");
+    $("#rq-nbPrspct-A").load("nbPrspctA");
+    $("#rq-nbPrspct-T").load("nbPrspctT");
+    $("#rq-nbPrspct-B").load("nbPrspctB");
+
+    //taches
     $("#rq-tachEnCour").load("tachEnCour");
-    $("#rq-tachEnCour").html('N/A');
-    $("#rq-nbClient").load("nbClient");
-    $("#rq-nbClient").html('N/A');
+    $("#rq-tachEnCourT-M").load("tachEnCourT_M");
+    $("#rq-tachEnCourT-A").load("tachEnCourT_A");
+    $("#rq-tachEnCourT-T").load("tachEnCourT_T");
+
+    //contacts
     $("#rq-nbCntct").load("nbCntct");
-    $("#rq-nbCntct").html('N/A');
-    $("#rq-tachFini").load("tachFini");
-    $("#rq-tachFini").html('N/A');
+    $("#rq-nbCntctE-M").load("nbCntctE_M");
+    $("#rq-nbCntctA-M").load("nbCntctA_M");
+    $("#rq-nbCntctE-A").load("nbCntctE_A");
+    $("#rq-nbCntctA-A").load("nbCntctA_A");
+    $("#rq-nbCntctE-T").load("nbCntctE_T");
+    $("#rq-nbCntctA-T").load("nbCntctA_T");
+
+    //clients
+    $("#rq-nbClient").load("nbClient");
+    $("#rq-nbClient-M").load("nbClient_M");
+    $("#rq-nbClient-A").load("nbClient_A");
+    $("#rq-nbClient-T").load("nbClient_T");
+
+    $('.connexion').html("N/A");
 
 
-    //stat scores
-    $("#rq-prsptc").load("scoresStat");
   </script>
 
 @endsection

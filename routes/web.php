@@ -68,13 +68,35 @@ Route::get('message_delete/{id}','MessageController@deleteMsg');
 
 
 // STATISTIQUES
+
 Route::get('scoresStat',"HomeController@scoresStat");
+//prospects
 Route::get('nbPrspct',"HomeController@nbPrspct");
+Route::get('nbPrspctM',"HomeController@nbPrspctM");
+Route::get('nbPrspctA',"HomeController@nbPrspctA");
+Route::get('nbPrspctT',"HomeController@nbPrspctT");
+Route::get('nbPrspctB',"HomeController@nbPrspctB");
+
+//taches
 Route::get('tachEnCour',"HomeController@tachEnCour");
+Route::get('tachEnCourT_M',"HomeController@tachEnCourT_M");
+Route::get('tachEnCourT_A',"HomeController@tachEnCourT_A");
+Route::get('tachEnCourT_T',"HomeController@tachEnCourT_T");
+
+//contacts
 Route::get('nbCntct',"HomeController@nbCntct");
-Route::get('tachFini',"HomeController@tachFini");
+Route::get('nbCntctE_M',"HomeController@nbCntctE_M");
+Route::get('nbCntctA_M',"HomeController@nbCntctA_M");
+Route::get('nbCntctE_A',"HomeController@nbCntctE_A");
+Route::get('nbCntctA_A',"HomeController@nbCntctA_A");
+Route::get('nbCntctE_T',"HomeController@nbCntctE_T");
+Route::get('nbCntctA_T',"HomeController@nbCntctA_T");
 
-
+//clients
+Route::get('nbClient',"HomeController@nbClient");
+Route::get('nbClient_M',"HomeController@nbClient_M");
+Route::get('nbClient_A',"HomeController@nbClient_A");
+Route::get('nbClient_T',"HomeController@nbClient_T");
 
 /* --- POST --- */
 
@@ -100,6 +122,7 @@ Route::post('createTache/{id}','TacheController@create');
 Route::post('deleteMsgs','MessageController@deleteMsgs');
 
 Route::post('GrpEmail','ContactController@GrpEmail');
+Route::post('directEmail','Controller@directEmail');
 
 
 /*  END  List route oussama  */

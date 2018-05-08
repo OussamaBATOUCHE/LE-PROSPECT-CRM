@@ -85,7 +85,7 @@
               <tr>
                 <th><input class="check" type="checkbox" value="{{$prospect->id}}"/></th>
                 <th>{{$prospect->codeProsp}}</th>
-                <th class="sub-info"><a href="{{url('detailsProspect/'.$prospect->id)}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{substr($prospect->description,0,50)}}">{{$prospect->societe}}</a> <span><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} {{$prospect->wilaya}}</span></th>
+                <th class="sub-info"><a href="{{url('detailsProspect/'.$prospect->id)}}" data-toggle="popover" data-trigger="hover"  title="{{$prospect->societe}}" data-content="{{substr($prospect->description,0,50)}}">{{$prospect->societe}}</a> <span><br/> {{$prospect->adresse}} <br/> {{$prospect->codePostal}} <span class="r-prospect-wilaya">{{$prospect->wilaya}}</span></span></th>
                 <th style="background-color:{{$infosProsp[$i]["couleur"]}};" > <span class="text-white">{{$infosProsp[$i]["score"]}}</span> <i class="fa fa-info score-info" data-toggle="popover" data-trigger="hover"  title="{{$infosProsp[$i]["date"]}}" data-content="{{substr($infosProsp[$i]["remarque"],0,60)}}"></i></th>
                 <th class="sub-info">{{$prospect->genre}}.{{$prospect->nom}} {{$prospect->prenom}} <span><br/> {{$prospect->email}} <br/> {{$prospect->tele1}}</span></th>
                 <th>{{$infosProsp[$i]["champActiv"]}}</th>
@@ -171,6 +171,64 @@
 
 
     });
+
+
+
+            nomWilaya = function(num){
+              switch (num) {
+                case "1": return "Adrar"; break;
+                case "2": return "Chlef"; break;
+                case "3": return "Laghouat"; break;
+                case "4": return "Oum El Bouaghi"; break;
+                case "5": return "Batna"; break;
+                case "6": return "Béjaïa"; break;
+                case "7": return "Biskra"; break;
+                case "8": return "Béchar"; break;
+                case "9": return "Blida"; break;
+                case "10": return "Bouira"; break;
+                case "11": return "Tamanrasset"; break;
+                case "12": return "Tébessa"; break;
+                case "13": return "Tlemcen"; break;
+                case "14": return "Tiaret"; break;
+                case "15": return "Tizi Ouzou"; break;
+                case "16": return "Alger"; break;
+                case "17": return "Djelfa"; break;
+                case "18": return "Jijel"; break;
+                case "19": return "Sétif"; break;
+                case "20": return "Saïda"; break;
+                case "21": return "Skikda"; break;
+                case "22": return "Sidi Bel Abbès"; break;
+                case "23": return "Annaba"; break;
+                case "24": return "Guelma"; break;
+                case "25": return "Constantine"; break;
+                case "26": return "Médéa"; break;
+                case "27": return "Mostaganem"; break;
+                case "28": return "M'Sila"; break;
+                case "29": return "Mascara"; break;
+                case "30": return "Ouargla"; break;
+                case "31": return "Oran"; break;
+                case "32": return "El Bayadh"; break;
+                case "33": return "Illizi"; break;
+                case "34": return "Bordj Bou Arreridj"; break;
+                case "35": return "Boumerdès"; break;
+                case "36": return "El Tarf"; break;
+                case "37": return "Tindouf"; break;
+                case "38": return "Tissemsilt"; break;
+                case "39": return "El Oued"; break;
+                case "40": return "Khenchela"; break;
+                case "41": return "Souk Ahras"; break;
+                case "42": return "Tipaza"; break;
+                case "43": return "Mila"; break;
+                case "44": return "Aïn Defla"; break;
+                case "45": return "Naâma"; break;
+                case "46": return "Aïn Témouchent"; break;
+                case "47": return "Ghardaïa"; break;
+                case "48": return "Relizane"; break;
+
+              }
+            };
+
+            $('.r-prospect-wilaya').html(nomWilaya($('.r-prospect-wilaya').html()));
 
 
 </script>

@@ -50,4 +50,9 @@
 
   <!-- to let popover works -->
   <script src="{{asset('adminLTE/bower_components/jquery/dist/jquery.min.js')}}"></script>
+
+
+  <!-- ChartJS -->
+  <script src="{{asset('adminLTE/bower_components/chart.js/Chart.js')}}"></script>
+  <script src="{{asset('adminLTE/bower_components/chart.js/Chart.min.js')}}"></script>
 </head>

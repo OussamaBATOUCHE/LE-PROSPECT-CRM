@@ -25,6 +25,7 @@
 <!-- Morris.js charts -->
 <script src="{{asset('adminLTE/bower_components/raphael/raphael.min.js')}}"></script>
 <script src="{{asset('adminLTE/bower_components/morris.js/morris.min.js')}}"></script>
+<script src="{{asset('adminLTE/bower_components/morris.js/morris.js')}}"></script>
 <!-- Sparkline -->
 <script src="{{asset('adminLTE/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
 <!-- jvectormap -->
@@ -56,15 +57,13 @@
 <script src="{{asset('adminLTE/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('adminLTE/dist/js/pages/dashboard.js')}}"></script>
-<!-- ChartJS -->
-<script src="{{asset('adminLTE/bower_components/chart.js/Chart.js')}}"></script>
-<script src="{{asset('adminLTE/bower_components/chart.js/Chart.min.js')}}"></script>
+
 <!-- DataTables -->
 <script src="{{asset('adminLTE/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('adminLTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('adminLTE/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-<script src="{{asset('myDashboard.js')}}"></script>
+{{-- <script src="{{asset('myDashboard.js')}}"></script> --}}
 
 
 

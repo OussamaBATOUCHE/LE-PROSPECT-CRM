@@ -201,6 +201,12 @@ class Controller extends BaseController
             ]);
             return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Un nouveau utilisateur a bien été crée.</div>');
         }
+       public function directEmail(Request $rq){
+
+         $this->sendEmail($rq,$rq->subject,$rq->msg);
+         return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close"data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Votre email a bien été envoyé.</div>');
+
+       }
 
 
 
