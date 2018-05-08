@@ -264,11 +264,17 @@ class ProspectController extends Controller
 
         $clientScore = Score::whereRaw('num = (select max(`num`) from Scores)')->first();
         if($rq->score == $clientScore->id ){
+          //dans ce cas je save le client avec les produits qu'on a derja lui relier . car on a pas choisi des produit lors de update de prospect
           Prospect::where('id',$prospect)
                     ->update(["client"=>1]);
-          // $client_produit = new Client_produit;
-          // $client_produit->idProsp = $prospect;
-          // $client_produit->produitService = $prospect;
+           $prspt_prd = Prospect_produit::where('idProsp',$prospect)->get();//je recupere ces produits
+           foreach ($prspt_prd as $pp) {
+             $client_produit = new Client_produit;
+             $client_produit->idProsp = $prospect;
+             $client_produit->idPrd = $pp->idPrd;
+             $client_produit->save();
+           }
+
         }else{
           Prospect::where('id',$prospect)
                     ->update(["client"=>0]);

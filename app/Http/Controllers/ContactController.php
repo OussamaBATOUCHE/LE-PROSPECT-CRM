@@ -22,6 +22,8 @@ use App\User;
 use App\Groupe;
 use App\ChampActivite;
 
+use App\Client_produit;
+
 class ContactController extends Controller
 {
 
@@ -107,6 +109,21 @@ class ContactController extends Controller
     $contact->type = $rq->type;
 
     $contact->save();
+
+    // T_3 mis a jour des infos du prospect en cas qu'il devient un client
+    $clientScore = Score::whereRaw('num = (select max(`num`) from Scores)')->first();
+    if($rq->score == $clientScore->id ){
+      Prospect::where('id',$prospect)
+                ->update(["client"=>1]);
+
+       foreach ($rq->produits as $p) {
+         $client_produit = new Client_produit;
+         $client_produit->idPros = $prospect;
+         $client_produit->idPrd = $p;
+         $client_produit->save();
+       }
+     }
+   // T_3 end
 
     //new Scorring
     $prospect_score = new Prospect_score;
@@ -205,6 +222,7 @@ class ContactController extends Controller
          $contact->remarque = $rq->remarque." -EmailGroupe.";
          $contact->type = "E";
          $contact->save();
+
 
          $Reciever = Prospect::where('id',$prospect)->first();
          $this->sendEmail($Reciever,$rq->titre,$rq->remarque);

@@ -21,14 +21,14 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
           <div class="inner">
-            <h3>N/A</h3>
+            <h3 id="rq-nbPrspct">N/A</h3>
 
             <p>Prospects</p>
           </div>
           <div class="icon">
             <i class="ion ion-bag"></i>
           </div>
-          <a href="#" class="small-box-footer">plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="#" class="small-box-footer">M.12 / A.100 / T.234 <br/>Bloqués.12</a>
         </div>
       </div>
       <!-- ./col -->
@@ -36,14 +36,14 @@
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
-            <h3>N/A<sup style="font-size: 20px">%</sup></h3>
+            <h3><span id="rq-tachEnCour"></span> </h3>
 
-            <p>Taches effectuées</p>
+            <p>Taches en cour</p>
           </div>
           <div class="icon">
             <i class="ion ion-stats-bars"></i>
           </div>
-          <a href="#" class="small-box-footer">plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="#" class="small-box-footer"> Terminé : M.10 / Y.34 / T.120</a>
         </div>
       </div>
       <!-- ./col -->
@@ -51,103 +51,140 @@
         <!-- small box -->
         <div class="small-box bg-yellow">
           <div class="inner">
-            <h3>N/A</h3>
+            <h3 id="rq-nbCntct">N/A</h3>
 
-            <p>Contact</p>
+            <p>Contacts effectués</p>
           </div>
           <div class="icon">
-            <i class="ion ion-person-add"></i>
+            <i class="fa fa-phone"></i>
           </div>
-          <a href="#" class="small-box-footer">plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="#" class="small-box-footer">M. <i class="fa fa-envelope"></i> 12 <i class="fa fa-phone"></i> 8 <br/>
+                                               A. <i class="fa fa-envelope"></i> 12 <i class="fa fa-phone"></i> 8 <br/>
+                                               T. <i class="fa fa-envelope"></i> 12 <i class="fa fa-phone"></i> 8  </a>
         </div>
       </div>
+      <!-- ./col -->
       <!-- ./col -->
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-red">
           <div class="inner">
-            <h3>N/A</h3>
+            <h3 id="rq-nbClient">N/A</h3>
 
-            <p>---</p>
+            <p>Clients</p>
           </div>
           <div class="icon">
             <i class="ion ion-pie-graph"></i>
           </div>
-          <a href="#" class="small-box-footer">plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="#" class="small-box-footer">M.8 / A.20 / T.210</a>
         </div>
       </div>
       <!-- ./col -->
     </div>
     <!-- /.row -->
-    <div class="box box-default">
-      <div class="box-header with-border">
-        <h3 class="box-title">Scores</h3>
+    <div class="row">
+    <div class="col-md-4">
+      <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">Scores</h3>
 
-        <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-          </button>
-          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
         </div>
-      </div>
-      <!-- /.box-header -->
-      <div class="box-body">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="chart-responsive">
-              <canvas id="pieChart" height="150"></canvas>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="chart-responsive">
+                <canvas id="pieChart" height="150"></canvas>
+              </div>
+              <div id="rq-prsptc"></div>
+              <!-- ./chart-responsive -->
             </div>
-            <div id="rq-prsptc"></div>
-
-
-            <!-- ./chart-responsive -->
+            <!-- /.col -->
+            <div class="col-md-4" style="margin-left: 30%;">
+              <ul class="chart-legend clearfix">
+                @foreach ($tousLesScores as $score)
+                  <li><i class="fa fa-circle-o" style="color:{{$score->couleur}}"></i> {{$score->LibScore}}</li>
+                @endforeach
+              </ul>
+            </div>
+            <!-- /.col -->
           </div>
-          <!-- /.col -->
-          <div class="col-md-4">
-            <ul class="chart-legend clearfix">
-              <li><i class="fa fa-circle-o text-red"></i> Chrome</li>
-              <li><i class="fa fa-circle-o text-green"></i> IE</li>
-              <li><i class="fa fa-circle-o text-yellow"></i> FireFox</li>
-              <li><i class="fa fa-circle-o text-aqua"></i> Safari</li>
-              <li><i class="fa fa-circle-o text-light-blue"></i> Opera</li>
-              <li><i class="fa fa-circle-o text-gray"></i> Navigator</li>
-            </ul>
-          </div>
-          <!-- /.col -->
+          <!-- /.row -->
         </div>
-        <!-- /.row -->
+        <!-- /.box-body -->
+        <div class="box-footer no-padding">
+          <ul class="nav nav-pills nav-stacked">
+            @foreach ($scorePourcentage as $sp)
+              <li><a href="#">{{$sp[0]->LibScore}}
+                <span class="pull-right " style="color:{{$sp[0]->couleur}}"><i class="fa fa-angle-down"></i> {{$sp[1]}}%</span></a>
+              </li>
+            @endforeach
+          </ul>
+        </div>
+        <!-- /.footer -->
       </div>
-      <!-- /.box-body -->
-      <div class="box-footer no-padding">
-        <ul class="nav nav-pills nav-stacked">
-          <li><a href="#">United States of America
-            <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
-          <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
-          </li>
-          <li><a href="#">China
-            <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
-        </ul>
-      </div>
-      <!-- /.footer -->
     </div>
+    <div class="col-md-8">
+
+          <!-- TABLE: Commercials Stat -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Commercials</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="table-responsive">
+                <table class="table no-margin">
+                  <thead>
+                  <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Tâches (Terminées)</th>
+                    <th>Contacts (Appel - Email)</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($commercialsStat as $comm)
+                      <tr>
+                        <td><a href="profil/{{$comm[0]->id}}">{{$comm[0]->name}}</a></td>
+                        <td>{{$comm[0]->prenom}}</td>
+                        <td>{{$comm[1]}} <span class="label label-success">{{$comm[2]}}</span></td>
+                        <td>
+                          {{$comm[3]}} -> {{$comm[4]}} - {{$comm[5]}}
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Liste des Taches non terminées</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Liste des Contacts</a>
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!-- /.box -->
+    </div>
+
+  </div>
     <!-- Main row -->
     <div class="row">
       <!-- Left col -->
       <section class="col-lg-7 connectedSortable">
-        <!-- Custom tabs (Charts with tabs)-->
-        <div class="nav-tabs-custom">
-          <!-- Tabs within a box -->
-          <ul class="nav nav-tabs pull-right">
-            <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-            <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-            <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
-          </ul>
-          <div class="tab-content no-padding">
-            <!-- Morris chart - Sales -->
-            <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
-          </div>
-        </div>
-        <!-- /.nav-tabs-custom -->
 
         <!-- quick email widget -->
         <div class="box box-info">
@@ -188,32 +225,7 @@
       <!-- right col (We are only adding the ID to make the widgets sortable)-->
       <section class="col-lg-5 connectedSortable">
 
-        <!-- Map box -->
-        <div class="box box-solid bg-light-blue-gradient">
-          <div class="box-header">
-            <!-- tools box -->
-            <div class="pull-right box-tools">
-              <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip"
-                      title="Date range">
-                <i class="fa fa-calendar"></i></button>
-              <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
-                      data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
-                <i class="fa fa-minus"></i></button>
-            </div>
-            <!-- /. tools -->
 
-            <i class="fa fa-map-marker"></i>
-
-            <h3 class="box-title">
-              Visitors
-            </h3>
-          </div>
-          <div class="box-body">
-            <div id="world-map" style="height: 250px; width: 100%;"></div>
-          </div>
-          <!-- /.box-body-->
-        </div>
-        <!-- /.box -->
 
         <!-- Calendar -->
         <div class="box box-solid bg-green-gradient">
@@ -301,6 +313,19 @@
   <!-- /.content -->
 
   <script>
+     // top stikers
+    $("#rq-nbPrspct").load("nbPrspct");
+    $("#rq-nbPrspct").html('N/A');
+    $("#rq-tachEnCour").load("tachEnCour");
+    $("#rq-tachEnCour").html('N/A');
+    $("#rq-nbClient").load("nbClient");
+    $("#rq-nbClient").html('N/A');
+    $("#rq-nbCntct").load("nbCntct");
+    $("#rq-nbCntct").html('N/A');
+    $("#rq-tachFini").load("tachFini");
+    $("#rq-tachFini").html('N/A');
+
+
     //stat scores
     $("#rq-prsptc").load("scoresStat");
   </script>
