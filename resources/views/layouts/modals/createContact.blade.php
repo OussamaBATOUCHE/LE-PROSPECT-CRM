@@ -19,7 +19,7 @@
           </div>
           <hr/>
 
-                <form id="cntct-form" method="post" action="createContact/0/phone">
+                <form id="cntct-form" method="post" action="{{url('createContact/0/phone')}}">
                   @csrf
                   <div class="row">
                     <div class="form-group col-md-8">
@@ -93,7 +93,7 @@
              $("#map").removeClass("btn-info");
         // END sinitialiser les button du top
             $('#societe').html(societe);
-            $('#cntct-form').attr('action',"createContact/"+idTache+"/phone/"+idProsp); // le 0 c'est pour le id de tache. je l'envoye auto , au moment de l'appel de fonction
+            $('#cntct-form').attr('action',"http://localhost:8000/createContact/"+idTache+"/phone/"+idProsp); // le 0 c'est pour le id de tache. je l'envoye auto , au moment de l'appel de fonction
             idP = idProsp;
             idT = idTache;
             //affichage des produits en question
@@ -103,11 +103,11 @@
            for(var k=0 ; k < tousLesProduits.length ;k++){
 
               for(var l = 0 ; l < tach_produits.length ; l++){
-                console.log(tach_produits[l]['idTach']);
+              //  console.log(tach_produits[l]['idTach']);
                 if (b != "selected" && tach_produits[l]['idPrd'] == tousLesProduits[k]['id'] && tach_produits[l]['idTach'] == idT) {
                   b = "selected";
                 }
-                produits += '<option '+b+'>'+tousLesProduits[k]['LibProd']+'</option>';
+                produits += '<option value="'+tousLesProduits[k]['id']+'" '+b+'>'+tousLesProduits[k]['LibProd']+'</option>';
                 b='';
               }
             }
@@ -138,7 +138,7 @@
       active = function(button){
           $("#"+button).addClass("btn-info");
           $("#"+button+"-form").show();
-          $('#cntct-form').attr('action',"createContact/"+idT+"/"+button+"/"+idP);
+          $('#cntct-form').attr('action',"http://localhost:8000/createContact/"+idT+"/"+button+"/"+idP);
           if (button == "phone") {
             $("#map").removeClass("btn-info");  $(".terain").remove();
             $("#mail").removeClass("btn-info"); $(".mail").remove(); $("#js").hide();

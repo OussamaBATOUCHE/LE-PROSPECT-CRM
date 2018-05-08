@@ -1,0 +1,1 @@
+SELECT p.societe , ps.idScore from prospects p,prospect_scores ps where p.id = ps.idPros  group by p.societe , ps.idScore;

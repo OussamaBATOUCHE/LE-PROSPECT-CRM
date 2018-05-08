@@ -69,6 +69,10 @@ Route::get('message_delete/{id}','MessageController@deleteMsg');
 
 // STATISTIQUES
 Route::get('scoresStat',"HomeController@scoresStat");
+Route::get('nbPrspct',"HomeController@nbPrspct");
+Route::get('tachEnCour',"HomeController@tachEnCour");
+Route::get('nbCntct',"HomeController@nbCntct");
+Route::get('tachFini',"HomeController@tachFini");
 
 
 
