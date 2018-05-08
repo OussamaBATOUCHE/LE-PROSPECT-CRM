@@ -19,100 +19,112 @@ use App\cntct_appel;
 use App\cntct_terain;
 use App\Priorite;
 use App\Etat;
+use App\Client_produit;
 
 class ProspectController extends Controller
 {
     public function get($bloque = 0,$type=1)
     {
-          switch ($type) {
-            case 0:
-              $prospects = Prospect::where('bloquer',$bloque)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
-              break;
-              case 1:
-                $prospects = Prospect::where('bloquer',$bloque)->where('client',0)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
-                break;
-                case 2:
-                  $prospects = Prospect::where('bloquer',$bloque)->where('client',1)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
-                  break;
-          }
-//          dd($prospects);
-
-          $tousLesScores = Score::get();//pour un nouveau contact/prospect
-          $tousLesChampActiv = ChampActivite::get();
-          $tousLesGroupes = Groupe::get();
-          $tousLesProduits = Produit::get();
-          $tousLesUsers = User::where('type',0)->get();
-          //pour form ajout tache et recuperation des produit supposes au moment de creation de se prospect
-          $produitsPropose = Prospect_produit::get();
-          $tousLesPriorites = Priorite::get();
-
-          //pour ne pas generer des erreur lors de l'include of create contact
-          $etats = Etat::get();
-
-          $infosProspect = array();//pour chaque prospect , on recupere toute autre infos
-
-          //dernier score marqué
-          foreach ($prospects as $prospect) {
-             $lastScore = Prospect_score::where('idPros',$prospect->id)->latest()->first();
-             $scoreById = Score::where('id',$lastScore->idScore)->first();
-             $champActById = champActivite::where('id',$prospect->idChampAct)->first();
-             $derniersContacts = Contact::where('idProsp',$prospect->id)->orderByRaw('id DESC')->first();
-             $cntct="";
-             if ($derniersContacts) { //si un contact exist deja , dans le cas de creatino ce code ne s'execute pas .
-               switch ($derniersContacts->type) {
-
-                 case 'A':
-                   $cntct = cntct_appel::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
+         //gestion de demandeur
+         if ($this->UserType() == 0 && $bloque == 1) {
+            return redirect('home')->with('status',  '<div class="alert alert-danger alert-dismissible show" >
+                                                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                              </button>
+                                                               Acces interdit !
+                                                             </div>');
+         }else{
+           switch ($type) {
+             case 0:
+               $prospects = Prospect::where('bloquer',$bloque)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
+               break;
+               case 1:
+                 $prospects = Prospect::where('bloquer',$bloque)->where('client',0)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
+                 break;
+                 case 2:
+                   $prospects = Prospect::where('bloquer',$bloque)->where('client',1)->orderByRaw('id DESC')->get(); //je ne recuppere que les prospects non bloque , inclus les client
                    break;
-                 case 'E':
-                   $cntct = cntct_email::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul mail pour un contact
-                   break;
-                 case 'T':
-                   $cntct = cntct_terain::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
-                   break;
-                   default:return $derniersContacts->type; break;
-               }
-               $userCntct = user::where('id',$derniersContacts->idUser)->first();
-               $infosProspect[] = array( "score" => $scoreById->num,
-                                         "scoreLib" => $scoreById->LibScore,
-                                         "date" => $lastScore->date,
-                                         "remarque" => $lastScore->remarque,
-                                         "couleur" => $scoreById->couleur,
-                                         "champActiv"=> $champActById->LibChampAct,
-                                         "idDernierCntct" => $derniersContacts->id,
-                                         "typeDernierCntct" => $derniersContacts->type,
-                                         "remarqueDernierCntct" => $derniersContacts->remarque,
-                                         "cntct_info" => json_decode($cntct, true),
-                                         "cntct_user" => $userCntct->name." ".$userCntct->prenom
-                                       );
-             }else {
-               $infosProspect[] = array( "score" => $scoreById->num,
-                                         "scoreLib" => $scoreById->LibScore,
-                                         "date" => $lastScore->date,
-                                         "remarque" => $lastScore->remarque,
-                                         "couleur" => $scoreById->couleur,
-                                         "champActiv"=> $champActById->LibChampAct,
-                                         "idDernierCntct" => "",
-                                         "typeDernierCntct" => "",
-                                         "remarqueDernierCntct" => "",
-                                         "cntct_info" => "",
-                                         "cntct_user" => ""
-                                       );
-             }
-
-          }
+           }
 
 
-          return view('prospects')->with('prospects',$prospects)
-                                  ->with('tousLeScores',$tousLesScores)
-                                  ->with('tousLesChampActiv',$tousLesChampActiv)
-                                  ->with('tousLesGroupes',$tousLesGroupes)
-                                  ->with('tousLesProduits',$tousLesProduits)
-                                  ->with('infosProsp',$infosProspect)
-                                  ->with('tousLesUsers',$tousLesUsers)
-                                  ->with('produitsPropose',$produitsPropose)
-                                  ->with('tousLesPriorites',$tousLesPriorites)
-                                  ->with('etats', $etats);
+           $tousLesScores = Score::get();//pour un nouveau contact/prospect
+           $tousLesChampActiv = ChampActivite::get();
+           $tousLesGroupes = Groupe::get();
+           $tousLesProduits = Produit::get();
+           $tousLesUsers = User::where('type',0)->get();
+           //pour form ajout tache et recuperation des produit supposes au moment de creation de se prospect
+           $produitsPropose = Prospect_produit::get();
+           $tousLesPriorites = Priorite::get();
+
+           //pour ne pas generer des erreur lors de l'include of create contact
+           $etats = Etat::get();
+
+           $infosProspect = array();//pour chaque prospect , on recupere toute autre infos
+
+           //dernier score marqué
+           foreach ($prospects as $prospect) {
+              $lastScore = Prospect_score::where('idPros',$prospect->id)->latest()->first();
+              $scoreById = Score::where('id',$lastScore->idScore)->first();
+              $champActById = champActivite::where('id',$prospect->idChampAct)->first();
+              $derniersContacts = Contact::where('idProsp',$prospect->id)->orderByRaw('id DESC')->first();
+              $cntct="";
+              if ($derniersContacts) { //si un contact exist deja , dans le cas de creatino ce code ne s'execute pas .
+                switch ($derniersContacts->type) {
+
+                  case 'A':
+                    $cntct = cntct_appel::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
+                    break;
+                  case 'E':
+                    $cntct = cntct_email::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul mail pour un contact
+                    break;
+                  case 'T':
+                    $cntct = cntct_terain::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
+                    break;
+                    default:return $derniersContacts->type; break;
+                }
+                $userCntct = user::where('id',$derniersContacts->idUser)->first();
+                $infosProspect[] = array( "score" => $scoreById->num,
+                                          "scoreLib" => $scoreById->LibScore,
+                                          "date" => $lastScore->date,
+                                          "remarque" => $lastScore->remarque,
+                                          "couleur" => $scoreById->couleur,
+                                          "champActiv"=> $champActById->LibChampAct,
+                                          "idDernierCntct" => $derniersContacts->id,
+                                          "typeDernierCntct" => $derniersContacts->type,
+                                          "remarqueDernierCntct" => $derniersContacts->remarque,
+                                          "cntct_info" => json_decode($cntct, true),
+                                          "cntct_user" => $userCntct->name." ".$userCntct->prenom
+                                        );
+              }else {
+                $infosProspect[] = array( "score" => $scoreById->num,
+                                          "scoreLib" => $scoreById->LibScore,
+                                          "date" => $lastScore->date,
+                                          "remarque" => $lastScore->remarque,
+                                          "couleur" => $scoreById->couleur,
+                                          "champActiv"=> $champActById->LibChampAct,
+                                          "idDernierCntct" => "",
+                                          "typeDernierCntct" => "",
+                                          "remarqueDernierCntct" => "",
+                                          "cntct_info" => "",
+                                          "cntct_user" => ""
+                                        );
+              }
+
+           }
+
+
+           return view('prospects')->with('prospects',$prospects)
+                                   ->with('tousLeScores',$tousLesScores)
+                                   ->with('tousLesChampActiv',$tousLesChampActiv)
+                                   ->with('tousLesGroupes',$tousLesGroupes)
+                                   ->with('tousLesProduits',$tousLesProduits)
+                                   ->with('infosProsp',$infosProspect)
+                                   ->with('tousLesUsers',$tousLesUsers)
+                                   ->with('produitsPropose',$produitsPropose)
+                                   ->with('tousLesPriorites',$tousLesPriorites)
+                                   ->with('etats', $etats);
+         }
+
     }
 
     public function create(Request $rq){
@@ -270,7 +282,7 @@ class ProspectController extends Controller
            $prspt_prd = Prospect_produit::where('idProsp',$prospect)->get();//je recupere ces produits
            foreach ($prspt_prd as $pp) {
              $client_produit = new Client_produit;
-             $client_produit->idProsp = $prospect;
+             $client_produit->idPros = $prospect;
              $client_produit->idPrd = $pp->idPrd;
              $client_produit->save();
            }
@@ -344,6 +356,16 @@ class ProspectController extends Controller
        $tousLesGroupes = Groupe::get();
        $tousLesProduits = Produit::get();
 
+       //si c'est un client je doit retourner tous les produits ou les services qui la acheter.
+       $listProduitClient = array();
+       if($prospect->client == 1){
+         $produitClient  = Client_produit::where('idPros',$prospect->id)->get();
+         foreach ($produitClient as $pc) {
+           $listProduitClient[] = [Produit::find($pc->idPrd)];
+         }
+       }
+       //dd($listProduitClient);
+
       return view('prospectDetails')->with('prospect',$prospect)
                                     ->with('score',$scoreById)
                                     ->with('chamActiv',$champActById)
@@ -355,7 +377,8 @@ class ProspectController extends Controller
                                     ->with('scores',$tousLesScores)
                                     ->with('lesChampActiv',$tousLesChampActiv)
                                     ->with('lesGroupes',$tousLesGroupes)
-                                    ->with('lesProduits',$tousLesProduits);
+                                    ->with('lesProduits',$tousLesProduits)
+                                    ->with('clientProduit',$listProduitClient);
 
     }
     public function GetList(){

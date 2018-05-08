@@ -11,7 +11,7 @@ use App\Prospect;
 use App\Tache;
 use App\cntct_email;
 use App\cntct_appel;
-
+use App\Client_produit;
 
 class HomeController extends Controller
 {
@@ -35,7 +35,7 @@ class HomeController extends Controller
         $TousLesScores = Score::get();
 
         // idUser | nbTaches | fini
-        $idUserTaches = DB::select('SELECT t1.idUser ,
+        $idUserTaches = DB::SELECT('SELECT t1.idUser ,
                                            COUNT(t1.id) AS nbTaches ,
                                            (SELECT count(t2.id)
                                             FROM taches t2
@@ -46,7 +46,7 @@ class HomeController extends Controller
                                     GROUP BY t1.idUser
                                     ');
         // idUser | emails | appels
-        $idUserContacts = DB::select('SELECT  c.idUser ,
+        $idUserContacts = DB::SELECT('SELECT  c.idUser ,
                                              COUNT((SELECT COUNT(e.id)
                                               FROM cntct_emails e
                                               WHERE e.idCntct = c.id
@@ -96,7 +96,7 @@ class HomeController extends Controller
       $sco = array();
       // idScore | idPros
       foreach ($pros as $pro) {
-         $sco[] = Prospect_score::where('idPros',$pro->id)->latest()->first(['idScore','idPros']);
+         $sco[] = Prospect_score::WHERE('idPros',$pro->id)->latest()->first(['idScore','idPros']);
       }
       //dd($sco);
       $t = array();
@@ -125,7 +125,7 @@ class HomeController extends Controller
       $sco = array();
       // idScore | idPros
       foreach ($pros as $pro) {
-         $sco[] = Prospect_score::where('idPros',$pro->id)->latest()->first(['idScore','idPros']);
+         $sco[] = Prospect_score::WHERE('idPros',$pro->id)->latest()->first(['idScore','idPros']);
       }
       //dd($sco);
       $t = array();
@@ -184,22 +184,100 @@ class HomeController extends Controller
                       </script>";
           return $returned;
     }
+
+    //prospects STAT
     public function nbPrspct(){
 
-      $prospects = Prospect::where('client',0)->get();
-
-      $prospectsMois = DB::select("select * from prospects where client = 0 and  year(created_at) = ".date('Y')." and month(created_at) = ".date('m'));
-
+      $prospects = Prospect::WHERE('client',0)->get();
       return $prospects->count();
 
     }
+    public function nbPrspctM(){
+      $prospectsMois = DB::SELECT("SELECT * FROM prospects WHERE client = 0 AND  year(created_at) = ".date('Y')." AND month(created_at) = ".date('m'));
+      return count($prospectsMois);
+    }
+    public function nbPrspctA(){
+      $prospectsAnnee = DB::SELECT("SELECT * FROM prospects WHERE client = 0 AND  year(created_at) = ".date('Y'));
+      return count($prospectsAnnee);
+    }
+    public function nbPrspctT(){
+      $prospects = Prospect::WHERE('client',0)->get();
+      return $prospects->count();
+    }
+    public function nbPrspctB(){
+      $prospectsBloquer = DB::SELECT("SELECT * FROM prospects WHERE client = 0 AND  bloquer = 1");
+      return count($prospectsBloquer);
+    }
+    //end prospects STAT
+
+    //taches STAT
     public function tachEnCour(){
-      $taches = Tache::where('termine',0)->get();
+      $taches = Tache::WHERE('termine',0)->get();
       return $taches->count();
     }
+    public function tachEnCourT_M(){
+      $tachesM = DB::SELECT("SELECT * FROM taches WHERE termine = 1 AND  year(created_at) = ".date('Y')." AND month(created_at) = ".date('m'));
+      return count($tachesM);
+    }
+    public function tachEnCourT_A(){
+      $tachesA = DB::SELECT("SELECT * FROM taches WHERE termine = 1 AND  year(created_at) = ".date('Y'));
+      return count($tachesA);
+    }
+    public function tachEnCourT_T(){
+      $tachesT = DB::SELECT("SELECT * FROM taches WHERE termine = 1 ");
+      return count($tachesT);
+    }
+
+    //end taches STAT
+
+    //contacts STAT
     public function nbCntct(){
       $emails = cntct_email::get();
       $appels = cntct_appel::get();
       return $emails->count()+$appels->count();
     }
+    public function nbCntctE_M(){
+      $emailsM = DB::SELECT("SELECT * FROM contacts WHERE type = 'E' AND  year(date) = ".date('Y')." AND month(date) = ".date('m'));
+      return count($emailsM);
+    }
+    public function nbCntctA_M(){
+      $appelsM = DB::SELECT("SELECT * FROM contacts WHERE type = 'A' AND  year(date) = ".date('Y')." AND month(date) = ".date('m'));
+      return count($appelsM);
+    }
+    public function nbCntctE_A(){
+      $emailsA = DB::SELECT("SELECT * FROM contacts WHERE type = 'E' AND  year(date) = ".date('Y'));
+      return count($emailsA);
+    }
+    public function nbCntctA_A(){
+      $appelsA = DB::SELECT("SELECT * FROM contacts WHERE type = 'A' AND  year(date) = ".date('Y'));
+      return count($appelsA);
+    }
+    public function nbCntctE_T(){
+      $emailsT = DB::SELECT("SELECT * FROM contacts WHERE type = 'E' ");
+      return count($emailsT);
+    }
+    public function nbCntctA_T(){
+      $appelsT = DB::SELECT("SELECT * FROM contacts WHERE type = 'A' ");
+      return count($appelsT);
+    }
+    //end contacts STAT
+
+    //client STAT
+    public function nbClient(){
+      $client = Client_produit::get();
+      return $client->count();
+    }
+    public function nbClient_M(){
+      $clientsM = DB::SELECT("SELECT * FROM Client_produits WHERE  year(created_at) = ".date('Y')." AND month(created_at) = ".date('m'));
+      return count($clientsM);
+    }
+    public function nbClient_A(){
+      $clientsA = DB::SELECT("SELECT * FROM Client_produits WHERE  year(created_at) = ".date('Y'));
+      return count($clientsA);
+    }
+    public function nbClient_T(){
+      $clientsT = DB::SELECT("SELECT * FROM Client_produits ");
+      return count($clientsT);
+    }
+    //end clients STAT
 }
