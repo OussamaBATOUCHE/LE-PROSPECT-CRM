@@ -222,4 +222,20 @@ class Controller extends BaseController
         }
 
 
+        //state
+
+        public function mes_taches_finis($id){
+            $tacheMe = Tache::where('idUser',$id)->get();
+            return $tacheMe->count();
+        }
+        public function mes_emails($id){
+          $emailMe = contact::where('idUser',$id)->where('type',"E")->get();
+          return $emailMe->count();
+        }
+        public function mes_appels($id){
+          $appelMe = contact::where('idUser',$id)->where('type',"A")->get();
+          return $appelMe->count();
+        }
+
+
 }

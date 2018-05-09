@@ -7,10 +7,6 @@
       Principal
       <small>menu de controle</small>
     </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> principal</a></li>
-      <li class="active">Dashboard</li>
-    </ol>
   </section>
   @if (session('status')){!! session('status') !!} @endif
   <!-- Main content -->
@@ -28,7 +24,9 @@
           <div class="icon">
             <i class="ion ion-bag"></i>
           </div>
-          <a href="#" class="small-box-footer">M.<span id="rq-nbPrspct-M" class="connexion"></span> / A.<span id="rq-nbPrspct-A" class="connexion"></span> / T.<span id="rq-nbPrspct-T" class="connexion"></span> <br/><span onclick="location.href = 'prospectsBloques/1'">Bloqués.<span id="rq-nbPrspct-B" class="connexion"></span></span></a>
+          <a class="small-box-footer" title="Prospect ajoutés M:ce Mois , A:cette Annee , T: tous les prospects."><span onclick="location.href='prospects'" class="ouss-links">M.<span id="rq-nbPrspct-M" class="connexion"></span> / A.<span id="rq-nbPrspct-A" class="connexion"></span> / T.<span id="rq-nbPrspct-T" class="connexion"></span></span>
+             <br/><span class="ouss-links" onclick="location.href = 'prospectsBloques/1'">Bloqués.<span id="rq-nbPrspct-B" class="connexion"></span></span>
+          </a>
         </div>
       </div>
       <!-- ./col -->
@@ -43,7 +41,7 @@
           <div class="icon">
             <i class="ion ion-stats-bars"></i>
           </div>
-          <a href="#" class="small-box-footer"> Terminé : M.<span id="rq-tachEnCourT-M" class="connexion"></span> / A.<span id="rq-tachEnCourT-A" class="connexion"></span> / T.<span id="rq-tachEnCourT-T" class="connexion"></span></a>
+          <a href="taches" class="small-box-footer" title="Taches terminées M:ce Mois , A:cette Année , T:Nombre totale des taches finis."> Terminé : M.<span id="rq-tachEnCourT-M" class="connexion"></span> / A.<span id="rq-tachEnCourT-A" class="connexion"></span> / T.<span id="rq-tachEnCourT-T" class="connexion"></span></a>
         </div>
       </div>
       <!-- ./col -->
@@ -58,9 +56,9 @@
           <div class="icon">
             <i class="fa fa-phone"></i>
           </div>
-          <a href="#" class="small-box-footer">M. <i class="fa fa-envelope"></i> <span id="rq-nbCntctE-M" class="connexion"></span> <i class="fa fa-phone"></i> <span id="rq-nbCntctA-M" class="connexion"></span> <br/>
-                                               A. <i class="fa fa-envelope"></i> <span id="rq-nbCntctE-A" class="connexion"></span> <i class="fa fa-phone"></i> <span id="rq-nbCntctA-A" class="connexion"></span> <br/>
-                                               T. <i class="fa fa-envelope"></i> <span id="rq-nbCntctE-T" class="connexion"></span> <i class="fa fa-phone"></i> <span id="rq-nbCntctA-T" class="connexion"></span>  </a>
+          <a href="contacts" class="small-box-footer" title="Contacts effectués M:ce Mois E: par Email A:par Appel.">M. <i class="fa fa-envelope"></i> <span id="rq-nbCntctE-M" class="connexion"></span> <i class="fa fa-phone"></i> <span id="rq-nbCntctA-M" class="connexion"></span> <br/>
+                                                       A. <i class="fa fa-envelope"></i> <span id="rq-nbCntctE-A" class="connexion"></span> <i class="fa fa-phone"></i> <span id="rq-nbCntctA-A" class="connexion"></span> <br/>
+                                                       T. <i class="fa fa-envelope"></i> <span id="rq-nbCntctE-T" class="connexion"></span> <i class="fa fa-phone"></i> <span id="rq-nbCntctA-T" class="connexion"></span>  </a>
         </div>
       </div>
       <!-- ./col -->
@@ -76,7 +74,7 @@
           <div class="icon">
             <i class="ion ion-pie-graph"></i>
           </div>
-          <a href="#" class="small-box-footer">M.<span id="rq-nbClient-M" class="connexion"></span> / A.<span id="rq-nbClient-A" class="connexion"></span> / T.<span id="rq-nbClient-T" class="connexion"></span></a>
+          <a href="prospectQue/0/2" class="small-box-footer">M.<span id="rq-nbClient-M" class="connexion"></span> / A.<span id="rq-nbClient-A" class="connexion"></span> / T.<span id="rq-nbClient-T" class="connexion"></span></a>
         </div>
       </div>
       <!-- ./col -->

@@ -8,7 +8,7 @@
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>L-P</b></span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>LE PROSPECT</b></span>
+    <span class="logo-lg"> <img src="full-logo.png" alt=""> </span>
   </span>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">
@@ -21,14 +21,14 @@
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
         <li class="dropdown messages-menu" id=mesMessages>
-            
+
         </li>
         <script>
             loadMessages = function(){
             $('#mesMessages').load("/mesMessages");
           }
           loadMessages();
-        </script>  
+        </script>
         <!-- Notifications: mes taches a faire et qui non pas encore terminées -->
         <li class="dropdown notifications-menu" id="mesNotifications" >
 

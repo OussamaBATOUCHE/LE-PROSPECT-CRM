@@ -179,7 +179,6 @@ class HomeController extends Controller
                            var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
                            var pieChart       = new Chart(pieChartCanvas);
                            var PieData = ".json_encode($data).";
-                           //alert('hello');
                            pieChart.Doughnut(PieData);
                       </script>";
           return $returned;

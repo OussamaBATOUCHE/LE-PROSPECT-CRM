@@ -98,6 +98,14 @@ Route::get('nbClient_M',"HomeController@nbClient_M");
 Route::get('nbClient_A',"HomeController@nbClient_A");
 Route::get('nbClient_T',"HomeController@nbClient_T");
 
+//by commercials
+
+Route::get('profil/mes_taches_finis/{id}',"Controller@mes_taches_finis");
+Route::get('profil/mes_emails/{id}',"Controller@mes_emails");
+Route::get('profil/mes_appels/{id}',"Controller@mes_appels");
+
+
+
 /* --- POST --- */
 
 Route::post('/createScore','ScoreController@create');
