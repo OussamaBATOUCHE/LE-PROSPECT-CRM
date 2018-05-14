@@ -122,6 +122,22 @@ th.sub-info > span{
 .label{
   font-size: 15px;
 }
+
+.logo-lg>img{
+  width: 70%;
+}
+.logo{
+  box-shadow: rgb(49, 40, 40) -1px 1px 10px 0px inset;
+  background-color: #edf0f5!important;
+}
+.logo:hover{
+  box-shadow: rgb(49, 40, 40) -1px 1px 20px 0px inset;
+  transition: .8s;
+}
+
+.ouss-links{
+ cursor: pointer;
+}
 /* END Oussama */
 
 #showMessagesModal .row{

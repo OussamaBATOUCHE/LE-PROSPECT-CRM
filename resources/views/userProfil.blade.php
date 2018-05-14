@@ -26,17 +26,17 @@
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Taches finis</b> <a class="pull-right">134</a>
+                  <b>Taches finis</b> <a class="pull-right" id="mes-taches-finis">N/A</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Appels envoyés</b> <a class="pull-right">543</a>
+                  <b>Appels envoyés</b> <a class="pull-right" id="mes-appels">N/A</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Emails envoyés</b> <a class="pull-right">13</a>
+                  <b>Emails envoyés</b> <a class="pull-right" id="mes-emails" key="{{$me->id}}">N/A</a>
                 </li>
               </ul>
               @if ($me->bloque == 1)
-              <a href="/debloquerUser/{{$me->id}}" class="btn btn-primary btn-block"><b>Debloquer le compte</b></a>  
+              <a href="/debloquerUser/{{$me->id}}" class="btn btn-primary btn-block"><b>Debloquer le compte</b></a>
               @endif
 
             </div>
@@ -71,12 +71,6 @@
 
                 <span class="label label-success">{{$me->telephone}}</span>
               </p>
-
-              <hr>
-
-              <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
             </div>
             <!-- /.box-body -->
           </div>
@@ -237,5 +231,15 @@
 
     </section>
     <!-- /.content -->
+
+    <script>
+    $("#mes-taches-finis").load('mes_taches_finis/'+$("#mes-emails").attr('key'));
+    $("#mes-emails").load('mes_emails/'+$("#mes-emails").attr('key'));
+    $("#mes-appels").load('mes_appels/'+$("#mes-emails").attr('key'));
+
+
+
+
+    </script>
 
 @endsection
