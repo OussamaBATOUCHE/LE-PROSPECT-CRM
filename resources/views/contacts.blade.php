@@ -58,7 +58,7 @@
                   @if ($contact->type == "A")
                      <i class="fa fa-phone"></i>  - Appel Telephonique
                   @else
-                     <i class="fa fa-envelope"></i>  - @if($details[$i]->envoye = "Oui") <i class="fa fa-check-circle"></i> @endif Email
+                     <i class="fa fa-envelope"></i>  - @if($details[$i]->envoye == "Oui") <i class="fa fa-check-circle"></i> @endif Email
                   @endif </span>
                 </th>
                 <th>{{$contact->date}}</th>

@@ -18,7 +18,7 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <span class="profile-user-img img-responsive img-circle" >  A-B</span>
+              <span class="profile-user-img img-responsive img-circle" >{{substr($me->name,0,1)."-".substr($me->prenom,0,1)}}</span>
 
               <h3 class="profile-username text-center">{{$me->name." ".$me->prenom}}</h3>
 
@@ -153,7 +153,47 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="contact">
+                @if (session('status')){!! session('status') !!}@endif
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="box">
+                      <div class="box-header ">
+                        <h3>La liste des Contacts.</h3>
+                      </div>
+                      <div class="box-body">
+                        <table id="example3" class="table table-bordered table-striped">
+                          <thead>
+                            <tr>
+                              <th>Objet</th>
+                              <th>Type</th>
+                              <th>Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @php
+                              $i = 0 ;
+                            @endphp
+                            @foreach($contacts as $contact)
+                            <tr>
+                              <th><span data-toggle="popover" data-trigger="hover"  title="Remarque" data-content="{{$contact->remarque}}">{{$contact->objet}}</span></th>
+                              <th><span >
+                                @if ($contact->type == "A")
+                                   <i class="fa fa-phone"></i>  - Appel Telephonique
+                                @else
+                                   <i class="fa fa-envelope"></i>  - @if($detailsCntct[$i]->envoye == "Oui") <i class="fa fa-check-circle"></i> @endif Email
+                                @endif </span>
+                              </th>
+                              <th>{{$contact->date}}</th>
 
+                            @php $i++; @endphp
+                            @endforeach
+                          </tbody>
+                          </tfoot>
+                        </table>
+                      </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                  </div><!-- /.col -->
+                </div><!-- /.row -->
               </div>
               <!-- /.tab-pane -->
 
@@ -233,13 +273,22 @@
     <!-- /.content -->
 
     <script>
-    $("#mes-taches-finis").load('mes_taches_finis/'+$("#mes-emails").attr('key'));
-    $("#mes-emails").load('mes_emails/'+$("#mes-emails").attr('key'));
-    $("#mes-appels").load('mes_appels/'+$("#mes-emails").attr('key'));
-
-
-
-
+    $(document).ready(function(){
+      $('[data-toggle="popover"]').popover({ trigger: "hover" , html: true });
+      $("#mes-taches-finis").load('mes_taches_finis/'+$("#mes-emails").attr('key'));
+      $("#mes-emails").load('mes_emails/'+$("#mes-emails").attr('key'));
+      $("#mes-appels").load('mes_appels/'+$("#mes-emails").attr('key'));
+    });
+    $(function () {
+      $('#example3').DataTable({
+        'paging'      : true,
+        'lengthChange': true,
+        'searching'   : true,
+        'ordering'    : false,//pour ne par trier le tableau automatiquement juste change this parameter to false
+        'info'        : true,
+        'autoWidth'   : true
+      });
+    });
     </script>
 
 @endsection

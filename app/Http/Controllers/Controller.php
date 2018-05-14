@@ -24,6 +24,9 @@ use App\Prospect;
 use App\Contact;
 use App\Message;
 
+use App\cntct_appel;
+use App\cntct_email;
+
 
 class Controller extends BaseController
 {
@@ -116,12 +119,33 @@ class Controller extends BaseController
 
               }
 
+              //recuperation des cotacts -> 14-05-2018
+
+              $cntct = array();
+              $contacts = Contact::where('idUser',$id)->orderByRaw('id DESC')->get();
+
+              if (Count($contacts) !=0) { //si un contact exist deja , dans le cas de creation ce code ne s'execute pas .
+                foreach ($contacts as $contact) {
+                  switch ($contact->type) {
+                    case 'A':
+                      $cntct[] = cntct_appel::where('idCntct',$contact->id)->first();//c sur que y'a q'un seul appel pour un contact
+                      break;
+                    case 'E':
+                      $cntct[] = cntct_email::where('idCntct',$contact->id)->first();//c sur que y'a q'un seul mail pour un contact
+                      break;
+                      default:return $contact->type; break;
+                  }
+                }
+              }
+
               $me = User::find($id);
 
               return view('userProfil')->with('me',$me)
                                        ->with('taches',$taches)
                                        ->with('lesProspects', array_values($lesProspects))
-                                       ->with('dernierEtats',$dernierEtat);
+                                       ->with('dernierEtats',$dernierEtat)
+                                       ->with('contacts', $contacts)
+                                       ->with('detailsCntct', $cntct);
            }else {
             return  $this->messageDroitAccee();
            }

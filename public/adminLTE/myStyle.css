@@ -138,6 +138,42 @@ th.sub-info > span{
 .ouss-links{
  cursor: pointer;
 }
+
+.img-circle{
+  font-size: 29px;
+    height: 70px;
+}
+.profile-user-img{
+  width: 70px;
+  padding-top: 12px;
+}
+
+
+/* The only rule that matters */
+#video-background {
+/*  making the video fullscreen  */
+  position: fixed;
+  z-index: -100;
+}
+.blur {
+  width: 100%;
+  /* content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1; */
+
+  /* display: block;
+  background-image: url('../logoV.jpg') 100%;
+  width: 1200px;
+  height: 800px; */
+
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
 /* END Oussama */
 
 #showMessagesModal .row{

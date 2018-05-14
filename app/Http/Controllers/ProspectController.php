@@ -68,7 +68,7 @@ class ProspectController extends Controller
               $champActById = champActivite::where('id',$prospect->idChampAct)->first();
               $derniersContacts = Contact::where('idProsp',$prospect->id)->orderByRaw('id DESC')->first();
               $cntct="";
-              if ($derniersContacts) { //si un contact exist deja , dans le cas de creatino ce code ne s'execute pas .
+              if (Count($derniersContacts) != 0) { //si un contact exist deja , dans le cas de creatino ce code ne s'execute pas .
                 switch ($derniersContacts->type) {
 
                   case 'A':

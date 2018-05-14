@@ -16,7 +16,7 @@
 
 /* --- GET --- */
 
-Route::get('/','HomeController@index');
+Route::get('/','HomeController@home');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/paramList','HomeController@paramList');
@@ -70,6 +70,7 @@ Route::get('message_delete/{id}','MessageController@deleteMsg');
 // STATISTIQUES
 
 Route::get('scoresStat',"HomeController@scoresStat");
+Route::get('detailsProspect/scoresStat_prosp/{id}',"HomeController@scoresStat_prosp");
 //prospects
 Route::get('nbPrspct',"HomeController@nbPrspct");
 Route::get('nbPrspctM',"HomeController@nbPrspctM");
