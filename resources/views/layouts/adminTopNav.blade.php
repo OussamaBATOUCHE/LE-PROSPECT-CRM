@@ -8,7 +8,7 @@
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>L-P</b></span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"> <img src="full-logo.png" alt=""> </span>
+    <span class="logo-lg"> <img src="{{asset('logoH.png')}}" alt=""> </span>
   </span>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">

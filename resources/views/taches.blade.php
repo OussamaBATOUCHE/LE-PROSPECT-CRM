@@ -52,7 +52,7 @@
                     </ul>
                 </th>
                 <th>{{$tache->dateDebut}} jusqu'a {{$tache->dateFin}}</th>
-                <th id="etatTache" Etat="{{$dernierEtats[$i]->num}}">
+                <th>
                   @if ($dernierEtats[$i]->LibEtat == 'Terminé')<i class="fa fa-check-circle" ></i> @endif{{$dernierEtats[$i]->LibEtat}}
                 </th>
                 <th><a href="profil/{{$usersTaches[$i]->id}}">

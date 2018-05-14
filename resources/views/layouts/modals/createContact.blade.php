@@ -10,9 +10,8 @@
 
             <div class="col-md-12">
 
-                <button id="phone" class=" btn  col-md-4 btn-info" type="button" name="button" onclick="active('phone')"><i class="fa fa-phone"></i> Appel</button>
-                <button id="mail" class=" btn col-md-4" type="button" name="button" onclick="active('mail')"><i class="fa fa-envelope-o"></i> Email</button>
-                <button id="map" class=" btn col-md-4" type="button" name="button" onclick="active('map')"><i class="fa fa-map"></i> Sur terain</button>
+                <button id="phone" class=" btn  col-md-6 btn-info" type="button" name="button" onclick="active('phone')"><i class="fa fa-phone"></i> Appel</button>
+                <button id="mail" class=" btn col-md-6" type="button" name="button" onclick="active('mail')"><i class="fa fa-envelope-o"></i> Email</button>
 
             </div>
 
@@ -58,7 +57,7 @@
                   </div>
 
                     <div class="row etats"></div>
-                    <div class="form-group col-md-12">
+                    <div class="form-group ">
                       <select id="tchPrds" class="form-control select2 select2-hidden-accessible " name="produits[]" required multiple="" data-placeholder="Produits/Services" style="width: 100%;" tabindex="-1" aria-hidden="true">
 
                       </select>
@@ -115,15 +114,12 @@
             $("#tchPrds").html(produits);
             if (idTache != 0 ) {//donc sa concerne une tache
 
-
-            //  alert(tach_produits[0]["idPrd"]);
-              var etatNum = $("#etatTache").Etat ;
               //je cree une liste d'etat , et l'initialiser avec le dernier etat ->to the controller
               var tacheEtat = `<div class="form-group col-md-12 ">
                                 <select class="form-control" name="etatTache" required style="background-color:#4bc1f0">
                                   <option value="" disabled selected>Etat de Tache</option>
                                   @foreach ($etats as $etat)
-                                    <option value="{{$etat->num}}" @if($etat->num == `+etatNum+ `) selected @endif>{{$etat->LibEtat}}</option>
+                                    <option value="{{$etat->num}}" >{{$etat->LibEtat}}</option>
                                   @endforeach
                                 </select>
                               </div>`;
@@ -162,17 +158,13 @@
 
               $("#submit").attr('value','Ajouter');
 
-          }else if (button == "mail") {
+          }else{
             $("#map").removeClass("btn-info");   $(".terain").remove();
             $("#phone").removeClass("btn-info"); $(".phone").remove();
 
             $("#submit").attr('value','Envoyer & Enregisrer');
             $("#js").show();
 
-          }else {
-            $("#phone").removeClass("btn-info"); $(".phone").remove();
-            $("#mail").removeClass("btn-info");  $(".mail").remove(); $("#js").hide();
-            $("#submit").attr('value','Ajouter');
           }
       };
 
