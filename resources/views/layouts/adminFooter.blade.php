@@ -2,7 +2,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0 by BATOUCHE & BENSAIB
     </div>
-    <strong>Copyright &copy; 2018 <a href="https://fecomit.com">FECOM IT</a> &nbsp; & &nbsp; <a href="https://usthb.dz">USTHB</a>.</strong> All rights
+    <strong>Copyright &copy; {{date('Y')}} <a href="https://fecomit.com">FECOM IT</a> &nbsp; & &nbsp; <a href="https://usthb.dz">USTHB</a>.</strong> All rights
     reserved.
   </footer>
 </div>

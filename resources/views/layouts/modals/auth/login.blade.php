@@ -1,14 +1,12 @@
 
 <div class="modal fade" id="login">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog  modal-T1">
     <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h3 class="modal-title" style="color:white" ><img style="width:30%" src="{{asset('logoH.png')}}"/></h3>
-      </div>
+
       <div class="modal-body">
 
           <div class="row justify-content-center">
-              <div class="col-md-8">
+              <div class="col-md-12">
                   <div class="card">
 
                       <div class="card-body">

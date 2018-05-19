@@ -157,22 +157,38 @@ th.sub-info > span{
 }
 .blur {
   width: 100%;
-  /* content: "";
+  height: 100%;
+ content: "";
   position: fixed;
   left: 0;
   right: 0;
-  z-index: -1; */
-
-  /* display: block;
-  background-image: url('../logoV.jpg') 100%;
-  width: 1200px;
-  height: 800px; */
-
+  z-index: -1;
+ margin: 0px;
+ padding: 0px;
   -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -o-filter: blur(5px);
   -ms-filter: blur(5px);
   filter: blur(5px);
+}
+
+#logoUSTHB{
+  width: 80px;
+margin-top: 45%;
+left: 3%;
+position: fixed;
+}
+#logoFECOMIT{
+  width: 200px;
+margin-top: 46%;
+left: 10%;
+position: fixed;
+}
+#logoLINKEDIN{
+  width: 50px;
+margin-top: 47%;
+right: 1%;
+position: fixed;
 }
 /* END Oussama */
 
