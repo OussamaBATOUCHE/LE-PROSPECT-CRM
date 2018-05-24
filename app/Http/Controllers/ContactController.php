@@ -23,7 +23,7 @@ use App\Groupe;
 use App\ChampActivite;
 
 use App\Client_produit;
-
+use App\ProchaineAction;
 class ContactController extends Controller
 {
 
@@ -175,6 +175,16 @@ class ContactController extends Controller
       if ($rq->etatTache == $etat->num) {
         $TacheToUpdate = Tache::find($tache)->update(["termine"=>1]);
       }
+    }
+
+    //prochaine action
+    if ($rq->nvAction == 1) {
+      $action = new ProchaineAction;
+      $action->idCntct = $contact->id;
+      $action->action = $rq->action;
+      $action->date = $rq->dateNvAct;
+      $action->note = $rq->noteNvAct;
+      $action->save();
     }
 
     return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Contact ajouté '.$emailSendResult.'avec succée !</div>');

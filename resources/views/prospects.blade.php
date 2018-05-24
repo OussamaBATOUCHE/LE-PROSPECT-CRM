@@ -4,8 +4,10 @@
 <section class="content">
     <h3 class="box-title">Gestion des prospects</h3>
   <div style="text-align:right;float: right">
-  <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect({{$tousLesProduits}})" ><i class="fa fa-calendar"></i>&nbsp; Taches en groupe</a>
-  <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-user-plus"></i>&nbsp; Ajouter un prospect</a>
+    @if (Auth::user()->type == 1)
+      <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect({{$tousLesProduits}})" ><i class="fa fa-calendar"></i>&nbsp; Taches en groupe</a>
+      <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-user-plus"></i>&nbsp; Ajouter un prospect</a>
+    @endif
 
   </div>
   <div style="float:left">
@@ -60,24 +62,14 @@
                 <th>Contact</th>
                 <th>Categorie</th>
                 <th>Dernier Echange</th>
-                <th>Contact</th>
+                @if (Auth::user()->type == 1)
+                  <th>Contact</th>
+                @endif
+
               </tr>
             </thead>
             <tbody>
-              {{-- <tr>
-              <tr>
-                <th><input type="checkbox"/></th>
-                <th>06.18.0706/18</th>
-                <th><a href="#" data-toggle="popover" data-trigger="hover"  title="SULTAN Hotel" data-content="voici la toute dernier remarque sur ce prospect ... ">SULTAN Hotel</a> <span style="color:#848484;"><br/> 12 Rue salim merabet <br/> 16056 Alger</span></th>
-                <th style="background-color:#ffc440; font-size: 25px;color: white;">2</th>
-                <th>MALKI Amine<span style="color:#848484;"><br/> contact@sultanHotel.com <br/> 02.14.56.73.02</span></th>
-                <th>Hotel & restauration</th>
-                <th><a>12-04-2018</a></th>
-                <th>
-                  <a class="btn btn-info col"><i class="fa fa-plus-square"></i></a>
-                  <a class="btn btn-info col"><i class="fa fa-calendar"></i></a>
-                </th>
-              </tr> --}}
+
               @php
                 $i = 0 ;
               @endphp
@@ -106,15 +98,19 @@
                           data-toggle="modal" data-target="#updateContact">
                         {{$infosProsp[$i]["date"]}}
                        </a>
+                       <br/>
+                       P.A : @if($infosProsp[$i]["pa"][$i] != "")<a>{{$infosProsp[$i]["pa"][$i]["action"]."-". $infosProsp[$i]["pa"][$i]["date"]}}</a> @else / @endif
                      @else
                        Aucun Echange
                      @endif
 
                 </th>
-                <th>
+                @if (Auth::user()->type == 1)
+                 <th>
                   <a class="btn btn-info col" title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}},0,{{str_replace('"',"'",$produitsPropose)}}, {{str_replace('"',"'",$tousLesProduits)}})" data-toggle="modal" data-target="#nouveauContact"><i class="fa fa-plus-square"></i></a>
                   <a class="btn btn-info col" title="Programmer une Tache" onclick="chargeNouvelleTache('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}} , {{$tousLesProduits}} , {{$produitsPropose}})"  data-toggle="modal" data-target="#nouvelleTache"><i class="fa fa-calendar"></i></a>
-                </th>
+                 </th>
+                @endif
               @php $i++; @endphp
               @endforeach
             </tbody>

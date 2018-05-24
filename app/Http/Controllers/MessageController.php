@@ -59,7 +59,7 @@ class MessageController extends Controller
                 		//machi ana li b3at
                         $html .='
                          <div class="container">
-                           <img src="adminLTE/dist/img/user8-128x128.jpg" alt="Avatar">
+                           <img src="adminLTE/dist/img/avatar5.png" alt="Avatar">
                            <p>'.$message->message.'</p>
                            <span class="time-right">'.$message->created_at.'</span>
                          </div> ';
@@ -67,7 +67,7 @@ class MessageController extends Controller
                 		//ana li B3at
                 		$html .='
                          <div class="container darker">
-                           <img src="adminLTE/dist/img/user2-160x160.jpg" alt="Avatar">
+                           <img src="adminLTE/dist/img/avatar04.png" alt="Avatar">
                            <p>'.$message->message.'</p>
                            <span class="time-left">'.$message->created_at.'</span>
                          </div> ';
@@ -80,7 +80,7 @@ class MessageController extends Controller
               <div style="width: 95%;">
 
                     <input user="'.$id.'" type="text" class="col-md-10 send" placeholder="Votre Message" required style="    margin-top: 5px;    width: 90.333333%;">
-                    <img class="btn-send" src="adminLTE/dist/img/sendSemiCircle.png" title="Envoyer" style="width:9%">
+                    <img class="btn-send" src="adminLTE/dist/img/send.png" title="Envoyer" style="width:9%">
 
               </div>
               </div>
@@ -154,7 +154,7 @@ class MessageController extends Controller
 				<li><!-- start message -->
 				<a href="#">
 				  <div class="pull-left">
-					<img src="adminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+					<img src="adminLTE/dist/img/avatar04.png" class="img-circle" alt="User Image">
 				  </div>
 				  <h4>'.$messages[$nbr]->user->name.'
 				  <small><i class="fa fa-clock-o"></i>'.$messages[$nbr]->created_at->totimestring().'</small>

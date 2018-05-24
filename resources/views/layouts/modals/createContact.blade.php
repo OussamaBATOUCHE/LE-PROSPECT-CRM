@@ -68,6 +68,29 @@
                   </div>
                   <input id="typeCntct" type="hidden" name="type" value="A">
 
+                  {{-- cette partie est pour l'ajout d'une programation des compgnre --}}
+                  <a id="a-nvAct"  class="form-group"  onclick="nouvelleAction()" style="cursor: pointer;background: #00ff2b;color: white;font-size: 15px;padding: 5px;">Programmer la prochaine action >> </a> <br/> <br/>
+                  <div class="row">
+                    <div class="form-group col-md-6 nvAct">
+                      <select class="form-control " name="action">
+                        <option id="nvActSelect" value="" disabled selected>Prochaine action</option>
+                        <option value="Email">Email</option>
+                        <option value="Appel">Appel</option>
+                        <option value="Abandonner">Abandonner</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group col-md-6 nvAct">
+                      <input type="date" name="dateNvAct" value="" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-group nvAct">
+                       <textarea class="textarea form-control" name="noteNvAct" rows="8" style="width:100%; " placeholder="Votre note  ..." required></textarea>
+                  </div>
+                  <input id="checkNvAct" type="hidden" name="nvAction" value="0">
+
+
       </div>
       <div class="modal-footer">
         <input id="submit" class="btn btn-primary col-md-4" type="submit" value="Ajouter">
@@ -106,9 +129,10 @@
                 if (b != "selected" && tach_produits[l]['idPrd'] == tousLesProduits[k]['id'] && tach_produits[l]['idTach'] == idT) {
                   b = "selected";
                 }
-                produits += '<option value="'+tousLesProduits[k]['id']+'" '+b+'>'+tousLesProduits[k]['LibProd']+'</option>';
-                b='';
+
               }
+              produits += '<option value="'+tousLesProduits[k]['id']+'" '+b+'>'+tousLesProduits[k]['LibProd']+'</option>';
+              b='';
             }
 
             $("#tchPrds").html(produits);
@@ -175,6 +199,23 @@
          $("#mail").click(function(){
              $("#typeCntct").val("E");
          });
+
+//programmer nouvelle action
+    var newAct = false ;
+    $(".nvAct").hide();
+    nouvelleAction = function(){
+      if (newAct == false) {
+        newAct = true ;
+          $(".nvAct").show();
+          $('#a-nvAct').html("<< Annuler l'action");
+          $("#checkNvAct").attr('value','1');
+      } else {
+        newAct = false ;
+        $(".nvAct").hide();
+        $('#a-nvAct').html("Programmer la prochaine action >>");
+        $("#checkNvAct").attr('value','0');
+      }
+    }
 
     });
 

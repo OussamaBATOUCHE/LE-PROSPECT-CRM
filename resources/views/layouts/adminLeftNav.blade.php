@@ -34,7 +34,7 @@
       <li >
         <a href="/contacts">
           <i class="fa fa-phone"></i>
-          <span>Contacts</span>
+          <span>Prospections</span>
         </a>
       </li>
       <li>

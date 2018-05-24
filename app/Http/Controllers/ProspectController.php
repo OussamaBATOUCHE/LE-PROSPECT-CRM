@@ -20,6 +20,7 @@ use App\cntct_terain;
 use App\Priorite;
 use App\Etat;
 use App\Client_produit;
+use App\prochaineAction;
 
 class ProspectController extends Controller
 {
@@ -83,6 +84,9 @@ class ProspectController extends Controller
                     default:return $derniersContacts->type; break;
                 }
                 $userCntct = user::where('id',$derniersContacts->idUser)->first();
+
+                //pour l'affichage des prochaine action
+                $pa[] = prochaineAction::where('idCntct',$derniersContacts->id)->latest()->first();
                 $infosProspect[] = array( "score" => $scoreById->num,
                                           "scoreLib" => $scoreById->LibScore,
                                           "date" => $lastScore->date,
@@ -91,11 +95,13 @@ class ProspectController extends Controller
                                           "champActiv"=> $champActById->LibChampAct,
                                           "idDernierCntct" => $derniersContacts->id,
                                           "typeDernierCntct" => $derniersContacts->type,
+                                          "pa" => $pa,
                                           "remarqueDernierCntct" => $derniersContacts->remarque,
                                           "cntct_info" => json_decode($cntct, true),
                                           "cntct_user" => $userCntct->name." ".$userCntct->prenom
                                         );
               }else {
+
                 $infosProspect[] = array( "score" => $scoreById->num,
                                           "scoreLib" => $scoreById->LibScore,
                                           "date" => $lastScore->date,
@@ -104,6 +110,7 @@ class ProspectController extends Controller
                                           "champActiv"=> $champActById->LibChampAct,
                                           "idDernierCntct" => "",
                                           "typeDernierCntct" => "",
+                                          "pa"=>"",
                                           "remarqueDernierCntct" => "",
                                           "cntct_info" => "",
                                           "cntct_user" => ""
@@ -129,98 +136,95 @@ class ProspectController extends Controller
 
     public function create(Request $rq){
 
-        /*    $this->validate(request(),[
-            'codeProsp'->required,
-            'idChampAct'->required,
-            'societe'->required,
-            'wilaya'->required,
-            'tele1'->required
-            ]);
-         */ //mais had la validation lzem ndirouha ....
-
-         // traitement pour obtenir le num sequentiel d'un nouveau prospect
+     try {
+       // traitement pour obtenir le num sequentiel d'un nouveau prospect
 
 
-         //traitement des champs de code
-         $NchAct = strval($rq->idChampAct); if(strlen($NchAct) != 2) $NchAct = "0".$NchAct;
-         $Nwilaya = strval($rq->wilaya);    if(strlen($Nwilaya) != 2) $Nwilaya = "0".$Nwilaya;
-         $year   = substr(date("Y"),-2); //to get only the 2 last number ex: 2016 -> 16
-         $sytax = $NchAct.$Nwilaya.$year;
+       //traitement des champs de code
+       $NchAct = strval($rq->idChampAct); if(strlen($NchAct) != 2) $NchAct = "0".$NchAct;
+       $Nwilaya = strval($rq->wilaya);    if(strlen($Nwilaya) != 2) $Nwilaya = "0".$Nwilaya;
+       $year   = substr(date("Y"),-2); //to get only the 2 last number ex: 2016 -> 16
+       $sytax = $NchAct.$Nwilaya.$year;
 
-          $oldPrspects = Prospect::select('codeProsp')->get();
-          $threeOne = 0 ; // pour savoir si on a prospect avec le meme champ d'activite et la meme wilaya et la meme annee , dans ce cas on doit incrementer , other ways une simple initialisation.
-          $list[] = 0 ; //une liste qui contient les num sequenciel qui existe deja
-          foreach ($oldPrspects as $prospect) {
-            $OPchAct  = substr($prospect->codeProsp,0,2);
-            $OPwilaya = substr($prospect->codeProsp,3,2);
-            $OPyear   = substr($prospect->codeProsp,-2);
-            $OPsytax = $OPchAct.$OPwilaya.$OPyear;
+        $oldPrspects = Prospect::select('codeProsp')->get();
+        $threeOne = 0 ; // pour savoir si on a prospect avec le meme champ d'activite et la meme wilaya et la meme annee , dans ce cas on doit incrementer , other ways une simple initialisation.
+        $list[] = 0 ; //une liste qui contient les num sequenciel qui existe deja
+        foreach ($oldPrspects as $prospect) {
+          $OPchAct  = substr($prospect->codeProsp,0,2);
+          $OPwilaya = substr($prospect->codeProsp,3,2);
+          $OPyear   = substr($prospect->codeProsp,-2);
+          $OPsytax = $OPchAct.$OPwilaya.$OPyear;
 
-            if ( $sytax == $OPsytax) {
-              $threeOne = 1;
-            }else{
-              $list[] = intval(substr($prospect->codeProsp,6,4));
-            }
+          if ( $sytax == $OPsytax) {
+            $threeOne = 1;
+          }else{
+            $list[] = intval(substr($prospect->codeProsp,6,4));
           }
+        }
 
-          if ($threeOne == 1) {
-            $mySeq = strval(max($list)+1); if(strlen($mySeq) == 1){$mySeq = "000".$mySeq;}else{if(strlen($mySeq) == 2){$mySeq = "00".$mySeq;}else{if(strlen($mySeq) == 3){$mySeq = "0".$mySeq;}}}
-          }else {
-            $mySeq = "0001";
-          }
+        if ($threeOne == 1) {
+          $mySeq = strval(max($list)+1); if(strlen($mySeq) == 1){$mySeq = "000".$mySeq;}else{if(strlen($mySeq) == 2){$mySeq = "00".$mySeq;}else{if(strlen($mySeq) == 3){$mySeq = "0".$mySeq;}}}
+        }else {
+          $mySeq = "0001";
+        }
 
 
 
-          $newCode =$NchAct.".".$Nwilaya.".".$mySeq."/".substr(date("Y"),-2);//le code est pret
+        $newCode =$NchAct.".".$Nwilaya.".".$mySeq."/".substr(date("Y"),-2);//le code est pret
 
-          //Societe
-          $prospect = new Prospect ;
-          $prospect->codeProsp = $newCode;
-          $prospect->societe = ucfirst(strtolower($rq->societe));
-          $prospect->adresse = $rq->adresse;
-          $prospect->codePostal = $rq->codePostal;
-          $prospect->wilaya = $rq->wilaya;
-          $prospect->nbreEmplyes = $rq->nbreEmplyes;
-          //Contact
-          $prospect->genre = $rq->genre;
-          $prospect->nom = strtoupper($rq->nom);
-          $prospect->prenom = ucfirst(strtolower($rq->prenom));
-          $prospect->email = $rq->email;
-          $prospect->tele1 = $rq->tele1;
-          $prospect->tele2 = $rq->tele2;
-          $prospect->tele3 = $rq->tele3;
-          $prospect->fax = $rq->fax;
-          $prospect->skype = $rq->skype;
-          $prospect->siteWeb = $rq->siteWeb;
+        //Societe
+        $prospect = new Prospect ;
+        $prospect->codeProsp = $newCode;
+        $prospect->societe = ucfirst(strtolower($rq->societe));
+        $prospect->adresse = $rq->adresse;
+        $prospect->codePostal = $rq->codePostal;
+        $prospect->wilaya = $rq->wilaya;
+        $prospect->nbreEmplyes = $rq->nbreEmplyes;
+        //Contact
+        $prospect->genre = $rq->genre;
+        $prospect->nom = strtoupper($rq->nom);
+        $prospect->prenom = ucfirst(strtolower($rq->prenom));
+        $prospect->email = $rq->email;
+        $prospect->tele1 = $rq->tele1;
+        $prospect->tele2 = $rq->tele2;
+        $prospect->tele3 = $rq->tele3;
+        $prospect->fax = $rq->fax;
+        $prospect->skype = $rq->skype;
+        $prospect->siteWeb = $rq->siteWeb;
 
-          //Autre
-          $prospect->description = $rq->description;
-          $prospect->idGrp = $rq->idGrp;
-          $prospect->idChampAct = $rq->idChampAct;
-          $prospect->bloquer = 0;
-          $prospect->client = 0;
-          //$prospect->created_at = \Carbon\Carbon::now()->toDateTimeString() ;
+        //Autre
+        $prospect->description = $rq->description;
+        $prospect->idGrp = $rq->idGrp;
+        $prospect->idChampAct = $rq->idChampAct;
+        $prospect->bloquer = 0;
+        $prospect->client = 0;
+        //$prospect->created_at = \Carbon\Carbon::now()->toDateTimeString() ;
 
-          //Done
-          $prospect->save();
+        //Done
+        $prospect->save();
 
-          //produits supposés pour ce prospect
-          foreach ($rq->produits as $produit) {
-            $prospect_produit = new Prospect_produit ;
-            $prospect_produit->idPrd = $produit;
-            $prospect_produit->idProsp = $prospect->id ;
-            $prospect_produit->save();
-          }
-          //preScorring
-          $prospect_score = new Prospect_score;
-          $prospect_score->idPros = $prospect->id;
-          $prospect_score->idScore = $rq->score ;
-          $prospect_score->date = date("d/m/Y H:i:s");//la date est en format string
-          $prospect_score->remarque = 'Creation.';
+        //produits supposés pour ce prospect
+        foreach ($rq->produits as $produit) {
+          $prospect_produit = new Prospect_produit ;
+          $prospect_produit->idPrd = $produit;
+          $prospect_produit->idProsp = $prospect->id ;
+          $prospect_produit->save();
+        }
+        //preScorring
+        $prospect_score = new Prospect_score;
+        $prospect_score->idPros = $prospect->id;
+        $prospect_score->idScore = $rq->score ;
+        $prospect_score->date = date("d/m/Y H:i:s");//la date est en format string
+        $prospect_score->remarque = 'Creation.';
 
-          $prospect_score->save();
+        $prospect_score->save();
 
-          return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');
+        return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');
+     } catch (\Exception $e) {
+        return redirect('/prospects')->with('status', '<div class="alert alert-danger alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Erreur ! NB: verifier les informations necessaires pour l\'ajout d\'un nouveau prospect.</div>');
+     }
+
+
     }
 
 
