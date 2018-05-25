@@ -62,11 +62,13 @@ class ContactController extends Controller
     $scores = array();
     $taches = array();
     $details = array();
+    $pa = array();
     foreach ($contacts as $contact) {
       $users[] = User::find($contact->idUser);
       $prospects[] = Prospect::find($contact->idProsp);
       $scores[] = Score::find($contact->idScore);
       $taches[] = Tache::find($contact->idTach);
+      $pa[] = ProchaineAction::where('idCntct',$contact->id)->latest()->first();//la dernier prochaine action ajouter pour ce contact
       switch ($contact->type) {
 
         case 'A':
@@ -87,6 +89,7 @@ class ContactController extends Controller
     //dd($taches);
     return view('contacts')->with('contacts',$contacts)
                            ->with('details',$details)
+                           ->with('pa',$pa)
                            ->with('users',$users)
                            ->with('prospects',$prospects)
                            ->with('scores',$scores)
@@ -98,96 +101,102 @@ class ContactController extends Controller
 
 
   public function create(Request $rq,$tache,$type,$prospect){
-    $contact = new contact ;
-    $contact->idUser = Auth::user()->id;
-    $contact->idTach = $tache;
-    $contact->idProsp = $prospect;
-    $contact->idScore = $rq->score;
-    $contact->objet = $rq->objet;
-    $contact->date = $rq->date;
-    $contact->remarque = $rq->remarque;
-    $contact->type = $rq->type;
+    try {
 
-    $contact->save();
+          $contact = new contact ;
+          $contact->idUser = Auth::user()->id;
+          $contact->idTach = $tache;
+          $contact->idProsp = $prospect;
+          $contact->idScore = $rq->score;
+          $contact->objet = $rq->objet;
+          $contact->date = $rq->date;
+          $contact->remarque = $rq->remarque;
+          $contact->type = $rq->type;
 
-    // T_3 mis a jour des infos du prospect en cas qu'il devient un client
-    $clientScore = Score::whereRaw('num = (select max(`num`) from Scores)')->first();
-    if($rq->score == $clientScore->id ){
-      Prospect::where('id',$prospect)
-                ->update(["client"=>1]);
+          $contact->save();
 
-       foreach ($rq->produits as $p) {
-         $client_produit = new Client_produit;
-         $client_produit->idPros = $prospect;
-         $client_produit->idPrd = $p;
-         $client_produit->save();
-       }
-     }
-   // T_3 end
+          // T_3 mis a jour des infos du prospect en cas qu'il devient un client
+          $clientScore = Score::whereRaw('num = (select max(`num`) from Scores)')->first();
+          if($rq->score == $clientScore->id ){
+            Prospect::where('id',$prospect)
+                      ->update(["client"=>1]);
 
-    //new Scorring
-    $prospect_score = new Prospect_score;
-    $prospect_score->idPros = $prospect;
-    $prospect_score->idScore = $rq->score ;
-    $prospect_score->date = $rq->date." ".$rq->heure ;//la date est en format string
-    $prospect_score->remarque = $rq->remarque;
-    $prospect_score->save();
+             foreach ($rq->produits as $p) {
+               $client_produit = new Client_produit;
+               $client_produit->idPros = $prospect;
+               $client_produit->idPrd = $p;
+               $client_produit->save();
+             }
+           }
+         // T_3 end
 
-    $emailSendResult=""; //pour les emails
-    //traitement des types
-    //Appel
-    if ($type == "phone") {
-      $cntct_appel = new cntct_appel;
-      $cntct_appel->idCntct = $contact->id;
-      $cntct_appel->entrantSortant = $rq->ES;
-      $cntct_appel->duree = $rq->duree;
-      $cntct_appel->save();
-    }elseif ($type == "mail") {
-      //we send'it first if it's a saveSend Request
+          //new Scorring
+          $prospect_score = new Prospect_score;
+          $prospect_score->idPros = $prospect;
+          $prospect_score->idScore = $rq->score ;
+          $prospect_score->date = $rq->date." ".$rq->heure ;//la date est en format string
+          $prospect_score->remarque = $rq->remarque;
+          $prospect_score->save();
 
-      $envoye = 'Non';
-      //return $rq->jsave ;
-      if ($rq->jsave != "Enregistrer") {
-        $Reciever = Prospect::where('id',$prospect)->first();
-        $this->sendEmail($Reciever,$rq->titre,$rq->remarque);
-        $emailSendResult=" et email envoyé ";
-        $envoye = 'Oui';
-      }
+          $emailSendResult=""; //pour les emails
+          //traitement des types
+          //Appel
+          if ($type == "phone") {
+            $cntct_appel = new cntct_appel;
+            $cntct_appel->idCntct = $contact->id;
+            $cntct_appel->entrantSortant = $rq->ES;
+            $cntct_appel->duree = $rq->duree;
+            $cntct_appel->save();
+          }elseif ($type == "mail") {
+            //we send'it first if it's a saveSend Request
+
+            $envoye = 'Non';
+            //return $rq->jsave ;
+            if ($rq->jsave != "Enregistrer") {
+              $Reciever = Prospect::where('id',$prospect)->first();
+              $this->sendEmail($Reciever,$rq->titre,$rq->remarque);
+              $emailSendResult=" et email envoyé ";
+              $envoye = 'Oui';
+            }
 
 
-      $cntct_email = new cntct_email;
-      $cntct_email->idCntct = $contact->id;
-      $cntct_email->idGrp = 0;
-      $cntct_email->contenu = $rq->remarque;
-      $cntct_email->envoye = $envoye;
-      $cntct_email->save();
+            $cntct_email = new cntct_email;
+            $cntct_email->idCntct = $contact->id;
+            $cntct_email->idGrp = 0;
+            $cntct_email->contenu = $rq->remarque;
+            $cntct_email->envoye = $envoye;
+            $cntct_email->save();
+          }
+
+          //si ce contact corespand a une tache , je doit recuperer l'etat d'avancement de cette tache
+          if ($tache!=0) {
+            $tache_etat = new Tache_etat;
+            $tache_etat->idEtat = $rq->etatTache;
+            $tache_etat->idTache = $tache;
+            $tache_etat->save();
+
+            //si cette etat est le plus grand dans liste des tache ceci dire que la tache est bien accompli
+            $etat = Etat::whereRaw('num = (select max(`num`) from Etats)')->first();
+            if ($rq->etatTache == $etat->num) {
+              $TacheToUpdate = Tache::find($tache)->update(["termine"=>1]);
+            }
+          }
+
+          //prochaine action
+          if ($rq->nvAction == 1) {
+            $action = new ProchaineAction;
+            $action->idCntct = $contact->id;
+            $action->action = $rq->action;
+            $action->date = $rq->dateNvAct;
+            $action->note = $rq->noteNvAct;
+            $action->save();
+          }
+
+          return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Contact ajouté '.$emailSendResult.'avec succée !</div>');
+
+    } catch (\Exception $e) {
+      return back()->with('status', '<div class="alert alert-danger alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Erreur ! NB: verifier les informations necessaires pour l\'ajout d\'un nouveau contact de prospection.</div>');
     }
-
-    //si ce contact corespand a une tache , je doit recuperer l'etat d'avancement de cette tache
-    if ($tache!=0) {
-      $tache_etat = new Tache_etat;
-      $tache_etat->idEtat = $rq->etatTache;
-      $tache_etat->idTache = $tache;
-      $tache_etat->save();
-
-      //si cette etat est le plus grand dans liste des tache ceci dire que la tache est bien accompli
-      $etat = Etat::whereRaw('num = (select max(`num`) from Etats)')->first();
-      if ($rq->etatTache == $etat->num) {
-        $TacheToUpdate = Tache::find($tache)->update(["termine"=>1]);
-      }
-    }
-
-    //prochaine action
-    if ($rq->nvAction == 1) {
-      $action = new ProchaineAction;
-      $action->idCntct = $contact->id;
-      $action->action = $rq->action;
-      $action->date = $rq->dateNvAct;
-      $action->note = $rq->noteNvAct;
-      $action->save();
-    }
-
-    return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Contact ajouté '.$emailSendResult.'avec succée !</div>');
   }
   public function GrpEmail(Request $rq){
   if($rq->prospects!= null) {
@@ -286,6 +295,7 @@ class ContactController extends Controller
   {
     $rowAppel = cntct_appel::where('idCntct',$id)->delete(); //ici je supprime tous les rows qui concernent le contact dont je vient de le supprimer..
     $rowEmail = cntct_email::where('idCntct',$id)->delete(); //ici je supprime tous les rows qui concernent le contact dont je vient de le supprimer..
+    $rowPA = ProchaineAction::where('idCntct',$id)->delete(); //ici je supprime tous les rows qui concernent le contact dont je vient de le supprimer..
     $contact = Contact::find($id)->delete();
     return back()->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button> Supprimé avec succée !</div>');
 

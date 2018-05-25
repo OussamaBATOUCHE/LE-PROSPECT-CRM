@@ -133,7 +133,8 @@ Route::post('deleteMsgs','MessageController@deleteMsgs');
 Route::post('GrpEmail','ContactController@GrpEmail');
 Route::post('directEmail','Controller@directEmail');
 
-
+// moteur de filtre sur les prospects
+Route::post('ProspectMR','ProspectController@filtrer');
 /*  END  List route oussama  */
 
 
