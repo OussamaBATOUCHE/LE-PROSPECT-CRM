@@ -138,7 +138,7 @@
         var wilayas  = `
 
         <select class="form-control" name="wilaya" required>
-          <option value="0" disabled selected>Wilaya</option>
+          <option disabled selected>Wilaya</option>
           <option value="1">Adrar</option>
           <option value="2">Chlef</option>
           <option value="3">Laghouat</option>

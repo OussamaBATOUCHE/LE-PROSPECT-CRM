@@ -26,7 +26,7 @@
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Taches finis</b> <a class="pull-right" id="mes-taches-finis">N/A</a>
+                  <b>Taches  </b> <a class="pull-right" id="mes-taches-finis">N/A</a>
                 </li>
                 <li class="list-group-item">
                   <b>Appels realisés</b> <a class="pull-right" id="mes-appels">N/A</a>

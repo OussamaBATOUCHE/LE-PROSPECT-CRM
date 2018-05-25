@@ -11,34 +11,41 @@
 
   </div>
   <div style="float:left">
-    <div class="form-group col" style="float:left;margin:5px 5px;">
-      <select class="form-control" id="champActivite" name="champActivite">
-        <option value="0" disabled selected>Champ d'Activite</option>
-        @foreach ($tousLesChampActiv as $champActiv)
-          <option value="{{$champActiv->id}}" >{{$champActiv->LibChampAct}}</option>
-        @endforeach
-      </select>
-    </div>
-    <div class="form-group col" style="float:left;margin:5px 5px;">
-      <select class="form-control" id="group" name="group">
-        <option value="0" disabled selected>Groupe</option>
-        @foreach ($tousLesGroupes as $groupe)
-          <option value="{{$groupe->id}}" >{{$groupe->LibGrp}}</option>
-        @endforeach
-      </select>
-    </div>
-    <div class="form-group col" style="float:left;margin:5px 5px;">
-      <select class="form-control" id="region" name="region">
-        <option value=1"">Adrar</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
-    </div>
-    <div class="form-group col" style="float:left;margin:5px 5px;">
-      <a id="btn-filtrer" class="btn btn-warning" ><i class="fa fa-search"></i>&nbsp; Filtrer</a>
-    </div>
+    <form class="" action="ProspectMR" method="post">
+      @csrf
+      <div class="form-group col" style="float:left;margin:5px 5px;">
+        <select class="form-control" id="scoreMR" name="scoreMR">
+          <option disabled selected>Score</option>
+          @foreach ($tousLeScores as $score)
+            <option value="{{$score->id}}" >{{$score->LibScore}}</option>
+          @endforeach
+        </select>
+      </div>
+      <div class="form-group col" style="float:left;margin:5px 5px;">
+        <select class="form-control" id="champActivite" name="chamActMR">
+          <option disabled selected>Champ d'Activite</option>
+          @foreach ($tousLesChampActiv as $champActiv)
+            <option value="{{$champActiv->id}}" >{{$champActiv->LibChampAct}}</option>
+          @endforeach
+        </select>
+      </div>
+      <div class="form-group col" style="float:left;margin:5px 5px;">
+        <select class="form-control" id="group" name="groupMR">
+          <option disabled selected>Groupe</option>
+          @foreach ($tousLesGroupes as $groupe)
+            <option value="{{$groupe->id}}" >{{$groupe->LibGrp}}</option>
+          @endforeach
+        </select>
+      </div>
+
+      <div id="wilaya2" class="form-group col" style="float:left;margin:5px 5px;">
+
+      </div>
+
+      <div class="form-group col" style="float:left;margin:5px 5px;">
+        <button type="submit" id="btn-filtrer" class="btn btn-warning" ><i class="fa fa-search"></i>&nbsp; Filtrer</button>
+      </div>
+    </form>
 
   </div>
   @if (session('status')){!! session('status') !!}@endif
@@ -93,7 +100,8 @@
                                                         {{$prospect->id}},
                                                         {{ json_encode($infosProsp[$i]["cntct_info"]) }},
                                                         '{{$infosProsp[$i]["cntct_user"]}}',
-                                                        '{{$infosProsp[$i]["scoreLib"]}}'
+                                                        '{{$infosProsp[$i]["scoreLib"]}}',
+                                                        {{ json_encode($infosProsp[$i]["pa"][$i]) }}
                                                       )"
                           data-toggle="modal" data-target="#updateContact">
                         {{$infosProsp[$i]["date"]}}
@@ -225,6 +233,7 @@
             };
 
             $('.r-prospect-wilaya').html(nomWilaya($('.r-prospect-wilaya').html()));
+            $('#wilaya2').append(wilayas);
 
 
 </script>

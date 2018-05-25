@@ -400,4 +400,202 @@ class ProspectController extends Controller
       }
       return $list;
     }
+
+    public function filtrer(Request $rq){
+      // return $rq->scoreMR;
+        $s = $rq->scoreMR;
+        $c = $rq->chamActMR;
+        $g = $rq->groupMR;
+        $w = $rq->wilaya;
+        if ($s != "") {
+          if ($c != "") {
+            if ($g != "") {
+              if ($w != "") {// s c g w
+                //return 2;
+                $ps = Prospect_score::where('idScore',$s)->get(['idPros']);
+                $prospects = Prospect::whereIn('id',$ps)
+                                       ->where('idChampAct',$c)
+                                       ->where('idGrp',$g)
+                                       ->where('wilaya',$w)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }else{ // s c g .
+                $ps = Prospect_score::where('idScore',$s)->get(['idPros']);
+                $prospects = Prospect::whereIn('id',$ps)
+                                       ->where('idChampAct',$c)
+                                       ->where('idGrp',$g)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }
+            }else { //g = .
+              if ($w != "") {// s c . w
+                $ps = Prospect_score::where('idScore',$s)->get(['idPros']);
+                $prospects = Prospect::whereIn('id',$ps)
+                                       ->where('idChampAct',$c)
+                                       ->where('wilaya',$w)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }else{// s c . .
+                $ps = Prospect_score::where('idScore',$s)->get(['idPros']);
+                $prospects = Prospect::whereIn('id',$ps)
+                                       ->where('idChampAct',$c)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }
+            }
+          }else{ //c = .
+            if($g != ""){
+              if ($w != "") {// s . g w
+                $ps = Prospect_score::where('idScore',$s)->get(['idPros']);
+                $prospects = Prospect::whereIn('id',$ps)
+                                       ->where('idGrp',$g)
+                                       ->where('wilaya',$w)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }else{// s . g .
+                $ps = Prospect_score::where('idScore',$s)->get(['idPros']);
+                $prospects = Prospect::whereIn('id',$ps)
+                                       ->where('idGrp',$g)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }
+            }else{
+              if($w != ""){// s . . w
+                $ps = Prospect_score::where('idScore',$s)->get(['idPros']);
+                $prospects = Prospect::whereIn('id',$ps)
+                                       ->where('wilaya',$w)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }else{// s . . .
+                $ps = Prospect_score::where('idScore',$s)->get(['idPros']);
+                $prospects = Prospect::whereIn('id',$ps)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }
+            }
+          }
+
+        }else{ //s= .
+          if ($c != "") {
+            if ($g != "") {
+              if ($w != "") {// . c g w
+                $prospects = Prospect::where('idChampAct',$c)
+                                       ->where('idGrp',$g)
+                                       ->where('wilaya',$w)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }else{ // . c g .
+                $prospects = Prospect::where('idChampAct',$c)
+                                       ->where('idGrp',$g)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }
+            }else { //g = .
+              if ($w != "") {// . c . w
+                $prospects = Prospect::where('idChampAct',$c)
+                                       ->where('wilaya',$w)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }else{// . c . .
+                $prospects = Prospect::where('idChampAct',$c)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }
+            }
+          }else{ //c = .
+            if($g != ""){
+              if ($w != "") {// . . g w
+                $prospects = Prospect::where('idGrp',$g)
+                                       ->where('wilaya',$w)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }else{// . . g .
+                $prospects = Prospect::where('idGrp',$g)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }
+            }else{
+              if($w != ""){// . . . w
+                $prospects = Prospect::where('wilaya',$w)
+                                       ->where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }else{// . . . .
+                $prospects = Prospect::where('bloquer',0)->where('client',0)->orderByRaw('id DESC')->get();
+              }
+            }
+          }
+        }
+
+
+
+
+        $tousLesScores = Score::get();//pour un nouveau contact/prospect
+        $tousLesChampActiv = ChampActivite::get();
+        $tousLesGroupes = Groupe::get();
+        $tousLesProduits = Produit::get();
+        $tousLesUsers = User::where('type',0)->get();
+        //pour form ajout tache et recuperation des produit supposes au moment de creation de se prospect
+        $produitsPropose = Prospect_produit::get();
+        $tousLesPriorites = Priorite::get();
+
+        //pour ne pas generer des erreur lors de l'include of create contact
+        $etats = Etat::get();
+
+        $infosProspect = array();//pour chaque prospect , on recupere toute autre infos
+
+        //dernier score marqué
+        foreach ($prospects as $prospect) {
+           $lastScore = Prospect_score::where('idPros',$prospect->id)->latest()->first();
+           $scoreById = Score::where('id',$lastScore->idScore)->first();
+           $champActById = champActivite::where('id',$prospect->idChampAct)->first();
+           $derniersContacts = Contact::where('idProsp',$prospect->id)->orderByRaw('id DESC')->first();
+           $cntct="";
+           if (Count($derniersContacts) != 0) { //si un contact exist deja , dans le cas de creatino ce code ne s'execute pas .
+             switch ($derniersContacts->type) {
+
+               case 'A':
+                 $cntct = cntct_appel::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
+                 break;
+               case 'E':
+                 $cntct = cntct_email::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul mail pour un contact
+                 break;
+               case 'T':
+                 $cntct = cntct_terain::where('idCntct',$derniersContacts->id)->first();//c sur que y'a q'un seul appel pour un contact
+                 break;
+                 default:return $derniersContacts->type; break;
+             }
+             $userCntct = user::where('id',$derniersContacts->idUser)->first();
+
+             //pour l'affichage des prochaine action
+             $pa[] = prochaineAction::where('idCntct',$derniersContacts->id)->latest()->first();
+             $infosProspect[] = array( "score" => $scoreById->num,
+                                       "scoreLib" => $scoreById->LibScore,
+                                       "date" => $lastScore->date,
+                                       "remarque" => $lastScore->remarque,
+                                       "couleur" => $scoreById->couleur,
+                                       "champActiv"=> $champActById->LibChampAct,
+                                       "idDernierCntct" => $derniersContacts->id,
+                                       "typeDernierCntct" => $derniersContacts->type,
+                                       "pa" => $pa,
+                                       "remarqueDernierCntct" => $derniersContacts->remarque,
+                                       "cntct_info" => json_decode($cntct, true),
+                                       "cntct_user" => $userCntct->name." ".$userCntct->prenom
+                                     );
+           }else {
+
+             $infosProspect[] = array( "score" => $scoreById->num,
+                                       "scoreLib" => $scoreById->LibScore,
+                                       "date" => $lastScore->date,
+                                       "remarque" => $lastScore->remarque,
+                                       "couleur" => $scoreById->couleur,
+                                       "champActiv"=> $champActById->LibChampAct,
+                                       "idDernierCntct" => "",
+                                       "typeDernierCntct" => "",
+                                       "pa"=>"",
+                                       "remarqueDernierCntct" => "",
+                                       "cntct_info" => "",
+                                       "cntct_user" => ""
+                                     );
+           }
+
+        }
+
+
+        return view('prospects')->with('prospects',$prospects)
+                                ->with('tousLeScores',$tousLesScores)
+                                ->with('tousLesChampActiv',$tousLesChampActiv)
+                                ->with('tousLesGroupes',$tousLesGroupes)
+                                ->with('tousLesProduits',$tousLesProduits)
+                                ->with('infosProsp',$infosProspect)
+                                ->with('tousLesUsers',$tousLesUsers)
+                                ->with('produitsPropose',$produitsPropose)
+                                ->with('tousLesPriorites',$tousLesPriorites)
+                                ->with('etats', $etats);
+
+    }
 }

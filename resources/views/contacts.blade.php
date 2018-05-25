@@ -28,7 +28,7 @@
                 <th>Objet</th>
                 <th>Type</th>
                 <th>Date</th>
-                <th>Duree</th>
+                <th>Prochaine action</th>
                 <th>Tache</th>
                 <th>Prospect</th>
                 <th>Commrcial</th>
@@ -56,15 +56,15 @@
                  </a></th>
                 <th><span >
                   @if ($contact->type == "A")
-                     <i class="fa fa-phone"></i>  - Appel Telephonique
+                     <i class="fa fa-phone"></i>  - Appel 
                   @else
                      <i class="fa fa-envelope"></i>  - @if($details[$i]->envoye == "Oui") <i class="fa fa-check-circle"></i> @endif Email
                   @endif </span>
                 </th>
                 <th>{{$contact->date}}</th>
                 <th>
-                  @if ($contact->type == "A")
-                    {{ substr($details[$i]->duree,0,2).'h.'.substr($details[$i]->duree,3,2).'mn'  }}
+                  @if ($pa[$i] != "")
+                    <a data-toggle="popover" data-trigger="hover"  title="{{$pa[$i]["action"]}}" data-content="{{$pa[$i]["note"]}}">{{$pa[$i]["date"]}}</a>
                   @else
                      - -
                   @endif

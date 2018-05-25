@@ -17,6 +17,9 @@
           <div class="row">
               <span class="col-md-3">COMMERCIAL : <br/><b id="up-cntct-commercial"><i class="fa fa-user"></i> </b></span>
               <span class="col-md-3">SCORE : <br/><b id="up-cntct-score"></b></span>
+              <span class="col-md-6">Prochaine Action : <br/><b id="up-cntct-pa"></b><br/>
+                <div class=" up-cntct-notePA" contenteditable style="background:#e8e8e8; padding:5px; width:100%; height:80px;" ></div>
+              </span>
           </div>
           <hr/>
           <div class="form-group">
@@ -40,13 +43,22 @@
     $(document).ready(function(){
 
       var idP;
-      chargeUpdateContact = function(idContact , typeContact , remarque , date , societe , idProsp , cntct_info , cntct_user , score ) {
+      chargeUpdateContact = function(idContact , typeContact , remarque , date , societe , idProsp , cntct_info , cntct_user , score , pa ) {
             //alert(cntct_info["contenu"]);
             //les champs qui ne change pas
             $('#up-cntct-dateDeCntct').html(date);
             $('#up-cntct-societe').html(societe);
             $('#up-cntct-commercial > i').html(" "+cntct_user);
             $('#up-cntct-score').html(" "+score);
+            if (pa != null) {
+              $('#up-cntct-pa').html(" "+pa["action"]+" "+pa["date"]);
+              $('.up-cntct-notePA').html(" "+pa["note"]);
+              $('.up-cntct-notePA').show();
+            }else{
+              $('#up-cntct-pa').html(" - ");
+              $('.up-cntct-notePA').hide();
+            }
+
             $('.up-cntct-remarque').html(remarque);
             $("#up-cntct-date").html(`<br/><b><i class="fa fa-calendar"></i> `+date+ `</b> `);
 
