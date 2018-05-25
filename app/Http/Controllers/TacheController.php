@@ -20,6 +20,8 @@ use Auth;
 use App\cntct_appel;
 use App\cntct_email;
 
+use Illuminate\Support\Facades\DB;
+
 
 class TacheController extends Controller
 {
@@ -249,20 +251,24 @@ class TacheController extends Controller
     public function Notifications(){
         $mesTaches = Tache::where('idUser',Auth::user()->id)->where('termine',0)->orderByRaw('id DESC')->get();
         // return 222;
+        //je doit afficher les prochaine action programmer lors d'un contact de prospection
+          $PAs = DB::SELECT("SELECT * FROM prochaine_actions WHERE  date >= now() AND idCntct IN (SELECT id FROM contacts where idUser = ".Auth::user()->id.")");
+          //dd($PAs);
+
 
         $listeTache = '<a href="#" onclick="loadNotifications()" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
                         ';
-                        if ($mesTaches->count() > 0) {
-                          $listeTache .= '<span class="label label-warning">'.$mesTaches->count().'</span>
+                        if ($mesTaches->count() + count($PAs) > 0) {
+                          $listeTache .= '<span class="label label-warning">'.($mesTaches->count() + count($PAs)).'</span>
                                             </a>
                                             <ul class="dropdown-menu" >
-                                              <li class="header">Vous avez '.$mesTaches->count().' tâches non terminées</li>';
+                                              <li class="header">Vous avez '.$mesTaches->count().' tâches non terminées et '.count($PAs).' actions programmées.</li>';
                         }else {
                           $listeTache .= '
                                             </a>
                                             <ul class="dropdown-menu" >
-                                              <li class="header">Toutes vos tâches sont terminées</li>';
+                                              <li class="header">Toutes vos tâches sont terminées.</li>';
                         }
        $listeTache .= '
                         <li>
@@ -272,6 +278,16 @@ class TacheController extends Controller
                               $listeTache .= '<li>
                                                 <a href="'.url('tache/'.$tache->id).'">
                                                   <i class="fa fa-users text-aqua"></i> '.$tache->titre.'
+                                                </a>
+                                              </li>';
+                            }
+                            //PA
+                            foreach ($PAs as $pa) {
+                              $listeTache .= '<li>
+                                                <a>
+                                                  <i class="fa fa-users text-aqua"></i> '.$pa->action." le ".$pa->date.'
+                                                  <br/>
+                                                  - - <small  class="form-text text-muted"> '.substr($pa->note,3,10).' ... </small>
                                                 </a>
                                               </li>';
                             }
