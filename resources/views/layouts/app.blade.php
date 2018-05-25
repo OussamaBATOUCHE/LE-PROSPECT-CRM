@@ -24,17 +24,23 @@
 <body>
     <div id="app">
 
-
-        <main class="py-4">
-          <button class="btn btn-primary" type="button"name="button" style="margin-left:45%" data-toggle="modal" data-target="#login">Connecter</button>
+          <button class="btn btn-primary" type="button"name="button" style="margin-left:92%;margin-top:1%;" data-toggle="modal" data-target="#login">Connecter</button>
          {{-- <img  src="logoV.jpg" alt=""> --}}
-          <video class="blur" autoplay loop  muted plays-inline>
+          <video class="blur" autoplay  muted plays-inline>
           <source src="{{url('logoVideo.mp4')}}" type="video/mp4">
           </video>
             @yield('content')
-        </main>
+            <div class="pull-left">
+              <img class="hide" id="logoUSTHB" src="{{asset('logo_usthb.png')}}" alt="">
+              <img class="hide" id="logoFECOMIT" src="{{asset('logo_fecomit.png')}}" alt="">
+            </div>
+            <div class="pull-right">
+              <img class="hide" id="logoLINKEDIN" src="{{asset('logo_linkedin.png')}}" alt="">
+            </div>
 
         @include('../layouts/modals/auth/login')
     </div>
+
+
 </body>
 </html>

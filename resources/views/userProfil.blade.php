@@ -29,7 +29,7 @@
                   <b>Taches finis</b> <a class="pull-right" id="mes-taches-finis">N/A</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Appels envoyés</b> <a class="pull-right" id="mes-appels">N/A</a>
+                  <b>Appels realisés</b> <a class="pull-right" id="mes-appels">N/A</a>
                 </li>
                 <li class="list-group-item">
                   <b>Emails envoyés</b> <a class="pull-right" id="mes-emails" key="{{$me->id}}">N/A</a>

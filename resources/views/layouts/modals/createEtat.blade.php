@@ -9,7 +9,7 @@
           @csrf
           <div class="form-group">
             <label class="form-control-label">Numero</label>
-            <input type="text" class="form-control" name="num" required>
+            <input type="number" min="0" class="form-control" name="num" required>
           </div>
           <div class="form-group">
             <label class="form-control-label">Libelle</label>

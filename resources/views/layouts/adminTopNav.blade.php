@@ -6,7 +6,7 @@
   <!-- Logo -->
   <span  class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>L-P</b></span>
+    <span class="logo-mini"><img style="width:80%" src="{{asset('logoS.png')}}" alt=""></span>
     <!-- logo for regular state and mobile devices -->
     <span class="logo-lg"> <img src="{{asset('logoH.png')}}" alt=""> </span>
   </span>

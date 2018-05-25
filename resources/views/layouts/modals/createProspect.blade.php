@@ -54,15 +54,15 @@
                       <input type="email" class="form-control" name="email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" name="tele1" placeholder="Telephone " maxlength="10" required>
+                      <input type="tel" class="form-control" name="tele1" placeholder="Telephone " maxlength="10" required>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" name="tele2" placeholder="Telephone 2" maxlength="10" >
+                      <input type="tel" class="form-control" name="tele2" placeholder="Telephone 2" maxlength="10" >
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input type="text" class="form-control" name="tele3" placeholder="Telephone 3" maxlength="10" >
+                      <input type="tel" class="form-control" name="tele3" placeholder="Telephone 3" maxlength="10" >
                     </div>
                     <div class="form-group">
                       <input type="text" class="form-control" name="fax" placeholder="Fax " maxlength="10" >
@@ -71,7 +71,7 @@
                       <input type="text" class="form-control" name="skype" placeholder="Skype " >
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" name="siteWeb" placeholder="Site Web (url) " >
+                      <input type="url" class="form-control" name="siteWeb" placeholder="Site Web (url) " >
                     </div>
                   </div>
                 </div>
