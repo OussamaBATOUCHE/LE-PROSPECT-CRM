@@ -287,7 +287,7 @@ class TacheController extends Controller
                                                 <a>
                                                   <i class="fa fa-users text-aqua"></i> '.$pa->action." le ".$pa->date.'
                                                   <br/>
-                                                  - - <small  class="form-text text-muted"> '.substr($pa->note,3,10).' ... </small>
+                                                  - - <small  class="form-text text-muted"> '.substr($pa->note,3,15).' ... </small>
                                                 </a>
                                               </li>';
                             }

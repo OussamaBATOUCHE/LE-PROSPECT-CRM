@@ -10,7 +10,7 @@
   </div>
   <div style="float:left">
 
-  <h3>Contacts effectués</h3>
+  <h3>Prospection effectués</h3>
   </div>
   @if (session('status')){!! session('status') !!}@endif
   <div class="row">
@@ -19,7 +19,7 @@
         <div class="box-header ">
           <a href="{{url('cntctQue/1')}}" class="btn "><i class="fa fa-phone" style="color:blue;font-size:20px;"></i>&nbsp; Appels</a>
           <a href="{{url('cntctQue/2')}}" class="btn "><i class="fa fa-envelope" style="color:blue;font-size:20px;"></i>&nbsp; Emails</a>
-          <a href="{{url('contacts')}}" class="btn "><i class="fa fa-list" style="color:blue;font-size:20px;"></i>&nbsp; Tous les contacts</a>
+          <a href="{{url('contacts')}}" class="btn "><i class="fa fa-list" style="color:blue;font-size:20px;"></i>&nbsp; Tous les prospéctions</a>
         </div>
         <div class="box-body">
           <table id="example1" class="table table-bordered table-striped">
@@ -56,7 +56,7 @@
                  </a></th>
                 <th><span >
                   @if ($contact->type == "A")
-                     <i class="fa fa-phone"></i>  - Appel 
+                     <i class="fa fa-phone"></i>  - Appel
                   @else
                      <i class="fa fa-envelope"></i>  - @if($details[$i]->envoye == "Oui") <i class="fa fa-check-circle"></i> @endif Email
                   @endif </span>

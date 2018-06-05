@@ -269,6 +269,11 @@ class HomeController extends Controller
       return $returned;
     }
 
+    public function getAllFromProspectTable(){
+      $prospects = Prospect::get();
+      return $prospects->count();
+    }
+
     //prospects STAT
     public function nbPrspct(){
 

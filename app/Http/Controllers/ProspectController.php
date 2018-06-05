@@ -86,7 +86,7 @@ class ProspectController extends Controller
                 $userCntct = user::where('id',$derniersContacts->idUser)->first();
 
                 //pour l'affichage des prochaine action
-                $pa[] = prochaineAction::where('idCntct',$derniersContacts->id)->latest()->first();
+                $pa = prochaineAction::where('idCntct',$derniersContacts->id)->latest()->first();
                 $infosProspect[] = array( "score" => $scoreById->num,
                                           "scoreLib" => $scoreById->LibScore,
                                           "date" => $lastScore->date,
@@ -110,7 +110,7 @@ class ProspectController extends Controller
                                           "champActiv"=> $champActById->LibChampAct,
                                           "idDernierCntct" => "",
                                           "typeDernierCntct" => "",
-                                          "pa"=>"",
+                                          "pa"=>null,
                                           "remarqueDernierCntct" => "",
                                           "cntct_info" => "",
                                           "cntct_user" => ""

@@ -71,6 +71,7 @@ Route::get('message_delete/{id}','MessageController@deleteMsg');
 
 Route::get('scoresStat',"HomeController@scoresStat");
 Route::get('detailsProspect/scoresStat_prosp/{id}',"HomeController@scoresStat_prosp");
+Route::get('getAllFromProspectTable','HomeController@getAllFromProspectTable');
 //prospects
 Route::get('nbPrspct',"HomeController@nbPrspct");
 Route::get('nbPrspctM',"HomeController@nbPrspctM");

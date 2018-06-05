@@ -21,7 +21,7 @@
         <hr/>
       <div class="" >
          <label>Remarques </label>
-         <div class="form-control" disabled>{!!$tache->remarque!!}</div>
+         <div class="form-control" disabled style="height:100px">{!!$tache->remarque!!}</div>
       </div>
     </div>
  </div>
