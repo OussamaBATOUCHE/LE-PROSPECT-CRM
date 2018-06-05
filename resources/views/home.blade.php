@@ -125,9 +125,12 @@
             <ul class="nav nav-pills nav-stacked">
               @foreach ($scorePourcentage as $sp)
                 <li><a href="#">{{$sp[0]->LibScore}}
-                  <span class="pull-right " style="color:{{$sp[0]->couleur}}"><i class="fa fa-angle-down"></i> {{$sp[1]}}%</span></a>
+                  <span class="pull-right " style="color:{{$sp[0]->couleur}}"><i class="fa fa-angle-right"></i> {{substr($sp[1],0,5)}}%</span></a>
                 </li>
               @endforeach
+              <li><a href="#">TOTAL
+                <span class="pull-right " style="color:Gray"><i class="fa fa-angle-right"></i> 100% = <span id="totalProsp"></span></span></a>
+              </li>
             </ul>
           </div>
           <!-- /.footer -->
@@ -281,6 +284,7 @@
   <script>
   //stat scores
   $("#rq-prsptc").load("scoresStat");
+  $("#totalProsp").load('getAllFromProspectTable');
 
      // top stikers
      //prospects

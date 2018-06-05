@@ -38,7 +38,7 @@
         </select>
       </div>
 
-      <div id="wilaya2" class="form-group col" style="float:left;margin:5px 5px;">
+      <div id="wilayaF" class="form-group col" style="float:left;margin:5px 5px;">
 
       </div>
 
@@ -69,9 +69,7 @@
                 <th>Contact</th>
                 <th>Categorie</th>
                 <th>Dernier Echange</th>
-                @if (Auth::user()->type == 1)
-                  <th>Contact</th>
-                @endif
+                <th>Prospection</th>
 
               </tr>
             </thead>
@@ -101,24 +99,25 @@
                                                         {{ json_encode($infosProsp[$i]["cntct_info"]) }},
                                                         '{{$infosProsp[$i]["cntct_user"]}}',
                                                         '{{$infosProsp[$i]["scoreLib"]}}',
-                                                        {{ json_encode($infosProsp[$i]["pa"][$i]) }}
+                                                        {{ json_encode($infosProsp[$i]["pa"]) }}
                                                       )"
                           data-toggle="modal" data-target="#updateContact">
                         {{$infosProsp[$i]["date"]}}
                        </a>
                        <br/>
-                       P.A : @if($infosProsp[$i]["pa"][$i] != "")<a>{{$infosProsp[$i]["pa"][$i]["action"]."-". $infosProsp[$i]["pa"][$i]["date"]}}</a> @else / @endif
+                       P.A : @if($infosProsp[$i]["pa"] != "")<a>{{$infosProsp[$i]["pa"]["action"]." le ". $infosProsp[$i]["pa"]["date"]}}</a> @else / @endif
                      @else
                        Aucun Echange
                      @endif
 
                 </th>
-                @if (Auth::user()->type == 1)
                  <th>
-                  <a class="btn btn-info col" title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}},0,{{str_replace('"',"'",$produitsPropose)}}, {{str_replace('"',"'",$tousLesProduits)}})" data-toggle="modal" data-target="#nouveauContact"><i class="fa fa-plus-square"></i></a>
+                  <a class="btn btn-info col" title="Nouvelle prospection" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}},0,{{str_replace('"',"'",$produitsPropose)}}, {{str_replace('"',"'",$tousLesProduits)}})" data-toggle="modal" data-target="#nouveauContact"><i class="fa fa-plus-square"></i></a>
+                  @if (Auth::user()->type == 1)
                   <a class="btn btn-info col" title="Programmer une Tache" onclick="chargeNouvelleTache('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}} , {{$tousLesProduits}} , {{$produitsPropose}})"  data-toggle="modal" data-target="#nouvelleTache"><i class="fa fa-calendar"></i></a>
+                  @endif
                  </th>
-                @endif
+
               @php $i++; @endphp
               @endforeach
             </tbody>
@@ -233,7 +232,8 @@
             };
 
             $('.r-prospect-wilaya').html(nomWilaya($('.r-prospect-wilaya').html()));
-            $('#wilaya2').append(wilayas);
+
+
 
 
 </script>

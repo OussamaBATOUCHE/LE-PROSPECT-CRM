@@ -19,7 +19,8 @@ class Kernel extends ConsoleKernel
 
         $schedule->exec("/Users/Sofiane/bin/mysqldump -h 127.0.0.1 -u root -p123  pfe")
                  ->everyMinute()
-                 ->sendOutputTo('/Users/Sofiane/Desktop/Monthly_backup'.date('Y-m-d').'.sql');
+                 ->sendOutputTo('/Users/Sofiane/Desktop/Monthly_backup'.date('Y-m-d').'.sql')
+                 ->EmailOutputTo('ossama12batouche@gmail.com');
                  //and if i want to email'it i can just , EmailOutputTo()
     }
 

@@ -61,6 +61,10 @@ trait AuthenticatesUsers
      */
     protected function validateLogin(Request $request)
     {
+       //verifier si le user n'est pas bloquer
+       $u = User::where('email',$request->email)->first();
+       if($u->bloque == 1) $this->sendFailedLoginResponse($request);
+
         $this->validate($request, [
             $this->username() => 'required|string',
             'password' => 'required|string',
