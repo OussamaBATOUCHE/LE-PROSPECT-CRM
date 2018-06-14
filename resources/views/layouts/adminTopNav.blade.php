@@ -57,13 +57,15 @@
                       <p>Configurations</p>
                     </a>
                   </div>
-                  <div class="col-md-6" id="c2">
-                    <a id="c2a"   data-toggle="modal" data-target="#usersModal">
-                      <i class="fa fa-user top-param"></i>
-                      <p>Utilisateurs</p>
-                    </a>
+                  @if (Auth::user()->type == 1)
+                    <div class="col-md-6" id="c2">
+                      <a id="c2a"   data-toggle="modal" data-target="#usersModal">
+                        <i class="fa fa-user top-param"></i>
+                        <p>Utilisateurs</p>
+                      </a>
+                    </div>
+                  @endif
 
-                  </div>
                 </div>
               </div>
               <div class="row">

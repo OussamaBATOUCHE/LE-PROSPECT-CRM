@@ -183,6 +183,7 @@ Route::post('/createChamp','ChampActiviteController@create');
 Route::post('/createProduit','ProduitController@create');
 
 Route::post('/createProspect','ProspectController@create');
+Route::post('/importProspects','ProspectController@import');
 
 
 

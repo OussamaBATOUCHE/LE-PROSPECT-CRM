@@ -95,7 +95,7 @@
                    <select class="form-control" name="idGrp" required>
                      <option value="0" disabled selected>Groupe</option>
                      @foreach ($lesGroupes as $groupe)
-                       <option value="{{$groupe->id}}" @if ($groupe->id == $monGroupe->id) selected @endif>{{$groupe->LibGrp}}</option>
+                       <option value="{{$groupe->id}}" @if($monGroupe != null ) @if ($groupe->id == $monGroupe->id) selected @endif @endif>{{$groupe->LibGrp}}</option>
                      @endforeach
                    </select>
                  </div>

@@ -6,6 +6,7 @@
   <div style="text-align:right;float: right">
     @if (Auth::user()->type == 1)
       <a class="btn btn-info" onclick="chargeNouvelleTachePlusieurProspect({{$tousLesProduits}})" ><i class="fa fa-calendar"></i>&nbsp; Taches en groupe</a>
+      <a class="btn btn-warning" data-toggle="modal" data-target="#importprospectsModal" ><i class="fa fa-upload"></i>&nbsp; Importer des prospects(.xlsx)</a>
       <a class="btn btn-success" data-toggle="modal" data-target="#addprospectModal" ><i class="fa fa-user-plus"></i>&nbsp; Ajouter un prospect</a>
     @endif
 
@@ -131,6 +132,9 @@
 
 <!--Nouveau Prospect-->
 @include('layouts.modals.createProspect')
+
+{{-- Importer des prospects --}}
+@include('layouts.modals.importProspect')
 
 <!--Nouveau Contact-->
 @include('layouts.modals.createContact')
