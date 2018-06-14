@@ -22,6 +22,9 @@ use App\Etat;
 use App\Client_produit;
 use App\prochaineAction;
 
+use App\Classes\hello;
+use App\Classes\PHPExcel\PHPExcel_IOFactory;
+
 class ProspectController extends Controller
 {
     public function get($bloque = 0,$type=1)
@@ -135,8 +138,8 @@ class ProspectController extends Controller
     }
 
     public function create(Request $rq){
-
-     try {
+     //dd($rq->email); return 0;
+    // try {
        // traitement pour obtenir le num sequentiel d'un nouveau prospect
 
 
@@ -154,16 +157,17 @@ class ProspectController extends Controller
           $OPwilaya = substr($prospect->codeProsp,3,2);
           $OPyear   = substr($prospect->codeProsp,-2);
           $OPsytax = $OPchAct.$OPwilaya.$OPyear;
-
           if ( $sytax == $OPsytax) {
             $threeOne = 1;
-          }else{
             $list[] = intval(substr($prospect->codeProsp,6,4));
           }
+
+
         }
 
         if ($threeOne == 1) {
-          $mySeq = strval(max($list)+1); if(strlen($mySeq) == 1){$mySeq = "000".$mySeq;}else{if(strlen($mySeq) == 2){$mySeq = "00".$mySeq;}else{if(strlen($mySeq) == 3){$mySeq = "0".$mySeq;}}}
+          $mySeq = max($list)+1;
+          if(strlen($mySeq) == 1){$mySeq = "000".$mySeq;}else{if(strlen($mySeq) == 2){$mySeq = "00".$mySeq;}else{if(strlen($mySeq) == 3){$mySeq = "0".$mySeq;}}}
         }else {
           $mySeq = "0001";
         }
@@ -220,13 +224,80 @@ class ProspectController extends Controller
         $prospect_score->save();
 
         return redirect('/prospects')->with('status', '<div class="alert alert-success alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Ajouté avec succée !</div>');
-     } catch (\Exception $e) {
-        return redirect('/prospects')->with('status', '<div class="alert alert-danger alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Erreur ! NB: verifier les informations necessaires pour l\'ajout d\'un nouveau prospect.</div>');
-     }
+     // } catch (\Exception $e) {
+     //    return redirect('/prospects')->with('status', '<div class="alert alert-danger alert-dismissible show" ><button type="button" class="close" data-dismiss="alert" aria-label="Close"><spanaria-hidden="true">&times;</span></button>Erreur ! NB: verifier les informations necessaires pour l\'ajout d\'un nouveau prospect.</div>');
+     // }
 
 
     }
 
+    //feature added : Juin 15th , 2018
+    public function import(Request $rq){
+
+      define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
+
+      $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+      $objPHPExcel = $objReader->load($rq->file);
+
+      foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+      //  	echo '--> Feuille : ' , $worksheet->getTitle() . EOL;
+
+        	foreach ($worksheet->getRowIterator() as $row) {
+        		//echo '<br/>    -->  Ligne - ' . $row->getRowIndex() . EOL;
+            if ($row->getRowIndex() > 1) {
+        		$cellIterator = $row->getCellIterator();
+        		$cellIterator->setIterateOnlyExistingCells(false); // Loop all cells, even if it is not set
+
+            $imp = new Request;
+            $imp->idChampAct = $rq->idChampAct;
+            $imp->wilaya = $worksheet->getTitle() ;
+
+            $i = 0;
+            foreach ($cellIterator as $cell) {
+
+                  switch ($i) {
+                      case 1:
+                        $imp->societe = $cell->getCalculatedValue() ;
+                        break;
+                      case 4:
+                        $imp->adresse = $cell->getCalculatedValue() ;
+                        break;
+                      case 5:
+                        $imp->adresse .= ' Commune : '.$cell->getCalculatedValue() ;
+                        break;
+                      case 6:
+                        $imp->tele1 = $cell->getCalculatedValue() ;
+                        break;
+                      case 7:
+                        $imp->fax = $cell->getCalculatedValue() ;
+                        break;
+                      case 8:
+                        $imp->genre = 'M' ;
+                        $imp->nom = $cell->getCalculatedValue() ;
+                        break;
+                      case 10:
+                        $imp->email = $cell->getCalculatedValue() ;
+                        break;
+                      case 11:
+                        $imp->siteWeb = $cell->getCalculatedValue() ;
+                        break;
+                  }
+                  $i++;//les colomns
+              $imp->description = "Ajouté de Excel";
+              $imp->score = 2;
+              $imp->produits = [];
+        		}
+            $ProspectsImporte[] = $imp;
+        	}
+        }
+        }
+
+        foreach ($ProspectsImporte as $PI) {
+          $this->create($PI);
+        }
+      //  return "<br>END";
+      return redirect('prospects');;
+    }
 
 
  public function update(Request $rq,$prospect ){
@@ -318,6 +389,7 @@ class ProspectController extends Controller
       $scores = Prospect_score::where('idPros',$prospect->id)->latest()->first();
       $scoreById = Score::where('id',$scores->idScore)->first();//pour la couleur
       $monGroupe = Groupe::where('id',$prospect->idGrp)->first();
+      // if($monGroupe== null){$monGroupe['id'] = 0;}
 
       $champActById = champActivite::where('id',$prospect->idChampAct)->first();
       $derniersContacts = Contact::where('idProsp',$prospect->id)->orderByRaw('id DESC')->get();

@@ -8,15 +8,15 @@
         @if ($prospect->bloquer == "1")
           <a class="btn btn-danger " title="Debloquer ce prospect"  data-toggle="modal" data-target="#ouiNonDebloque" ><i class="fa fa-edit"></i>&nbsp; Debloquer</a>
         @endif
-      <a class="btn btn-info " title="Nouveau contact" onclick="chargeNouveauContact('{{str_replace("'","\'",$prospect->societe)}}',{{$prospect->id}})" data-toggle="modal" data-target="#updateprospectModal" ><i class="fa fa-pencil"></i>&nbsp; Modifier</a>
+      <a class="btn btn-info " data-toggle="modal" data-target="#updateprospectModal" ><i class="fa fa-pencil"></i>&nbsp; Modifier</a>
       </div>
   </div>
   @if (session('status')){!! session('status') !!}@endif
   <div class="row">
     <div class="col-md-7 ">
       <div class="det-prosp-soc ">
-        <h2>{{$prospect->societe}} - <span style="background-color:{{$score->couleur}}">[ {{$score->LibScore}} ]</span></h2>
-        Produits/Services Achetés :
+        <h2>{{$prospect->societe}} - <span style="background-color:{{$score->couleur}}">[ {{$score->LibScore}} ]</span></h2> <h4>Code : <span style="background-color:aquamarine">[ {{$prospect->codeProsp}} ]</span></h4>
+        Produits/Services Achetés : -
         @foreach ($clientProduit as $cp)
              - {{$cp[0]->LibProd}}
         @endforeach
@@ -92,7 +92,7 @@
       <div class="prospect-info"> {{$chamActiv->LibChampAct}} </div>
       <h3>Groupe : <span><a href="{{url('groupes')}}"> -Gestion des groupe</a></span></h3>
       <hr/>
-      <div class="prospect-info"> @if(! $monGroupe) / @else {{$monGroupe->LibGrp}}. @endif </div>
+      <div class="prospect-info"> @if(!$monGroupe) / @else {{$monGroupe->LibGrp}}. @endif </div>
       <h3>Produits & Services : <span><a href="{{url('produits')}}"> - Gestion des produits/services</a></span></h3>
       <hr/>
       <div class="prospect-info">
